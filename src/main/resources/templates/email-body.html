@@ -1,0 +1,42 @@
+<body>
+<div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; max-width: 600px; margin: auto;">
+    <img th:src="${mainImageUrl}" alt="행사 이미지" style="width: 100%; max-height: 300px; object-fit: cover; margin-bottom: 20px;" />
+
+    <h2 style="color: #333;" th:text="${title}">행사 제목</h2>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="color: #444;">행사 개요</h3>
+        <ul style="list-style: none; padding: 0; color: #555;">
+            <li><strong>진행 기간:</strong> <span th:text="${eventStartDate} + ' ~ ' + ${eventEndDate}"></span></li>
+            <li><strong>운영 시간:</strong> <span th:text="${playTime}"></span></li>
+            <li><strong>예상 소요시간:</strong> <span th:text="${spendTimeFestival}"></span></li>
+            <li><strong>비용:</strong> <span th:text="${useTimeFestival}"></span></li>
+            <li><strong>행사 키워드:</strong>
+                <span th:each="keyword : ${keywords}" th:text="|${keyword}|"></span>
+            </li>
+        </ul>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="color: #444;">행사 상세 정보</h3>
+        <ul style="list-style: none; padding: 0; color: #555;">
+            <li th:each="info : ${infoList}">
+                <strong th:text="${info.infoName}">정보 이름</strong>:
+                <span th:text="${info.infoText}">정보 내용</span>
+            </li>
+        </ul>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="color: #444;">오시는 길</h3>
+        <ul style="list-style: none; padding: 0; color: #555;">
+            <li><strong>주소:</strong> <span th:text="${roadAddress}"></span></li>
+            <li><strong>세부 장소:</strong> <span th:text="${eventPlace}"></span></li>
+            <li><strong>연락처:</strong> <span th:text="${telephone}"></span></li>
+        </ul>
+    </div>
+
+    <hr style="margin: 30px 0;" />
+    <p style="font-size: 0.9em; color: #999;">본 메일은 발신 전용입니다. 문의는 홈페이지를 이용해주세요.</p>
+</div>
+</body>
