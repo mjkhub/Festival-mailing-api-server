@@ -1,0 +1,43 @@
+language: "ko-KR"
+early_access: false
+
+reviews:
+  profile: "balanced"
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+
+  auto_review:
+    enabled: true
+    drafts: false
+
+chat:
+  auto_reply: true
+
+review:
+  enabled: true
+
+  reviewers:
+    - code_expert
+    - security_auditor
+    - readability_guru
+    - architecture_advisor
+
+  files:
+    include:
+      - '**/*.java'
+      - '**/*.yml'
+    exclude:
+      - '**/test/**'
+      - '**/docs/**'
+
+  rules:
+    max_comments: 30
+    comment_style: explanatory
+    comment_tone: assertive
+    avoid_duplicate_comments: true
+    detect_code_smells: true
+    flag_unused_code: true
+    require_javadoc_for_public_methods: true
