@@ -50,6 +50,7 @@ public class TourUpdateListener {
 				.thenAccept((apiResponse) -> {
 					tourUpdater.sumTourEntity(count, apiResponse);
 					keywordExtractingEventPort.sendKeywordExtractingEvent(apiResponse.newToursEntity());
+					keywordExtractingEventPort.sendKeywordExtractingEvent(apiResponse.updatedToursEntity());
 				});
 			futures.add(future);
 		}

@@ -1,4 +1,4 @@
-package kori.tour.tour.adpater.out.persistence;
+package kori.tour.tour.adapter.out.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

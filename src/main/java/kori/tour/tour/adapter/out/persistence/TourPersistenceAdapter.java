@@ -1,4 +1,4 @@
-package kori.tour.tour.adpater.out.persistence;
+package kori.tour.tour.adapter.out.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,9 @@ class TourPersistenceAdapter implements TourCrudPort {
 		return tourRepository.findIdListByContentIdList(contentIdList);
 	}
 
-	// @Transactional // 이게 필요한지 조금 더 생각해보자 -> 일단 외부에 하나의 트랜잭션으로 관리
+	/**
+	 * 정보가 업데이트 되어서 기존의 데이터를 삭제하는 경우는 잘 없어서 그냥 간단하게 구현
+	 * */
 	@Override
 	public void deleteToursAndRelatedEntities(List<Long> tourIdList) {
 		for (Long tourId : tourIdList) {

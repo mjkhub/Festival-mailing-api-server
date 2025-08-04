@@ -1,8 +1,8 @@
-package kori.tour.email.apdater.out.persistence;
+package kori.tour..apdater.out.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kori.tour.email.domain.Email;
+import kori.tour..domain.;
 
-public interface EmailRepository extends JpaRepository<Email, Long> {
+public interface Repository extends JpaRepository<, Long> {
 }

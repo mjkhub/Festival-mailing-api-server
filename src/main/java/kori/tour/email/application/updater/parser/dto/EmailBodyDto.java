@@ -23,6 +23,7 @@ public class EmailBodyDto {
     private String eventPlace; //세부 장소
     private String telephone; //연락처
 
+    @Getter
     @AllArgsConstructor
     public static class InfoItem {
         private String infoName;

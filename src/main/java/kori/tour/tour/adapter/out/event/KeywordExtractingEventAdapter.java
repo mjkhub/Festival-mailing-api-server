@@ -1,4 +1,4 @@
-package kori.tour.tour.adpater.out.event;
+package kori.tour.tour.adapter.out.event;
 
 import java.util.List;
 import java.util.UUID;

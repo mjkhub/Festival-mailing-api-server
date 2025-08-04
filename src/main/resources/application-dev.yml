@@ -35,7 +35,7 @@ spring:
     openai:
       api-key: ${OPEN_AI_KEY}
       options:
-        model: gpt-3.5-turbo
+        model: ${AI_MODEL}
 
   thymeleaf:
     prefix: classpath:/templates/

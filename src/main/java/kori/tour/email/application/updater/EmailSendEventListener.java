@@ -18,7 +18,7 @@ import kori.tour.member.adapter.out.persistence.SubscriptionRepository;
 import kori.tour.member.domain.Member;
 import kori.tour.member.domain.PlatformInfo;
 import kori.tour.member.domain.Subscription;
-import kori.tour.tour.adpater.out.persistence.TourRepository;
+import kori.tour.tour.adapter.out.persistence.TourRepository;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import kori.tour.tour.domain.Tour;
 import kori.tour.tour.domain.TourDetail;

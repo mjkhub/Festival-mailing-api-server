@@ -1,4 +1,4 @@
-package kori.tour.tour.adpater.out.persistence;
+package kori.tour.tour.adapter.out.persistence;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,13 +40,14 @@ class TourJdbcRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("투어 정보 저장: 배치 삽입")
+	@DisplayName("투어 정보 저장: 배치 삽입 / 쿼리를 보기 위한 테스트")
 	void JdbcTemplate_BatchInsert() {
 		tourJdbcRepository.saveTours(tours);
+
 	}
 
 	@Test
-	@DisplayName("투어 정보 저장: 단일 insert 쿼리")
+	@DisplayName("투어 정보 저장: 단일 insert 쿼리 / 쿼리를 보기 위한 테스트")
 	void JPA_saveAll() {
 		tourJpaRepository.saveAll(tours);
 	}

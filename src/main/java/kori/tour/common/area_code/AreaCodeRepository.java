@@ -40,14 +40,14 @@ public class AreaCodeRepository {
         }
     }
 
-    // Todo 1.지역코드만  2.지역 코드를 클릭하면 시군구 코드를 함께 보내주는~~ 3. 예외처리 4. 폴더를 어디에 정리할지
+    // Todo 이 클래스 어느 폴더에 정리할지 잘 모르겠음
 
     public String getAreaName(String areaCode) {
         return areaCodeList.stream()
                 .filter(ac-> ac.areaCode().equals(areaCode))
                 .map(Area::name)
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("Area code not found: " + areaCode));
     }
 
     public String getSigunGuName(String areaCode, String sigunguCode) {
@@ -55,13 +55,13 @@ public class AreaCodeRepository {
                 .filter(ac -> ac.areaCode().equals(areaCode))
                 .map(Area::subRegions)
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("Area code not found: " + areaCode));
 
         return subAreas.stream()
                 .filter( sr->sr.sigunguCode().equals(sigunguCode))
                 .map(SubArea::name)
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Sigungu code '%s' not found for area code '%s'", sigunguCode, areaCode)));
     }
 
 

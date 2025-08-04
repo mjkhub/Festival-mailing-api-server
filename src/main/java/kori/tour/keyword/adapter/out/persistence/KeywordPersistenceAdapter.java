@@ -5,8 +5,8 @@ import java.util.List;
 import kori.tour.common.annotation.PersistenceAdapter;
 import kori.tour.keyword.application.port.out.KeywordExtractingPort;
 import kori.tour.keyword.domain.Keyword;
-import kori.tour.tour.adpater.out.persistence.TourJdbcRepository;
-import kori.tour.tour.adpater.out.persistence.TourRepository;
+import kori.tour.tour.adapter.out.persistence.TourJdbcRepository;
+import kori.tour.tour.adapter.out.persistence.TourRepository;
 import kori.tour.tour.domain.Tour;
 import lombok.RequiredArgsConstructor;
 

@@ -24,7 +24,7 @@ class TourApiClientTest {
         String wrongEndpoint = "http://localhost:8081/api/accounts/1";
 
         //when
-        ResponseEntity<String> response = tourApiClient.requestApi(wrongEndpoint);
+        ResponseEntity<String> response = tourApiClient.callApi(wrongEndpoint);
 
         //then
         Assertions.assertThat(response.getBody()).isEqualTo(tourApiClient.getEmptyResponse());

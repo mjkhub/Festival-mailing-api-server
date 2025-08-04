@@ -11,16 +11,16 @@ public final class CollectionUtils {
 	private CollectionUtils() {
 	}
 
-	public static <T> Map<Boolean, List<T>> separateList(List<T> tours, Predicate<T> predicate) {
-		return tours.stream().collect(Collectors.partitioningBy(predicate));
+	public static <T> Map<Boolean, List<T>> separateList(List<T> list, Predicate<T> predicate) {
+		return list.stream().collect(Collectors.partitioningBy(predicate));
 	}
 
-	public static <T> List<T> getFromMap(Map<Boolean, List<T>> partitionedTours, Boolean flag) {
-		return partitionedTours.get(flag);
+	public static <T> List<T> getFromMap(Map<Boolean, List<T>> partitionedList, Boolean flag) {
+		return partitionedList.get(flag);
 	}
 
-	public static <T> List<T> filterList(List<T> tours, Predicate<T> predicate) {
-		return tours.stream().filter(predicate).toList();
+	public static <T> List<T> filterList(List<T> list, Predicate<T> predicate) {
+		return list.stream().filter(predicate).toList();
 	}
 
 	public static <T, R> List<R> mapList(List<T> list, Function<T, R> mapper) {

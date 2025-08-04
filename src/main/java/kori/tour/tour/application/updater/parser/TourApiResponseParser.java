@@ -79,16 +79,12 @@ public class TourApiResponseParser {
 		return tourResponseList;
 	}
 
-	public List<TourDetailResponse> mapToTourDetailCreate(String jsonResponse) { // 실제로는
-																					// OneToOne
-																					// 이지만
-																					// 편의상
-																					// 이렇게
-																					// 맞췄음
-
+	/**
+	 * Tour - TourDetail은 OneToOne 이지만, 통일성을 위해 List로 작업
+	 * */
+	public List<TourDetailResponse> mapToTourDetailCreate(String jsonResponse) {
 		List<TourDetailResponse> tourDetailResponseList = new ArrayList<>();
 		try {
-			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode rootNode = objectMapper.readTree(jsonResponse);
 			JsonNode itemsNode = rootNode.path("response").path("body").path("items").path("item");
 			if (itemsNode.isArray()) {
@@ -115,10 +111,8 @@ public class TourApiResponseParser {
 		List<TourRepeatResponse> tourRepeatList = new ArrayList<>();
 
 		try {
-			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode rootNode = objectMapper.readTree(jsonResponse);
 			JsonNode itemsNode = rootNode.path("response").path("body").path("items").path("item");
-
 			if (itemsNode.isArray()) {
 				for (JsonNode itemNode : itemsNode) {
 					TourRepeatResponse repeatCreate = new TourRepeatResponse(itemNode.path("serialnum").asText(""),
@@ -126,7 +120,6 @@ public class TourApiResponseParser {
 					tourRepeatList.add(repeatCreate);
 				}
 			}
-
 		}
 		catch (JsonProcessingException e) { // xml response
 			log.warn("/detailInfo1 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
@@ -137,9 +130,7 @@ public class TourApiResponseParser {
 
 	public List<TourImageResponse> mapToTourImageCreateList(String jsonResponse) {
 		List<TourImageResponse> tourImageList = new ArrayList<>();
-
 		try {
-			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode rootNode = objectMapper.readTree(jsonResponse);
 			JsonNode itemsNode = rootNode.path("response").path("body").path("items").path("item");
 

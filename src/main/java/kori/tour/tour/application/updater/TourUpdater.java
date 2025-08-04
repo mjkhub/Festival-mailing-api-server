@@ -43,15 +43,16 @@ class TourUpdater { // DB를 포함한 로직 및 저장 담당
 		List<Long> updatedToursPk = tourCrudPort.findIdListByContentIdList(contentIdList);
 		tourCrudPort.deleteToursAndRelatedEntities(updatedToursPk);
 
-		tourCrudPort.saveTourListBulk(updatedTourDtoList);
-		log.info("언어={} 응답 결과: 업데이트 투어={} 업데이트 완료", language.getKrName(), updatedTours.size());
+		log.info("언어={} 응답 결과: 업데이트된 투어={} 삭제 완료 ", language.getKrName(), updatedTours.size());
 		return tourApiResponse;
 	}
 
 	@Transactional
 	public TourApiResponse saveNewTours(TourApiResponse tourApiResponse, Language language) {
 		tourCrudPort.saveTourListBulk(tourApiResponse.newToursEntity());
-		log.info("언어={} 응답 결과: 새로운 투어={} 저장 완료", language.getKrName(), tourApiResponse.newToursEntity().size());
+		tourCrudPort.saveTourListBulk(tourApiResponse.newToursEntity());
+		log.info("언어={} 응답 결과: 새로운 투어={} 업데이트된 투어={} 저장 완료", language.getKrName(),
+				tourApiResponse.newToursEntity().size(), tourApiResponse.updatedToursEntity().size());
 		return tourApiResponse;
 	}
 

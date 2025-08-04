@@ -4,6 +4,7 @@ import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.*;
@@ -11,6 +12,7 @@ import io.jsonwebtoken.security.Keys;
 
 import kori.tour.auth.exception.UnauthorizedException;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
 
@@ -36,14 +38,21 @@ public class JwtTokenProvider {
     }
 
     public String extractPrincipal(String token) {
-        try{
+        try {
             return Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
+        } catch (ExpiredJwtException e) {
+            log.warn("JWT token expired: {}", e.getMessage());
+            throw new UnauthorizedException(e);
+        } catch (MalformedJwtException e) {
+            log.warn("Malformed JWT token: {}", e.getMessage());
+            throw new UnauthorizedException(e);
         } catch (JwtException e) {
+            log.error("JWT validation failed: {}", e.getMessage());
             throw new UnauthorizedException(e);
         }
     }

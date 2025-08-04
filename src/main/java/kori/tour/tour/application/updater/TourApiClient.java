@@ -102,14 +102,14 @@ public class TourApiClient { // API 통신 담당
 	private ResponseEntity<String> fetchTourMetaData(Language language, String startDate) {
 		Map<String, String> queryParams = apiResolver.resolveQueryParams(ApiType.SEARCH, 1, 1, startDate);
 		String url = apiResolver.resolveEndPoint(language, ApiType.SEARCH, queryParams);
-		return requestApi(url);
+		return callApi(url);
 	}
 
 	private <T> List<T> fetchApiData(ApiType apiType, ApiParam apiParam, Class<T> responseType) {
 		Map<String, String> queryParams = apiResolver.resolveQueryParams(apiType, apiParam.numberOfRow(),
 				apiParam.pageNo(), apiParam.additionalParam());
 		String url = apiResolver.resolveEndPoint(apiParam.language(), apiType, queryParams);
-		ResponseEntity<String> response = requestApi(url);
+		ResponseEntity<String> response = callApi(url);
 
 		return switch (apiType) {
 			case SEARCH -> (List<T>) tourApiResponseParser.mapToTourCreateList(response.getBody());
@@ -120,14 +120,20 @@ public class TourApiClient { // API 통신 담당
 		};
 	}
 
-	public ResponseEntity<String> requestApi(String url) {
 
+	/**
+	 * 관광공사 API 가 불안정하여 업데이트 과정에서 에러가 종종 발생함
+	 * 때문에, 한번의 문제로 전체 작업을 Shut down 비효율적이라고 판단하여
+	 * 예외가 발생했더라도 정상흐름으로 변환하여 작업을 이어나가기로 결정.
+	 * 또한, 해당 데이터가 다음 작업에서 새롭게 추가될 가능성도 있기 때문에 이 로직이 나쁘지 않다고 판단.
+	 */
+	public ResponseEntity<String> callApi(String url) {
 		try {
 			return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(new HttpHeaders()), String.class);
 		}
 		catch (ResourceAccessException e) {
 			log.warn("url = {} API 요청 실패 ", url, e);
-			return new ResponseEntity<>(emptyResponse, HttpStatus.OK); // 기본 JSON 반환
+			return new ResponseEntity<>(emptyResponse, HttpStatus.INTERNAL_SERVER_ERROR); // 기본 JSON 반환
 		}
 	}
 

@@ -18,7 +18,7 @@ public enum PlatformType {
         String platformEmail = body.get("email").asText();
         return new PlatformProfile(platformPk, platformEmail);
     }),
-    EMAIL("kakao", null);
+    KAKAO("kakao", null);
 
     @Getter
     private String platformName;
