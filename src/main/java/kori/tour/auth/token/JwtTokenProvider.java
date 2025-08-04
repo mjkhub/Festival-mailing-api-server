@@ -4,13 +4,13 @@ import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
 import kori.tour.auth.exception.UnauthorizedException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component

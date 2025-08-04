@@ -8,7 +8,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import kori.tour.email.apdater.out.persistence.EmailRepository;
+import kori.tour.email.adapter.out.persistence.EmailRepository;
 import kori.tour.email.application.updater.parser.EmailContentParser;
 import kori.tour.email.application.updater.parser.dto.EmailBodyDto;
 import kori.tour.email.application.updater.parser.dto.EmailTitleDto;
