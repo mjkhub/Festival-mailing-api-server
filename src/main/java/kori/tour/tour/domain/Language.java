@@ -24,12 +24,26 @@ public enum Language {
 
 	private final String path;
 
+	/**
+	 * Constructs a Language enum constant with the specified Korean name, English name, and path identifier.
+	 *
+	 * @param krName the Korean name of the language
+	 * @param egName the English name of the language
+	 * @param path the path identifier associated with the language
+	 */
 	Language(String krName, String egName, String path) {
 		this.krName = krName;
 		this.egName = egName;
 		this.path = path;
 	}
 
+	/**
+	 * Returns the {@code Language} enum constant that matches the specified English name.
+	 *
+	 * @param egName the English name of the language to look up
+	 * @return the {@code Language} constant with the given English name
+	 * @throws IllegalArgumentException if no matching language is found
+	 */
 	public static Language getLanguageByEgName(String egName) {
 		return Arrays.stream(Language.values())
 				.filter(e->e.getEgName().equals(egName))

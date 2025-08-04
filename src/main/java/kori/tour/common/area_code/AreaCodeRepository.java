@@ -29,6 +29,12 @@ public class AreaCodeRepository {
 
     private final AreaCodeParser areaCodeParser;
 
+    /**
+     * Loads area and sub-area codes from the configured JSON resource file at application startup.
+     *
+     * Parses the JSON content into a list of area objects and stores them for later retrieval.
+     * Throws an {@link IllegalStateException} if the resource file cannot be read.
+     */
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
         try (InputStream is = areaCodeResource.getInputStream()) {
@@ -40,7 +46,13 @@ public class AreaCodeRepository {
         }
     }
 
-    // Todo 1.지역코드만  2.지역 코드를 클릭하면 시군구 코드를 함께 보내주는~~ 3. 예외처리 4. 폴더를 어디에 정리할지
+    /**
+     * Returns the name of the area corresponding to the given area code.
+     *
+     * @param areaCode the code identifying the area
+     * @return the name of the area matching the provided code
+     * @throws NoSuchElementException if no area with the specified code is found
+     */
 
     public String getAreaName(String areaCode) {
         return areaCodeList.stream()
@@ -50,6 +62,14 @@ public class AreaCodeRepository {
                 .orElseThrow();
     }
 
+    /**
+     * Returns the name of the sub-area (sigungu) corresponding to the given area code and sigungu code.
+     *
+     * @param areaCode the code identifying the area
+     * @param sigunguCode the code identifying the sub-area within the area
+     * @return the name of the matching sub-area
+     * @throws NoSuchElementException if no matching area or sub-area is found
+     */
     public String getSigunGuName(String areaCode, String sigunguCode) {
         List<SubArea> subAreas = areaCodeList.stream()
                 .filter(ac -> ac.areaCode().equals(areaCode))

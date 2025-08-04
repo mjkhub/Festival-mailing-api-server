@@ -18,6 +18,12 @@ public class KeywordPersistenceAdapter implements KeywordExtractingPort {
     private final KeywordRepository keywordRepository;
     private final TourJdbcRepository tourJdbcRepository;
 
+    /**
+     * Persists the given Tour entity and its associated list of Keyword entities.
+     *
+     * @param tour the Tour entity to be saved
+     * @param keywordsOfTour the list of Keyword entities related to the Tour to be saved
+     */
     @Override
     public void saveKeyword(Tour tour, List<Keyword> keywordsOfTour) {
         tourRepository.save(tour);

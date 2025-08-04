@@ -49,7 +49,13 @@ public class TourDetail {
 	private String subEvent;
 
 	@Column(length = 500)
-	private String useTimeFestival; // 비용
+	private String useTimeFestival; /**
+	 * Creates a new TourDetail entity by mapping fields from the provided TourDetailResponse DTO and associating it with the specified Tour entity.
+	 *
+	 * @param tourDetailResponse the DTO containing detailed tour information
+	 * @param tour the Tour entity to associate with this detail
+	 * @return a new TourDetail instance populated with data from the DTO and linked to the given Tour
+	 */
 
 	public static TourDetail createTourDetail(TourDetailResponse tourDetailResponse, Tour tour) {
 
@@ -71,6 +77,11 @@ public class TourDetail {
 			.build();
 	}
 
+	/**
+	 * Updates this TourDetail entity's fields with values from the provided TourDetailResponse DTO.
+	 *
+	 * @param tourDetailResponse the DTO containing updated tour detail information
+	 */
 	public void updateTourDetail(TourDetailResponse tourDetailResponse) {
 		ageLimit = tourDetailResponse.ageLimit();
 		bookingPlace = tourDetailResponse.bookingPlace();

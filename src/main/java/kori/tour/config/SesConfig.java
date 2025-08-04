@@ -9,6 +9,11 @@ import software.amazon.awssdk.services.sesv2.SesV2Client;
 @Configuration
 public class SesConfig {
 
+    /**
+     * Creates and configures an AWS SES v2 client for the AP_NORTHEAST_2 (Seoul) region.
+     *
+     * @return a SesV2Client instance configured for the Seoul AWS region
+     */
     @Bean
     public SesV2Client sesClient() {
         return SesV2Client.builder()

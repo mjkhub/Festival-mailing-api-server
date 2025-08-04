@@ -19,6 +19,11 @@ public class ActivityInfo {
     private LocalDateTime signUpDate;
     private LocalDate lastSignInDate;
 
+    /**
+     * Updates the last sign-in date with the specified date.
+     *
+     * @param localDate the new last sign-in date to set
+     */
     public void updateLastSignInDate(LocalDate localDate){
         this.lastSignInDate = localDate;
     }

@@ -25,11 +25,20 @@ public class PromptBuilder {
 
 	private PromptTemplate promptTemplate;
 
+	/**
+	 * Initializes the prompt template using the injected keyword extraction template resource.
+	 */
 	@PostConstruct
 	private void init() {
 		this.promptTemplate = new PromptTemplate(keywordExtractPromptTemplate);
 	}
 
+	/**
+	 * Constructs a prompt for keyword extraction using the provided tour document and predefined keywords.
+	 *
+	 * @param tourDocument the text of the tour document to extract keywords from
+	 * @return a Prompt object configured with the tour document and keywords
+	 */
 	public Prompt buildKeywordPrompt(String tourDocument) {
 		Map<String, Object> promptParameters = new HashMap<>();
 		promptParameters.put("document", tourDocument);

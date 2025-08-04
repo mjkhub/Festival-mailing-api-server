@@ -36,6 +36,15 @@ public class EmailSendEventListener {
     private final TourRepository tourRepository;
 
 
+    /**
+     * Handles an email sending event by composing and sending a new tour notification email to subscribed members.
+     *
+     * Processes the provided {@link EmailSendEvent} by extracting tour details and associated keywords, generating the email title and body, identifying subscribed members, sending the email to their addresses, and recording the sent email information for each member.
+     *
+     * This method is executed asynchronously upon event publication.
+     *
+     * @param emailSendEvent the event containing the new tour information and associated keywords
+     */
     @Async // 이거를 커스터마ㅣ징 필요
     @EventListener
     public void keywordExtractingEvent(EmailSendEvent emailSendEvent) {
@@ -76,6 +85,13 @@ public class EmailSendEventListener {
     }
 
 
+    /**
+     * Creates an EmailTitleDto containing the tour's area code, district code, title, and associated keywords.
+     *
+     * @param newTourDto      the DTO containing tour information
+     * @param keywordsOfTour  the list of keywords related to the tour
+     * @return an EmailTitleDto populated with the tour's area code, district code, title, and keywords
+     */
     private EmailTitleDto toEmailTitleDto(NewTourDto newTourDto, List<String> keywordsOfTour) {
         Tour tour = newTourDto.getTour();
 
@@ -86,6 +102,15 @@ public class EmailSendEventListener {
                 keywordsOfTour);
     }
 
+    /**
+     * Constructs an EmailBodyDto containing detailed information about a new tour for email content generation.
+     *
+     * The returned DTO includes the tour's main image, title, event dates, play time, spend time, usage time, associated keywords, repeat information, address, event place, and contact details. If the spend time festival information is missing, "정보 없음" is used as a placeholder.
+     *
+     * @param newTourDto      the DTO containing tour, detail, and repeat information
+     * @param keywordsOfTour  the list of keywords associated with the tour
+     * @return an EmailBodyDto populated with the tour's details for email content
+     */
     private EmailBodyDto toEmailBodyDto(NewTourDto newTourDto, List<String> keywordsOfTour) {
         Tour tour = newTourDto.getTour();
         TourDetail detail = newTourDto.getDetailInfo().get(0); // 단일 가정

@@ -20,6 +20,13 @@ public class TourApiResponseParser {
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
+	/**
+	 * Parses the JSON response to extract pagination metadata and calculates the total number of pages.
+	 *
+	 * @param jsonResponse the JSON response string from the tour API
+	 * @param language the language context for logging purposes
+	 * @return a {@code TourMetaData} object containing the number of rows per page, total item count, and total page count; returns a metadata object with zeros if parsing fails
+	 */
 	public TourMetaData mapToTotalPage(String jsonResponse, Language language) {
 
 		int numberOfRows = 0;
@@ -47,6 +54,15 @@ public class TourApiResponseParser {
 		return tourMetaData;
 	}
 
+	/**
+	 * Parses a JSON response to extract a list of tour summary items.
+	 *
+	 * Each item in the response is mapped to a {@link TourResponse} containing address, area codes, content IDs, event dates, images, map coordinates, modification time, telephone, and title.
+	 * Returns an empty list if the response cannot be parsed.
+	 *
+	 * @param jsonResponse the JSON string containing tour summary data
+	 * @return a list of {@link TourResponse} objects parsed from the response
+	 */
 	public List<TourResponse> mapToTourCreateList(String jsonResponse) {
 
 		List<TourResponse> tourResponseList = new ArrayList<>();
@@ -79,6 +95,15 @@ public class TourApiResponseParser {
 		return tourResponseList;
 	}
 
+	/**
+	 * Parses detailed tour information from a JSON response and returns a list of TourDetailResponse objects.
+	 *
+	 * Extracts fields such as age limit, booking place, discount information, homepage, event place, place info, playtime, program, spend time, sponsors, subevents, and usage time from each item in the response.
+	 * Returns an empty list if parsing fails or if no items are found.
+	 *
+	 * @param jsonResponse the JSON response string containing detailed tour information
+	 * @return a list of TourDetailResponse objects parsed from the response
+	 */
 	public List<TourDetailResponse> mapToTourDetailCreate(String jsonResponse) { // 실제로는
 																					// OneToOne
 																					// 이지만
@@ -111,6 +136,15 @@ public class TourApiResponseParser {
 		}
 	}
 
+	/**
+	 * Parses the JSON response to extract a list of repeated tour information entries.
+	 *
+	 * Each entry is mapped to a {@link TourRepeatResponse} containing serial number, info name, and info text.
+	 * Returns an empty list if parsing fails or if no items are found.
+	 *
+	 * @param jsonResponse the JSON string containing repeated tour information
+	 * @return a list of {@link TourRepeatResponse} objects extracted from the response
+	 */
 	public List<TourRepeatResponse> mapToTourRepeatCreateList(String jsonResponse) {
 		List<TourRepeatResponse> tourRepeatList = new ArrayList<>();
 
@@ -135,6 +169,15 @@ public class TourApiResponseParser {
 		return tourRepeatList;
 	}
 
+	/**
+	 * Parses a JSON response to extract a list of tour image information.
+	 *
+	 * Each image entry includes the original image URL, small image URL, image name, and serial number.
+	 * Returns an empty list if the response cannot be parsed.
+	 *
+	 * @param jsonResponse the JSON string containing tour image data
+	 * @return a list of {@link TourImageResponse} objects extracted from the response
+	 */
 	public List<TourImageResponse> mapToTourImageCreateList(String jsonResponse) {
 		List<TourImageResponse> tourImageList = new ArrayList<>();
 

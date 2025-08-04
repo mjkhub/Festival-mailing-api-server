@@ -17,6 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 class KeywordExtractingEventAdapter implements KeywordExtractingEventPort {
 
+    /**
+     * Sends a keyword extracting event containing the provided list of new tour data.
+     *
+     * Generates a unique event identifier and raises a {@code KeywordExtractingEvent} with the given tours and identifier.
+     *
+     * @param newToursEntity the list of new tour data to include in the event
+     */
     @Override
     public void sendKeywordExtractingEvent(List<NewTourDto> newToursEntity) {
         String uuid = UUID.randomUUID().toString();

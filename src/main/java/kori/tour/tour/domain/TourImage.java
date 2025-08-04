@@ -28,6 +28,13 @@ public class TourImage {
 
 	private String serialNumber;
 
+	/**
+	 * Creates a new TourImage entity from the provided TourImageResponse DTO and Tour entity.
+	 *
+	 * @param tourImageResponse the DTO containing image details to be mapped
+	 * @param tour the Tour entity to associate with the image
+	 * @return a new TourImage instance populated with data from the DTO and associated Tour
+	 */
 	public static TourImage createTourImage(TourImageResponse tourImageResponse, Tour tour) {
 		return TourImage.builder()
 			.originImageUrl(tourImageResponse.originImageUrl())

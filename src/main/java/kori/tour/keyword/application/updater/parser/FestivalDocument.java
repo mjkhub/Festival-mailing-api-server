@@ -32,6 +32,15 @@ public class FestivalDocument {
 
 	private Map<String, String> festivalDetails;
 
+	/**
+	 * Creates a FestivalDocument instance by extracting and aggregating festival information from a NewTourDto object.
+	 *
+	 * The method collects the festival name, program details, event location, event hours, duration, admission fee, age limit,
+	 * and additional festival details from the provided NewTourDto and its nested objects.
+	 *
+	 * @param newTourDto the data transfer object containing festival and event details
+	 * @return a FestivalDocument populated with information from the given NewTourDto
+	 */
 	public static FestivalDocument createFestivalDocument(NewTourDto newTourDto) {
 
 		Tour tour = newTourDto.getTour();

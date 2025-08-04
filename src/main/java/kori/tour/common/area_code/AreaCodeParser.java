@@ -12,6 +12,13 @@ public class AreaCodeParser {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Parses a JSON string into a list of Area objects.
+     *
+     * @param json the JSON string representing a list of areas
+     * @return a list of Area objects parsed from the JSON
+     * @throws RuntimeException if the JSON cannot be parsed into a list of Area objects
+     */
     public List<Area> parseToAreaCode(String json) {
         try {
             return objectMapper.readValue(json, new TypeReference<List<Area>>() {});

@@ -55,6 +55,13 @@ public class Tour {
 
 	private String title;
 
+	/**
+	 * Creates a new Tour entity from the provided TourResponse DTO and language.
+	 *
+	 * @param tourResponse the data transfer object containing tour information
+	 * @param language the language associated with the tour
+	 * @return a new Tour instance populated with values from the DTO and language
+	 */
 	public static Tour createTour(TourResponse tourResponse, Language language) {
 
 		return Tour.builder()
@@ -77,6 +84,11 @@ public class Tour {
 			.build();
 	}
 
+	/**
+	 * Updates the fields of this Tour entity with values from the provided TourResponse DTO.
+	 *
+	 * All mutable attributes, including addresses, codes, event dates, image URL, map coordinates, modification time, telephone, and title, are overwritten with the corresponding values from the DTO.
+	 */
 	public void updateTour(TourResponse tourResponse) {
 		roadAddress = tourResponse.roadAddress();
 		basicAddress = tourResponse.basicAddress();

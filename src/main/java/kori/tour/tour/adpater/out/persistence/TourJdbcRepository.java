@@ -19,6 +19,13 @@ public class TourJdbcRepository {
 
 	private final JdbcTemplate jdbcTemplate;
 
+	/**
+	 * Batch inserts a list of Tour entities into the tour database table.
+	 *
+	 * Each Tour's properties are mapped to the corresponding columns for efficient bulk persistence.
+	 *
+	 * @param tours the list of Tour entities to be inserted
+	 */
 	public void saveTours(List<Tour> tours) { // 테스트가 끝났으면 지우는게 맞는데.. 일단 그냥 두도로 하자 1월 31일
 		String sql = "INSERT INTO tour (language, road_address, basic_address, area_code, sigun_gu_code, "
 				+ "content_id, content_type_id, event_start_date, event_end_date, main_image_url, mapx, "
@@ -55,6 +62,13 @@ public class TourJdbcRepository {
 		});
 	}
 
+	/**
+	 * Batch inserts a list of tour detail entities into the tour_detail table.
+	 *
+	 * Each TourDetail is associated with a Tour and includes various descriptive fields such as age limit, booking place, event homepage, sponsor information, and usage times.
+	 *
+	 * @param tourDetailInfos the list of TourDetail entities to be inserted
+	 */
 	public void saveTourDetailInfos(List<TourDetail> tourDetailInfos) {
 		String sql = "INSERT INTO tour_detail (tour_id, age_limit, booking_place, discount_info_festival, "
 				+ "event_homepage, event_place, place_info, play_time, program, spend_time_festival, sponsor, "
@@ -89,6 +103,11 @@ public class TourJdbcRepository {
 		});
 	}
 
+	/**
+	 * Batch inserts a list of TourRepeat entities into the tour_repeat table.
+	 *
+	 * @param tourRepeats the list of TourRepeat entities to be persisted
+	 */
 	public void saveTourRepeats(List<TourRepeat> tourRepeats) {
 		String sql = "INSERT INTO tour_repeat (tour_id, serial_number, info_name, info_text) " + "VALUES (?, ?, ?, ?)";
 
@@ -110,6 +129,11 @@ public class TourJdbcRepository {
 		});
 	}
 
+	/**
+	 * Batch inserts a list of tour images into the tour_image table.
+	 *
+	 * Each image is associated with a tour and includes original and small image URLs, image name, and serial number.
+	 */
 	public void saveTourImages(List<TourImage> tourImages) {
 		String sql = "INSERT INTO tour_image (tour_id, origin_image_url, small_image_url, image_name, serial_number) "
 				+ "VALUES (?, ?, ?, ?, ?)";
@@ -134,6 +158,11 @@ public class TourJdbcRepository {
 		});
 	}
 
+	/**
+	 * Batch inserts a list of keywords associated with tours into the database.
+	 *
+	 * Each keyword is linked to a tour by its ID and stored in the `keyword` table.
+	 */
 	public void saveKeywords(List<Keyword> keywords) {
 		String sql = "INSERT INTO keyword (tour_id, keyword) VALUES (?, ?)";
 

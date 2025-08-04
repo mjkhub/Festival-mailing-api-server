@@ -26,7 +26,18 @@ public class KeywordExtractEventListener {
 
     // 키워드는 많아봐야 네개라서, 모아서 처리하는 것보다, 이어서 바로 저장하는게 나을 것 같음.
     // 어차피 AI 에게 요청을 Tour 단위로 하는 상황이니까 스레드를 빠르게 돌리는게 나을듯?
-    // 이것도 어딘가에 기록해두자
+    /**
+     * Handles `KeywordExtractingEvent` by asynchronously extracting and saving keywords for each new tour,
+     * then triggers an email event for each processed entry.
+     *
+     * For every `NewTourDto` in the event, this method initiates an asynchronous workflow to:
+     * 1. Extract keywords using the keyword extraction service.
+     * 2. Map the extracted keywords to `Keyword` entities linked to the tour.
+     * 3. Save the keyword entities.
+     * 4. Raise an `EmailSendEvent` for the saved entry.
+     *
+     * The method logs the event receipt and the total time taken to initiate all asynchronous tasks.
+     */
 
     @EventListener
     public void listenKeywordExtractEvent(KeywordExtractingEvent event) {

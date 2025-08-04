@@ -17,6 +17,14 @@ public class EmailSendService {
 
     private final SesV2Client sesClient;
 
+    /**
+     * Sends an email with the specified subject and HTML content to a list of recipients using AWS SES.
+     *
+     * @param emails       the list of recipient email addresses
+     * @param emailTitle   the subject of the email
+     * @param emailContent the HTML content of the email body
+     * @return the message ID assigned by AWS SES for the sent email
+     */
     public String sendEmailToMembers(List<String> emails, String emailTitle, String emailContent) {
         SendEmailRequest request = SendEmailRequest.builder()
                 .fromEmailAddress("noreply@yourdomain.com")

@@ -17,6 +17,15 @@ public class AiModelResponseParser {
 
 	private final ObjectMapper mapper = new ObjectMapper();
 
+	/**
+	 * Extracts a list of keywords from the "keywords" array field in a JSON response string.
+	 *
+	 * If the "keywords" field is present and is an array, each element is converted to a string and added to the result list.
+	 * Returns an empty list if parsing fails or if the "keywords" field is absent or not an array.
+	 *
+	 * @param jsonResponse the JSON string containing the AI model response
+	 * @return a list of keyword strings extracted from the response; empty if extraction fails
+	 */
 	public List<String> mapToKeywords(String jsonResponse) {
 		List<String> keywords = new ArrayList<>();
 

@@ -31,7 +31,12 @@ public class TourUpdateListener {
 	private final KeywordExtractingEventPort keywordExtractingEventPort;
 
 	// @Scheduled( cron = "0 0/5 10-18 * * *", zone = "Asia/Seoul" ) // 오전 10시 ~ 오후 6시 매 30분마다 실행
-	// @EventListener(ApplicationReadyEvent.class)
+	/**
+	 * Updates tour information for all supported languages using asynchronous, multi-threaded execution.
+	 *
+	 * Fetches, processes, and saves tour data updated within the last six months for each language in parallel.
+	 * After updating, sends keyword extraction events for newly saved tours. Logs the total number of tours updated and the elapsed time.
+	 */
 	public void updateTour() {
 		log.info("######################## 축제 정보 언어별 업데이트 시작 ######################## ");
 		long startTime = System.currentTimeMillis();
@@ -59,6 +64,11 @@ public class TourUpdateListener {
 		log.info("멀티스레드 축제 정보 {}개 업데이트 완료 총 소요시간 = {}ms", count, endTime - startTime);
 	}
 
+	/**
+	 * Updates tour information sequentially for all supported languages using a single thread.
+	 *
+	 * Fetches, processes, and saves tour data updated within the last six months for each language, executing all steps in a sequential manner.
+	 */
 	public void singleThread() { //로직이 더욱 명시적으로 드러나서 지우지는 않음
 		log.info("싱글스레드 시작");
 		String startDate = getStartDate();
@@ -72,6 +82,11 @@ public class TourUpdateListener {
 		log.info("싱글 스레드 끗");
 	}
 
+	/**
+	 * Calculates the date string representing six months prior to the current date in the "Asia/Seoul" timezone.
+	 *
+	 * @return the start date as a string in ISO-8601 format (yyyy-MM-dd)
+	 */
 	private String getStartDate() {
 		return LocalDate.now(ZoneId.of("Asia/Seoul")).minusMonths(6).toString();
 	}

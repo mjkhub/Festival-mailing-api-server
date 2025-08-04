@@ -15,6 +15,14 @@ public class TourAiModelClient {
 
 	private final OpenAiChatModel openAiChatModel;
 
+	/**
+	 * Sends a prompt to the OpenAI chat model and returns the generated response content.
+	 *
+	 * If the model does not return a result, an empty string is returned.
+	 *
+	 * @param prompt the prompt to send to the chat model
+	 * @return the generated response content, or an empty string if no result is returned
+	 */
 	public String call(Prompt prompt) {
 		// Generation의 개수는 Open API 서버에서 1개로 처리한다고 한다.
 		Generation result = openAiChatModel.call(prompt).getResult();

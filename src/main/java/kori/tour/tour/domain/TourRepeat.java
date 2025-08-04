@@ -27,6 +27,13 @@ public class TourRepeat {
 	@Column(length = 4000)
 	private String infoText;
 
+	/**
+	 * Creates a new TourRepeat entity from the provided TourRepeatResponse DTO and associates it with the given Tour.
+	 *
+	 * @param tourRepeatResponse the DTO containing serial number, info name, and info text for the TourRepeat
+	 * @param tour the Tour entity to associate with the new TourRepeat
+	 * @return a new TourRepeat entity populated with data from the DTO and linked to the specified Tour
+	 */
 	public static TourRepeat createTourRepeat(TourRepeatResponse tourRepeatResponse, Tour tour) {
 		return TourRepeat.builder()
 			.serialNumber(tourRepeatResponse.serialNumber())

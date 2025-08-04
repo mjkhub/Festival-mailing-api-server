@@ -25,6 +25,13 @@ class TourUpdater { // DB를 포함한 로직 및 저장 담당
 
 	private final TourCrudPort tourCrudPort;
 
+	/**
+	 * Separates a list of tours into new and updated tours based on their existence and update status in the database.
+	 *
+	 * @param tours the list of tours to be processed
+	 * @param language the language context for logging purposes
+	 * @return a {@link TourFilterResponse} containing lists of new and updated tours
+	 */
 	public TourFilterResponse separateUpdateTourNewTour(List<Tour> tours, Language language) {
 		Map<Boolean, List<Tour>> separatedTours = separateList(tours, tourCrudPort::isExisting);
 		List<Tour> newTours = getFromMap(separatedTours, false);
@@ -34,6 +41,15 @@ class TourUpdater { // DB를 포함한 로직 및 저장 담당
 		return new TourFilterResponse(newTours, updatedTours);
 	}
 
+	/**
+	 * Updates existing tours and their related entities in the database based on the provided API response and language.
+	 *
+	 * Deletes tours and their associated data matching the updated content IDs, then bulk saves the updated tour information.
+	 *
+	 * @param tourApiResponse the API response containing updated tour data
+	 * @param language the language context for the update operation
+	 * @return the original API response after performing the update
+	 */
 	@Transactional
 	public TourApiResponse updateTours(TourApiResponse tourApiResponse, Language language) {
 		List<NewTourDto> updatedTourDtoList = tourApiResponse.updatedToursEntity();
@@ -48,6 +64,13 @@ class TourUpdater { // DB를 포함한 로직 및 저장 담당
 		return tourApiResponse;
 	}
 
+	/**
+	 * Saves new tour entities in bulk to the database for the specified language.
+	 *
+	 * @param tourApiResponse the API response containing new tour entities to be saved
+	 * @param language the language context for the tours
+	 * @return the original API response after saving the new tours
+	 */
 	@Transactional
 	public TourApiResponse saveNewTours(TourApiResponse tourApiResponse, Language language) {
 		tourCrudPort.saveTourListBulk(tourApiResponse.newToursEntity());
@@ -55,6 +78,12 @@ class TourUpdater { // DB를 포함한 로직 및 저장 담당
 		return tourApiResponse;
 	}
 
+	/**
+	 * Adds the counts of new and updated tour entities from the given API response to the provided atomic counter.
+	 *
+	 * @param count the atomic integer to accumulate the total number of new and updated tours
+	 * @param tourApiResponse the API response containing lists of new and updated tour entities
+	 */
 	public void sumTourEntity(AtomicInteger count, TourApiResponse tourApiResponse) {
 		count.accumulateAndGet(tourApiResponse.newToursEntity().size(), Integer::sum);
 		count.accumulateAndGet(tourApiResponse.updatedToursEntity().size(), Integer::sum);
