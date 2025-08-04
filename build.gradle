@@ -1,0 +1,109 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'io.spring.javaformat' version '0.0.43'
+    id 'com.diffplug.spotless' version '6.25.0'
+}
+
+spotless {
+    java {
+        importOrder(
+                'java',
+                'javax',
+                'org',
+                'org.springframework',
+                'com',
+                'io',
+                'net'
+        )
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+group = 'kori'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
+}
+
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.2.0'
+
+    testImplementation 'junit:junit:4.13.1'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //Querydsl
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    testImplementation 'org.testng:testng:7.1.0'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    //프로메테우스 
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    //spring-ai
+    implementation platform("org.springframework.ai:spring-ai-bom:1.0.0-M2")
+    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+
+    //apache http client
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.1'
+
+    //ses
+    implementation(platform("software.amazon.awssdk:bom:2.25.39"))
+    implementation("software.amazon.awssdk:sesv2")
+
+    //thymeleaf
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+    //jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    implementation 'commons-codec:commons-codec:1.19.0'
+
+    // Test Container
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation 'org.testcontainers:testcontainers:1.19.8'
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.8'
+    testImplementation 'org.testcontainers:mariadb:1.19.8'
+    testImplementation 'io.projectreactor:reactor-test'
+
+    //flyway
+    implementation 'org.flywaydb:flyway-mysql'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    systemProperty 'spring.profiles.active', 'test'
+}
+
+
