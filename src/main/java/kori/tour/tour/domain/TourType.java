@@ -8,7 +8,6 @@ import lombok.Getter;
 @Getter
 public enum TourType {
 
-
 	// 85는 한국 정보 15는 외외국어 정보
 	FESTIVAL(List.of("85", "15")), RESTAURANT(List.of("82", "39"));
 

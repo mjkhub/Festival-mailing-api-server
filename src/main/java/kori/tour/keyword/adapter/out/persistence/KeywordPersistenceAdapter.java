@@ -14,13 +14,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class KeywordPersistenceAdapter implements KeywordExtractingPort {
 
-    private final TourRepository tourRepository;
-    private final KeywordRepository keywordRepository;
-    private final TourJdbcRepository tourJdbcRepository;
+	private final TourRepository tourRepository;
 
-    @Override
-    public void saveKeyword(Tour tour, List<Keyword> keywordsOfTour) {
-        tourRepository.save(tour);
-        keywordRepository.saveAll(keywordsOfTour);
-    }
+	private final KeywordRepository keywordRepository;
+
+	private final TourJdbcRepository tourJdbcRepository;
+
+	@Override
+	public void saveKeyword(Tour tour, List<Keyword> keywordsOfTour) {
+		tourRepository.save(tour);
+		keywordRepository.saveAll(keywordsOfTour);
+	}
+
 }

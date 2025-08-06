@@ -12,20 +12,19 @@ import kori.tour.common.area_code.AreaCodeParser;
 
 class AreaCodeParserTest {
 
-    AreaCodeParser areaCodeParser = new AreaCodeParser();
+	AreaCodeParser areaCodeParser = new AreaCodeParser();
 
-    @Test
-    @DisplayName("Json에서 읽어와서 정상변환")
-    void test() {
-    	// given
-        String json = "[{\"code\":\"1\",\"name\":\"서울\",\"subRegions\":[{\"code\":\"1\",\"name\":\"강남구\"},{\"code\":\"2\",\"name\":\"강북구\"}]},{\"code\":\"2\",\"name\":\"대구\",\"subRegions\":[{\"code\":\"1\",\"name\":\"중구\"},{\"code\":\"2\",\"name\":\"동구\"}]}]";
-        // when
-        List<Area> areas = areaCodeParser.parseToAreaCode(json);
+	@Test
+	@DisplayName("Json에서 읽어와서 정상변환")
+	void test() {
+		// given
+		String json = "[{\"code\":\"1\",\"name\":\"서울\",\"subRegions\":[{\"code\":\"1\",\"name\":\"강남구\"},{\"code\":\"2\",\"name\":\"강북구\"}]},{\"code\":\"2\",\"name\":\"대구\",\"subRegions\":[{\"code\":\"1\",\"name\":\"중구\"},{\"code\":\"2\",\"name\":\"동구\"}]}]";
+		// when
+		List<Area> areas = areaCodeParser.parseToAreaCode(json);
 
-        // then
-        assertThat(areas.size()).isEqualTo(2);
-        assertThat(areas.get(0).subRegions().size()).isEqualTo(2);
-    }
-
+		// then
+		assertThat(areas.size()).isEqualTo(2);
+		assertThat(areas.get(0).subRegions().size()).isEqualTo(2);
+	}
 
 }

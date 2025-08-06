@@ -1,6 +1,5 @@
 package kori.tour.member.domain;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -16,9 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlatformInfo {
 
-    @Enumerated(EnumType.STRING) @Column(length = 20)
-    private PlatformType platformType;
-    private String platformPk;
-    private String platformEmail;
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20)
+	private PlatformType platformType;
+
+	private String platformPk;
+
+	private String platformEmail;
 
 }

@@ -32,8 +32,11 @@ public enum ApiType {
 	});
 
 	private final String path;
+
 	private final BiFunction<BasicApiParams, String, Map<String, String>> queryParamResolver;
-	private final String FESTIVAL_CONTENT_TYPE_ID = "15"; // ContentTypeID 15: 한국의 축제공연행사 85:다국어 축제공연행사 파라미터값
+
+	private final String FESTIVAL_CONTENT_TYPE_ID = "15"; // ContentTypeID 15: 한국의 축제공연행사
+															// 85:다국어 축제공연행사 파라미터값
 
 	ApiType(String path, BiFunction<BasicApiParams, String, Map<String, String>> queryParamResolver) {
 		this.path = path;

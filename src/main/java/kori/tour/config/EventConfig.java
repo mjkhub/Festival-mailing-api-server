@@ -11,12 +11,12 @@ import kori.tour.common.events.Events;
 @Configuration
 public class EventConfig {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+	@Autowired
+	private ApplicationContext applicationContext;
 
-    @Bean
-    public InitializingBean eventsInitializer() {
-        return () -> Events.setPublisher(applicationContext);
-    }
+	@Bean
+	public InitializingBean eventsInitializer() {
+		return () -> Events.setPublisher(applicationContext);
+	}
 
 }

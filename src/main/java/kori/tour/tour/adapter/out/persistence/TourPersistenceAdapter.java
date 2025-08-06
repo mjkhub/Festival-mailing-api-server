@@ -43,7 +43,7 @@ class TourPersistenceAdapter implements TourCrudPort {
 
 	/**
 	 * 정보가 업데이트 되어서 기존의 데이터를 삭제하는 경우는 잘 없어서 그냥 간단하게 구현
-	 * */
+	 */
 	@Override
 	public void deleteToursAndRelatedEntities(List<Long> tourIdList) {
 		for (Long tourId : tourIdList) {

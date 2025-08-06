@@ -1,24 +1,21 @@
 package kori.tour.member.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Entity
+@Embeddable
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Subscription {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="subscription_id")
-    private Long id;
+	private String areaCode;
 
-    @JoinColumn(name="member_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+	private String sigunGuCode;
 
-    @Embedded
-    private SubscriptionInfo subscriptionInfo;
+	private String sigunGuName;
 
 }

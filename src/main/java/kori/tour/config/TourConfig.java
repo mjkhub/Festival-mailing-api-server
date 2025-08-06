@@ -25,9 +25,9 @@ public class TourConfig {
 		connectionManager.setDefaultMaxPerRoute(10);
 
 		CloseableHttpClient httpClient = HttpClients.custom()
-				.setConnectionManager(connectionManager)
-				.setKeepAliveStrategy(DefaultConnectionKeepAliveStrategy.INSTANCE)
-				.build();
+			.setConnectionManager(connectionManager)
+			.setKeepAliveStrategy(DefaultConnectionKeepAliveStrategy.INSTANCE)
+			.build();
 
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient);
 		factory.setConnectTimeout(10_000);

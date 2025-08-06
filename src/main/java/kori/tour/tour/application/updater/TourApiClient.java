@@ -28,7 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class TourApiClient { // API 통신 담당
+public class TourApiClient {
+
+// API 통신 담당
 
 	private final ApiResolver apiResolver;
 
@@ -120,12 +122,10 @@ public class TourApiClient { // API 통신 담당
 		};
 	}
 
-
 	/**
-	 * 관광공사 API 가 불안정하여 업데이트 과정에서 에러가 종종 발생함
-	 * 때문에, 한번의 문제로 전체 작업을 Shut down 비효율적이라고 판단하여
-	 * 예외가 발생했더라도 정상흐름으로 변환하여 작업을 이어나가기로 결정.
-	 * 또한, 해당 데이터가 다음 작업에서 새롭게 추가될 가능성도 있기 때문에 이 로직이 나쁘지 않다고 판단.
+	 * 관광공사 API 가 불안정하여 업데이트 과정에서 에러가 종종 발생함 때문에, 한번의 문제로 전체 작업을 Shut down 비효율적이라고 판단하여
+	 * 예외가 발생했더라도 정상흐름으로 변환하여 작업을 이어나가기로 결정. 또한, 해당 데이터가 다음 작업에서 새롭게 추가될 가능성도 있기 때문에 이 로직이
+	 * 나쁘지 않다고 판단.
 	 */
 	public ResponseEntity<String> callApi(String url) {
 		try {
@@ -133,7 +133,9 @@ public class TourApiClient { // API 통신 담당
 		}
 		catch (ResourceAccessException e) {
 			log.warn("url = {} API 요청 실패 ", url, e);
-			return new ResponseEntity<>(emptyResponse, HttpStatus.INTERNAL_SERVER_ERROR); // 기본 JSON 반환
+			return new ResponseEntity<>(emptyResponse, HttpStatus.INTERNAL_SERVER_ERROR); // 기본
+																							// JSON
+																							// 반환
 		}
 	}
 

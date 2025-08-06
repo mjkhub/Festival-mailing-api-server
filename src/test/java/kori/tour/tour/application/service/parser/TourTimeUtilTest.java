@@ -11,7 +11,6 @@ import kori.tour.tour.application.updater.parser.TourTimeUtil;
 
 class TourTimeUtilTest {
 
-
 	@Test
 	void parseLocalDate() {
 		// given

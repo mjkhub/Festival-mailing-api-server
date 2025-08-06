@@ -6,5 +6,7 @@ import kori.tour.keyword.domain.Keyword;
 import kori.tour.tour.domain.Tour;
 
 public interface KeywordExtractingPort {
-    void saveKeyword(Tour tour, List<Keyword> keywordsOfTour);
+
+	void saveKeyword(Tour tour, List<Keyword> keywordsOfTour);
+
 }
