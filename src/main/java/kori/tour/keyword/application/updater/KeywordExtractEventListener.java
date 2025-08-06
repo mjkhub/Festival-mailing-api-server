@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import kori.tour.common.events.Events;
 import kori.tour.email.application.updater.EmailSendEvent;
 import kori.tour.keyword.application.updater.parser.FestivalDocument;
-import kori.tour.keyword.domain.Keyword;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,9 +40,6 @@ public class KeywordExtractEventListener {
 			CompletableFuture<Void> future = CompletableFuture
 				.supplyAsync(() -> keywordExtractService.extractKeywords(festivalDocument),
 						tourUpdaterThreadTaskExecutor)
-				.thenApply(keywords -> keywords.stream()
-					.map(keyword -> Keyword.builder().keyword(keyword).tour(newTourDto.getTour()).build())
-					.toList())
 				.thenApply(keywordEntities -> keywordExtractService.saveKeywords(newTourDto, keywordEntities))
 				.thenAccept(entry -> Events.raise(new EmailSendEvent(entry)));
 			futures.add(future);

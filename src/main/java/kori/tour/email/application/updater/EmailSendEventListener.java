@@ -12,7 +12,6 @@ import kori.tour.email.application.updater.parser.EmailContentParser;
 import kori.tour.email.application.updater.parser.dto.EmailBodyDto;
 import kori.tour.email.application.updater.parser.dto.EmailTitleDto;
 import kori.tour.email.domain.Email;
-import kori.tour.keyword.domain.Keyword;
 import kori.tour.member.adapter.out.persistence.MemberRepository;
 import kori.tour.member.domain.Member;
 import kori.tour.member.domain.PlatformInfo;
@@ -42,7 +41,7 @@ public class EmailSendEventListener {
 	public void keywordExtractingEvent(EmailSendEvent emailSendEvent) {
 		// ToDo: 1. Email 형식 2. Email 보내는 로직 3. Async 스레드 풀 커스터마이징
 		NewTourDto newTourDto = emailSendEvent.entry().getKey();
-		List<String> keywordsOfTour = emailSendEvent.entry().getValue().stream().map(Keyword::getKeyword).toList();
+		List<String> keywordsOfTour = emailSendEvent.entry().getValue();
 		EmailTitleDto emailTitleDto = toEmailTitleDto(newTourDto, keywordsOfTour);
 		EmailBodyDto emailBodyDto = toEmailBodyDto(newTourDto, keywordsOfTour);
 		String emailTitle = emailContentParser.parseToEmailTitle(emailTitleDto);

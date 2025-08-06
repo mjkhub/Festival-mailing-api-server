@@ -15,7 +15,6 @@ import kori.tour.keyword.application.port.out.KeywordExtractingPort;
 import kori.tour.keyword.application.updater.parser.AiApiException;
 import kori.tour.keyword.application.updater.parser.AiModelResponseParser;
 import kori.tour.keyword.application.updater.parser.FestivalDocument;
-import kori.tour.keyword.domain.Keyword;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +43,7 @@ public class KeywordExtractService {
 	}
 
 	@Transactional
-	public Map.Entry<NewTourDto, List<Keyword>> saveKeywords(NewTourDto newTourDto, List<Keyword> keywordsOfTour) {
+	public Map.Entry<NewTourDto, List<String>> saveKeywords(NewTourDto newTourDto, List<String> keywordsOfTour) {
 		keywordExtractingPort.saveKeyword(newTourDto.getTour(), keywordsOfTour);
 		return Map.entry(newTourDto, keywordsOfTour);
 	}
