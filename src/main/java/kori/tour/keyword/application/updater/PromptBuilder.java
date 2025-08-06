@@ -27,13 +27,16 @@ public class PromptBuilder {
 
 	@PostConstruct
 	private void init() {
+		// Resource 클래스에서 문자열을 직접 읽어온다.
 		this.promptTemplate = new PromptTemplate(keywordExtractPromptTemplate);
+
 	}
 
 	public Prompt buildKeywordPrompt(String tourDocument) {
 		Map<String, Object> promptParameters = new HashMap<>();
 		promptParameters.put("document", tourDocument);
 		promptParameters.put("keywords", keywords);
+		promptParameters.put("response_format", "{\"keywords\": [\"keyword1\" ... ]}");
 		return promptTemplate.create(promptParameters);
 	}
 

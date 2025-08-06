@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import kori.tour.common.events.Events;
 import kori.tour.email.application.updater.EmailSendEvent;
+import kori.tour.keyword.application.updater.parser.FestivalDocument;
 import kori.tour.keyword.domain.Keyword;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,11 @@ public class KeywordExtractEventListener {
     private final KeywordExtractService keywordExtractService;
     private final ThreadPoolTaskExecutor tourUpdaterThreadTaskExecutor;
 
-    // 키워드는 많아봐야 네개라서, 모아서 처리하는 것보다, 이어서 바로 저장하는게 나을 것 같음.
-    // 어차피 AI 에게 요청을 Tour 단위로 하는 상황이니까 스레드를 빠르게 돌리는게 나을듯?
-    // 이것도 어딘가에 기록해두자
+    /**
+     * 키워드는 많아봐야 네개라서, Batch query 보다, 이어서 바로 저장하는게 나을 것 같음.
+     *  어차피 AI 에게 요청을 Tour 단위로 하는 상황이니까 스레드를 빠르게 돌리는게 낫다고 판단
+     *  Todo: ExtractKeyword 에서 Retry를 했음에도 정상 응답을 못받았은 상황을 더 자세히 고려해야 한다.
+     * */
 
     @EventListener
     public void listenKeywordExtractEvent(KeywordExtractingEvent event) {
@@ -34,8 +37,9 @@ public class KeywordExtractEventListener {
         long startTime = System.currentTimeMillis();
         List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (NewTourDto newTourDto : event.newToursEntity()) {
+            FestivalDocument festivalDocument = FestivalDocument.createFestivalDocument(newTourDto);
             CompletableFuture<Void> future = CompletableFuture
-                    .supplyAsync(() -> keywordExtractService.extractKeywords(newTourDto), tourUpdaterThreadTaskExecutor)
+                    .supplyAsync(() -> keywordExtractService.extractKeywords(festivalDocument), tourUpdaterThreadTaskExecutor)
                     .thenApply(keywords -> keywords.stream()
                             .map(keyword -> Keyword.builder()
                                     .keyword(keyword)
@@ -48,7 +52,6 @@ public class KeywordExtractEventListener {
         }
         long endTime = System.currentTimeMillis();
         log.info("KeywordExtractingEvent={} saved {} 개 Tour의 keyword 저장 Total time: {}ms", event.eventId(), event.newToursEntity().size(), (endTime - startTime));
-
     }
 
 }

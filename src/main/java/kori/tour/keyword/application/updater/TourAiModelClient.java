@@ -1,6 +1,5 @@
 package kori.tour.keyword.application.updater;
 
-import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,7 @@ public class TourAiModelClient {
 
 	public String call(Prompt prompt) {
 		// Generation의 개수는 Open API 서버에서 1개로 처리한다고 한다.
-		Generation result = openAiChatModel.call(prompt).getResult();
-		if(result != null) return result.getOutput().getContent();
-		else return ""; // Todo: API 서버에서 응답을 못받았을 때 Retry 로직이 필요하지 않을까?
+        return openAiChatModel.call(prompt).getResult().getOutput().getContent();
 	}
 
 }
