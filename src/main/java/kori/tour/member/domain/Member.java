@@ -1,7 +1,5 @@
 package kori.tour.member.domain;
 
-import java.util.HashSet;
-import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,10 +22,9 @@ public class Member {
 	@Embedded
 	private ActivityInfo activityInfo;
 
-	@ElementCollection
-	@CollectionTable(name = "member_subscription", joinColumns = @JoinColumn(name = "member_id"))
-	private Set<Subscription> subscriptions = new HashSet<>();
+	@Embedded
+	private Subscriptions subscriptions = new Subscriptions();
 
-	// Todo Subscription을 추가하고 삭제하는 비즈니스 로직
+	// Todo 비즈니스 로직은 데이터 흐름을 파악하고 작성하도록하자
 
 }
