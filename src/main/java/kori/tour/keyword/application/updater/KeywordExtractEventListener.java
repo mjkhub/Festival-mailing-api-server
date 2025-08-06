@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import kori.tour.keyword.application.updater.parser.FestivalDocument;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import kori.tour.common.events.Events;
 import kori.tour.email.application.updater.EmailSendEvent;
+import kori.tour.keyword.application.updater.parser.FestivalDocument;
 import kori.tour.keyword.domain.Keyword;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import lombok.RequiredArgsConstructor;

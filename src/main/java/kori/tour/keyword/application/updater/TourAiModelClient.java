@@ -1,10 +1,7 @@
 package kori.tour.keyword.application.updater;
 
-import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;

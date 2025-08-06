@@ -1,6 +1,5 @@
 package kori.tour.keyword.application.updater;
 
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 

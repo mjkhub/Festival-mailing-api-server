@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kori.tour.keyword.application.updater.parser.AiApiException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
@@ -14,11 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kori.tour.keyword.application.port.out.KeywordExtractingPort;
+import kori.tour.keyword.application.updater.parser.AiApiException;
 import kori.tour.keyword.application.updater.parser.AiModelResponseParser;
 import kori.tour.keyword.application.updater.parser.FestivalDocument;
 import kori.tour.keyword.domain.Keyword;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service

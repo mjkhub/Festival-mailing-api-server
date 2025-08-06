@@ -1,23 +1,25 @@
 package kori.tour.keyword.application.updater;
 
-import kori.tour.keyword.application.port.out.KeywordExtractingPort;
-import kori.tour.keyword.application.updater.parser.AiApiException;
-import kori.tour.keyword.application.updater.parser.FestivalDocument;
-import org.assertj.core.api.ThrowableAssert;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import org.assertj.core.api.ThrowableAssert;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
+import kori.tour.keyword.application.port.out.KeywordExtractingPort;
+import kori.tour.keyword.application.updater.parser.AiApiException;
+import kori.tour.keyword.application.updater.parser.FestivalDocument;
 
 
 @SpringBootTest

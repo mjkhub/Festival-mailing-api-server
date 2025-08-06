@@ -1,15 +1,12 @@
 package kori.tour.keyword.application.updater.parser;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kori.tour.tour.application.updater.dto.NewTourDto;
-import kori.tour.tour.domain.Tour;
-import kori.tour.tour.domain.TourDetail;
 import kori.tour.tour.domain.TourRepeat;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
