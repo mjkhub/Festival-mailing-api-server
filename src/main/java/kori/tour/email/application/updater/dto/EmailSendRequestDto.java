@@ -1,8 +1,8 @@
 package kori.tour.email.application.updater.dto;
 
-import kori.tour.member.domain.Member;
-
 import java.util.List;
+
+import kori.tour.member.domain.Member;
 
 public record EmailSendRequestDto(
         List<Member> members,

@@ -5,9 +5,9 @@ import org.thymeleaf.context.Context;
 
 import org.springframework.stereotype.Component;
 
-import kori.tour.tour.adapter.out.persistence.AreaCodeMemoryRepository;
 import kori.tour.email.application.updater.dto.EmailBodyDto;
 import kori.tour.email.application.updater.dto.EmailTitleDto;
+import kori.tour.tour.adapter.out.persistence.AreaCodeMemoryRepository;
 import lombok.RequiredArgsConstructor;
 
 @Component

@@ -8,8 +8,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
-import kori.tour.global.events.Events;
 import kori.tour.email.application.updater.EmailSendEvent;
+import kori.tour.global.events.Events;
 import kori.tour.keyword.application.updater.parser.FestivalDocument;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import lombok.RequiredArgsConstructor;

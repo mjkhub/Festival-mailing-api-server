@@ -3,6 +3,10 @@ package kori.tour.email.application.updater;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import kori.tour.email.adapter.out.persistence.EmailRepository;
 import kori.tour.email.application.updater.dto.EmailSendRequestDto;
 import kori.tour.email.domain.Email;
@@ -11,12 +15,8 @@ import kori.tour.member.domain.Member;
 import kori.tour.member.domain.PlatformInfo;
 import kori.tour.tour.adapter.out.persistence.TourRepository;
 import kori.tour.tour.domain.Tour;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import software.amazon.awssdk.services.sesv2.SesV2Client;
 import software.amazon.awssdk.services.sesv2.model.*;
 

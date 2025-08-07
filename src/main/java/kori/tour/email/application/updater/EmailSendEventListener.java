@@ -2,14 +2,14 @@ package kori.tour.email.application.updater;
 
 import java.util.List;
 
-import kori.tour.email.application.updater.dto.EmailSendRequestDto;
-import kori.tour.member.domain.Member;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import kori.tour.email.application.updater.dto.EmailBodyDto;
+import kori.tour.email.application.updater.dto.EmailSendRequestDto;
 import kori.tour.email.application.updater.dto.EmailTitleDto;
+import kori.tour.member.domain.Member;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import kori.tour.tour.domain.Tour;
 import kori.tour.tour.domain.TourDetail;

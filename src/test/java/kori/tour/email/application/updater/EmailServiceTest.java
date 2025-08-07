@@ -1,5 +1,17 @@
 package kori.tour.email.application.updater;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
 import kori.tour.email.adapter.out.persistence.EmailRepository;
 import kori.tour.email.application.updater.dto.EmailSendRequestDto;
 import kori.tour.member.adapter.out.persistence.MemberRepository;
@@ -8,18 +20,8 @@ import kori.tour.member.domain.PlatformInfo;
 import kori.tour.member.domain.PlatformType;
 import kori.tour.tour.adapter.out.persistence.TourRepository;
 import kori.tour.tour.domain.Tour;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import software.amazon.awssdk.services.sesv2.SesV2Client;
 import software.amazon.awssdk.services.sesv2.model.*;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class EmailServiceTest {
