@@ -1,29 +1,33 @@
-package kori.tour.global.area_code;
+package kori.tour.tour.adapter.out.persistence;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import kori.tour.global.exception.ApplicationLogicException;
+import kori.tour.global.exception.NotFoundException;
+import kori.tour.global.exception.code.ErrorCode;
+import kori.tour.tour.adapter.out.persistence.area_code.Area;
+import kori.tour.tour.adapter.out.persistence.area_code.AreaCodeParser;
+import kori.tour.tour.adapter.out.persistence.area_code.SubArea;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AreaCodeRepository {
+public class AreaCodeMemoryRepository {
 
 	@Value("classpath:/files/area/area-code.json")
 	private Resource areaCodeResource;
 
-	@Getter
 	private List<Area> areaCodeList;
 
 	private final AreaCodeParser areaCodeParser;
@@ -36,33 +40,30 @@ public class AreaCodeRepository {
 			log.info("======== Json 파일로부터 지역 코드, 시군구 코드 읽어오기 성공 ========");
 		}
 		catch (IOException e) {
-			throw new IllegalStateException("지역 코드 파일을 읽는 데 실패했습니다", e);
+			throw new ApplicationLogicException(ErrorCode.AREA_CODE_FILE);
 		}
 	}
 
-	// Todo 이 클래스 어느 폴더에 정리할지 잘 모르겠음
-
 	public String getAreaName(String areaCode) {
 		return areaCodeList.stream()
-			.filter(ac -> ac.areaCode().equals(areaCode))
-			.map(Area::name)
-			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException("Area code not found: " + areaCode));
+				.filter(ac -> ac.areaCode().equals(areaCode))
+				.map(Area::name)
+				.findAny()
+				.orElseThrow(() -> new NotFoundException(ErrorCode.AREA_NOT_FOUND));
 	}
 
-	public String getSigunGuName(String areaCode, String sigunguCode) {
+	public String getSigunGuName(String areaCode, String sigunGuCode) {
 		List<SubArea> subAreas = areaCodeList.stream()
-			.filter(ac -> ac.areaCode().equals(areaCode))
-			.map(Area::subRegions)
-			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException("Area code not found: " + areaCode));
+				.filter(ac -> ac.areaCode().equals(areaCode))
+				.map(Area::subRegions)
+				.findAny()
+				.orElseThrow(() -> new NotFoundException(ErrorCode.AREA_NOT_FOUND));
 
 		return subAreas.stream()
-			.filter(sr -> sr.sigunguCode().equals(sigunguCode))
-			.map(SubArea::name)
-			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException(
-					String.format("Sigungu code '%s' not found for area code '%s'", sigunguCode, areaCode)));
+				.filter(sr -> sr.sigunGuCode().equals(sigunGuCode))
+				.map(SubArea::name)
+				.findAny()
+				.orElseThrow(() -> new NotFoundException(ErrorCode.AREA_NOT_FOUND));
 	}
 
 }

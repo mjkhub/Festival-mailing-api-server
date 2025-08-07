@@ -5,7 +5,7 @@ import org.thymeleaf.context.Context;
 
 import org.springframework.stereotype.Component;
 
-import kori.tour.global.area_code.AreaCodeRepository;
+import kori.tour.tour.adapter.out.persistence.AreaCodeMemoryRepository;
 import kori.tour.email.application.updater.parser.dto.EmailBodyDto;
 import kori.tour.email.application.updater.parser.dto.EmailTitleDto;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EmailContentParser {
 
-	private final AreaCodeRepository areaCodeRepository;
+	private final AreaCodeMemoryRepository areaCodeMemoryRepository;
 
 	private final TemplateEngine templateEngine;
 
@@ -23,8 +23,8 @@ public class EmailContentParser {
 		String sigunGuCode = emailTitleDto.sigunGuCode();
 		String title = emailTitleDto.title();
 
-		String areaName = areaCodeRepository.getAreaName(areaCode);
-		String sigunGuName = areaCodeRepository.getSigunGuName(areaCode, sigunGuCode);
+		String areaName = areaCodeMemoryRepository.getAreaName(areaCode);
+		String sigunGuName = areaCodeMemoryRepository.getSigunGuName(areaCode, sigunGuCode);
 
 		String keywords = String.join(", ", emailTitleDto.keywordsOfTour());
 		return String.format("[%s-%s]: %s - %s", areaName, sigunGuName, title, keywords);
