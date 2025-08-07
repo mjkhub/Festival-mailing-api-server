@@ -1,4 +1,4 @@
-package kori.tour.email.application.updater.parser.dto;
+package kori.tour.email.application.updater.dto;
 
 import java.util.List;
 

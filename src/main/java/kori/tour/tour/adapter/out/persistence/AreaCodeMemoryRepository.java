@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import kori.tour.global.exception.ApplicationLogicException;
+import kori.tour.global.exception.AsyncProcessingException;
 import kori.tour.global.exception.NotFoundException;
 import kori.tour.global.exception.code.ErrorCode;
 import kori.tour.tour.adapter.out.persistence.area_code.Area;
@@ -40,7 +40,7 @@ public class AreaCodeMemoryRepository {
 			log.info("======== Json 파일로부터 지역 코드, 시군구 코드 읽어오기 성공 ========");
 		}
 		catch (IOException e) {
-			throw new ApplicationLogicException(ErrorCode.AREA_CODE_FILE);
+			throw new AsyncProcessingException(ErrorCode.AREA_CODE_FILE);
 		}
 	}
 

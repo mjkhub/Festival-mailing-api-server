@@ -1,4 +1,4 @@
-package kori.tour.email.application.updater.parser;
+package kori.tour.email.application.updater;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -6,8 +6,8 @@ import org.thymeleaf.context.Context;
 import org.springframework.stereotype.Component;
 
 import kori.tour.tour.adapter.out.persistence.AreaCodeMemoryRepository;
-import kori.tour.email.application.updater.parser.dto.EmailBodyDto;
-import kori.tour.email.application.updater.parser.dto.EmailTitleDto;
+import kori.tour.email.application.updater.dto.EmailBodyDto;
+import kori.tour.email.application.updater.dto.EmailTitleDto;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -30,7 +30,7 @@ public class EmailContentParser {
 		return String.format("[%s-%s]: %s - %s", areaName, sigunGuName, title, keywords);
 	}
 
-	public String generateEventEmailHtml(EmailBodyDto emailBodyDto) {
+	public String parseToEventEmailHtml(EmailBodyDto emailBodyDto) {
 		Context context = new Context();
 		context.setVariable("mainImageUrl", emailBodyDto.getMainImageUrl());
 		context.setVariable("title", emailBodyDto.getTitle());

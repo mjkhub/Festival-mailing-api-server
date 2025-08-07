@@ -45,3 +45,6 @@ jwt:
 
 tour:
   api-key: test
+
+email:
+  sender: test

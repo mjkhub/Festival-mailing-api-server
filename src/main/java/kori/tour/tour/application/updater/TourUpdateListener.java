@@ -30,9 +30,7 @@ public class TourUpdateListener {
 
 	private final KeywordExtractingEventPort keywordExtractingEventPort;
 
-	// @Scheduled( cron = "0 0/5 10-18 * * *", zone = "Asia/Seoul" ) // 오전 10시 ~ 오후 6시 매
-	// 30분마다 실행
-	// @EventListener(ApplicationReadyEvent.class)
+	// @Scheduled( cron = "0 0/5 10-18 * * *", zone = "Asia/Seoul" ) // 오전 10시 ~ 오후 6시 매 30분마다 실행
 	public void updateTour() {
 		log.info("######################## 축제 정보 언어별 업데이트 시작 ######################## ");
 		long startTime = System.currentTimeMillis();
