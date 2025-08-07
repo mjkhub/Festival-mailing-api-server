@@ -3,7 +3,7 @@ package kori.tour.keyword.adapter.out.persistence;
 import java.util.HashSet;
 import java.util.List;
 
-import kori.tour.common.annotation.PersistenceAdapter;
+import kori.tour.global.annotation.PersistenceAdapter;
 import kori.tour.keyword.application.port.out.KeywordExtractingPort;
 import kori.tour.tour.adapter.out.persistence.TourRepository;
 import kori.tour.tour.domain.Tour;

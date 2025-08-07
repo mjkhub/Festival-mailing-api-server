@@ -1,4 +1,4 @@
-package kori.tour.common.exception;
+package kori.tour.global.exception;
 
 public class ApiException extends RuntimeException {
 

@@ -3,8 +3,8 @@ package kori.tour.tour.adapter.out.event;
 import java.util.List;
 import java.util.UUID;
 
-import kori.tour.common.annotation.EventAdapter;
-import kori.tour.common.events.Events;
+import kori.tour.global.annotation.EventAdapter;
+import kori.tour.global.events.Events;
 import kori.tour.keyword.application.updater.KeywordExtractingEvent;
 import kori.tour.tour.application.port.out.KeywordExtractingEventPort;
 import kori.tour.tour.application.updater.dto.NewTourDto;

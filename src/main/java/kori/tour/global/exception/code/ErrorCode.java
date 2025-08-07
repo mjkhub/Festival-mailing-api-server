@@ -1,4 +1,4 @@
-package kori.tour.common.exception.code;
+package kori.tour.global.exception.code;
 
 import org.springframework.http.HttpStatus;
 

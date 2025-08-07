@@ -1,4 +1,4 @@
-package kori.tour.common.events;
+package kori.tour.global.events;
 
 import java.util.Objects;
 

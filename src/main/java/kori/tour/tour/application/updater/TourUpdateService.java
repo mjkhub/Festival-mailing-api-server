@@ -1,6 +1,6 @@
 package kori.tour.tour.application.updater;
 
-import static kori.tour.common.utils.CollectionUtils.*;
+import static kori.tour.global.utils.CollectionUtils.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-class TourUpdater {
+class TourUpdateService {
 
 // DB를 포함한 로직 및 저장 담당
 

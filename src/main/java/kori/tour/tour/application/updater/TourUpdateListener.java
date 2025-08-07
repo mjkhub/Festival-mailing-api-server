@@ -26,7 +26,7 @@ public class TourUpdateListener {
 
 	private final ThreadPoolTaskExecutor tourUpdaterThreadTaskExecutor;
 
-	private final TourUpdater tourUpdater;
+	private final TourUpdateService tourUpdateService;
 
 	private final KeywordExtractingEventPort keywordExtractingEventPort;
 
@@ -43,13 +43,13 @@ public class TourUpdateListener {
 			CompletableFuture<Void> future = CompletableFuture
 				.supplyAsync(() -> tourApiClient.fetchTourListSinceStartDate(startDate, language),
 						tourUpdaterThreadTaskExecutor)
-				.thenApply((tours) -> tourUpdater.separateUpdateTourNewTour(tours, language))
+				.thenApply((tours) -> tourUpdateService.separateUpdateTourNewTour(tours, language))
 				.thenApply((filterResponse) -> tourApiClient.fetchTourRelatedEntities(filterResponse, language))
-				.thenApply((apiResponse) -> tourUpdater.updateTours(apiResponse, language))
-				.thenApply((apiResponse) -> tourUpdater.saveNewTours(apiResponse, language))
+				.thenApply((apiResponse) -> tourUpdateService.updateTours(apiResponse, language))
+				.thenApply((apiResponse) -> tourUpdateService.saveNewTours(apiResponse, language))
 				// TourApiResponse tourApiResponse 이 타입이 전달 흠 그래서 지금 약간 불편해
 				.thenAccept((apiResponse) -> {
-					tourUpdater.sumTourEntity(count, apiResponse);
+					tourUpdateService.sumTourEntity(count, apiResponse);
 					keywordExtractingEventPort.sendKeywordExtractingEvent(apiResponse.newToursEntity());
 					keywordExtractingEventPort.sendKeywordExtractingEvent(apiResponse.updatedToursEntity());
 				});
@@ -66,10 +66,10 @@ public class TourUpdateListener {
 		String startDate = getStartDate();
 		for (Language language : Language.values()) {
 			List<Tour> tours = tourApiClient.fetchTourListSinceStartDate(startDate, language);
-			TourFilterResponse filterResponse = tourUpdater.separateUpdateTourNewTour(tours, language);
+			TourFilterResponse filterResponse = tourUpdateService.separateUpdateTourNewTour(tours, language);
 			TourApiResponse apiResponse = tourApiClient.fetchTourRelatedEntities(filterResponse, language);
-			apiResponse = tourUpdater.updateTours(apiResponse, language);
-			apiResponse = tourUpdater.saveNewTours(apiResponse, language);
+			apiResponse = tourUpdateService.updateTours(apiResponse, language);
+			apiResponse = tourUpdateService.saveNewTours(apiResponse, language);
 		}
 		log.info("싱글 스레드 끗");
 	}

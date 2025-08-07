@@ -1,4 +1,4 @@
-package kori.tour.common.utils;
+package kori.tour.global.utils;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package kori.tour.common.annotation;
+package kori.tour.global.annotation;
 
 import java.lang.annotation.*;
 

@@ -3,7 +3,7 @@ package kori.tour.tour.adapter.out.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
-import kori.tour.common.annotation.PersistenceAdapter;
+import kori.tour.global.annotation.PersistenceAdapter;
 import kori.tour.tour.application.port.out.TourCrudPort;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import kori.tour.tour.domain.Tour;

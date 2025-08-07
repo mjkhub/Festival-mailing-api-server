@@ -5,7 +5,7 @@ import org.thymeleaf.context.Context;
 
 import org.springframework.stereotype.Component;
 
-import kori.tour.common.area_code.AreaCodeRepository;
+import kori.tour.global.area_code.AreaCodeRepository;
 import kori.tour.email.application.updater.parser.dto.EmailBodyDto;
 import kori.tour.email.application.updater.parser.dto.EmailTitleDto;
 import lombok.RequiredArgsConstructor;

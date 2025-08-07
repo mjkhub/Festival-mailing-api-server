@@ -1,4 +1,4 @@
-package kori.tour.common.area_code;
+package kori.tour.global.area_code;
 
 import java.io.IOException;
 import java.io.InputStream;
