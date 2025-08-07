@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 
-
 @Service
 @Component
 public class PromptBuilder {

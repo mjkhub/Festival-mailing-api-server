@@ -1,24 +1,34 @@
 package kori.tour.member.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
+import java.util.Objects;
 
-@Entity
+import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
-@AllArgsConstructor
 public class Subscription {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="subscription_id")
-    private Long id;
+	private String areaCode;
 
-    @JoinColumn(name="member_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+	private String sigunGuCode;
 
-    @Embedded
-    private SubscriptionInfo subscriptionInfo;
+	private String sigunGuName;
 
+	//Todo maybe need all-Args-Constructor
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		Subscription that = (Subscription) o;
+		return Objects.equals(areaCode, that.areaCode) && Objects.equals(sigunGuCode, that.sigunGuCode);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(areaCode, sigunGuCode);
+	}
 }

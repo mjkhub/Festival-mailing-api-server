@@ -16,7 +16,7 @@ public class TourAiModelClient {
 
 	public String call(Prompt prompt) {
 		// Generation의 개수는 Open API 서버에서 1개로 처리한다고 한다.
-        return openAiChatModel.call(prompt).getResult().getOutput().getContent();
+		return openAiChatModel.call(prompt).getResult().getOutput().getContent();
 	}
 
 }

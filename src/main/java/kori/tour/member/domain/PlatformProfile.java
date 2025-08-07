@@ -10,15 +10,16 @@ import lombok.ToString;
 @NoArgsConstructor
 public class PlatformProfile {
 
-    @Setter
-    private PlatformType platformType;
-    private String platformPk;
-    private String platformEmail;
+	@Setter
+	private PlatformType platformType;
 
-    public PlatformProfile(String platformPk, String platformEmail) { //oauth
-        this.platformPk = platformPk;
-        this.platformEmail = platformEmail;
-    }
+	private String platformPk;
 
+	private String platformEmail;
+
+	public PlatformProfile(String platformPk, String platformEmail) { // oauth
+		this.platformPk = platformPk;
+		this.platformEmail = platformEmail;
+	}
 
 }

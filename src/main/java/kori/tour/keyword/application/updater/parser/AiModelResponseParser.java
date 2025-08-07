@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AiModelResponseParser {
 
 	private final ObjectMapper mapper = new ObjectMapper();
+
 	private final String AI_API_ERROR_MESSAGE = "지정한 형식대로 응답이 오지 않음";
 
 	public List<String> mapToKeywords(String jsonResponse) {
@@ -30,9 +31,10 @@ public class AiModelResponseParser {
 					keywords.add(node.asText());
 				}
 			}
-		} catch (JsonProcessingException e) {
+		}
+		catch (JsonProcessingException e) {
 			log.warn("AI 키워드 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
-			throw new AiApiException(AI_API_ERROR_MESSAGE,e);
+			throw new AiApiException(AI_API_ERROR_MESSAGE, e);
 		}
 
 		return keywords;

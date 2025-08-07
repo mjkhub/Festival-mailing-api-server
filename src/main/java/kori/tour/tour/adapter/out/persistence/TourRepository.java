@@ -24,6 +24,4 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 			+ "where t.contentId = :contentId and t.modifiedTime < :modifiedTime")
 	boolean isUpdated(String contentId, LocalDateTime modifiedTime);
 
-
-
 }

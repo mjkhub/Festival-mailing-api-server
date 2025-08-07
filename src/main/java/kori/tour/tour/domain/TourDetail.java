@@ -28,7 +28,7 @@ public class TourDetail {
 
 	private String eventHomepage;
 
-	private String eventPlace; //세부 장소
+	private String eventPlace; // 세부 장소
 
 	@Column(length = 1000)
 	private String placeInfo;
@@ -39,7 +39,7 @@ public class TourDetail {
 	@Column(length = 1000)
 	private String program;
 
-	private String spendTimeFestival; //예상 소요 시간
+	private String spendTimeFestival; // 예상 소요 시간
 
 	private String sponsor; // sponsor1
 

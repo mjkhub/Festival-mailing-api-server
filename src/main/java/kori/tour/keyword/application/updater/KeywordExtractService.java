@@ -15,7 +15,6 @@ import kori.tour.keyword.application.port.out.KeywordExtractingPort;
 import kori.tour.keyword.application.updater.parser.AiApiException;
 import kori.tour.keyword.application.updater.parser.AiModelResponseParser;
 import kori.tour.keyword.application.updater.parser.FestivalDocument;
-import kori.tour.keyword.domain.Keyword;
 import kori.tour.tour.application.updater.dto.NewTourDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,32 +24,35 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class KeywordExtractService {
 
-    private final TourAiModelClient tourAiModelClient;
-    private final AiModelResponseParser aiModelResponseParser;
-    private final PromptBuilder promptBuilder;
-    private final KeywordExtractingPort keywordExtractingPort;
+	private final TourAiModelClient tourAiModelClient;
 
-    private static final int RETRY_PERIOD = 1000;
+	private final AiModelResponseParser aiModelResponseParser;
 
-    @Retryable(retryFor = {AiApiException.class}, backoff = @Backoff(delay = RETRY_PERIOD), maxAttempts = 3)
-    public List<String> extractKeywords(FestivalDocument festivalDocument) {
-        String jsonDocument = FestivalDocument.toJson(festivalDocument);
-        Prompt prompt = promptBuilder.buildKeywordPrompt(jsonDocument);
-        String aiResponse = tourAiModelClient.call(prompt);
-        return aiModelResponseParser.mapToKeywords(aiResponse);
-    }
+	private final PromptBuilder promptBuilder;
 
-    @Transactional
-    public Map.Entry<NewTourDto,List<Keyword>> saveKeywords(NewTourDto newTourDto, List<Keyword> keywordsOfTour){
-        keywordExtractingPort.saveKeyword(newTourDto.getTour(),keywordsOfTour);
-        return Map.entry(newTourDto,keywordsOfTour);
-    }
+	private final KeywordExtractingPort keywordExtractingPort;
 
-    @Recover
-    public List<String> recoverFromAiFailure(AiApiException e, FestivalDocument festivalDocument) {
-        log.error("AI 키워드 추출 실패 - 모든 재시도 시도 후에도 응답 없음. festivalDocument={}, message={}",
-                FestivalDocument.toJson(festivalDocument), e.getMessage(), e);
-        return new ArrayList<>(); // 일단 정상흐름으로
-    }
+	private static final int RETRY_PERIOD = 1000;
+
+	@Retryable(retryFor = { AiApiException.class }, backoff = @Backoff(delay = RETRY_PERIOD), maxAttempts = 3)
+	public List<String> extractKeywords(FestivalDocument festivalDocument) {
+		String jsonDocument = FestivalDocument.toJson(festivalDocument);
+		Prompt prompt = promptBuilder.buildKeywordPrompt(jsonDocument);
+		String aiResponse = tourAiModelClient.call(prompt);
+		return aiModelResponseParser.mapToKeywords(aiResponse);
+	}
+
+	@Transactional
+	public Map.Entry<NewTourDto, List<String>> saveKeywords(NewTourDto newTourDto, List<String> keywordsOfTour) {
+		keywordExtractingPort.saveKeyword(newTourDto.getTour(), keywordsOfTour);
+		return Map.entry(newTourDto, keywordsOfTour);
+	}
+
+	@Recover
+	public List<String> recoverFromAiFailure(AiApiException e, FestivalDocument festivalDocument) {
+		log.error("AI 키워드 추출 실패 - 모든 재시도 시도 후에도 응답 없음. festivalDocument={}, message={}",
+				FestivalDocument.toJson(festivalDocument), e.getMessage(), e);
+		return new ArrayList<>(); // 일단 정상흐름으로
+	}
 
 }

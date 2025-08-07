@@ -21,7 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-class TourUpdater { // DB를 포함한 로직 및 저장 담당
+class TourUpdater {
+
+// DB를 포함한 로직 및 저장 담당
 
 	private final TourCrudPort tourCrudPort;
 

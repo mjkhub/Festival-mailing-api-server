@@ -11,16 +11,16 @@ import kori.tour.tour.application.updater.dto.NewTourDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 @EventAdapter
 @RequiredArgsConstructor
 class KeywordExtractingEventAdapter implements KeywordExtractingEventPort {
 
-    @Override
-    public void sendKeywordExtractingEvent(List<NewTourDto> newToursEntity) {
-        String uuid = UUID.randomUUID().toString();
-        log.info("KeywordExtractingEvent sent eventId = {}", uuid);
-        Events.raise(new KeywordExtractingEvent(newToursEntity, uuid));
-    }
+	@Override
+	public void sendKeywordExtractingEvent(List<NewTourDto> newToursEntity) {
+		String uuid = UUID.randomUUID().toString();
+		log.info("KeywordExtractingEvent sent eventId = {}", uuid);
+		Events.raise(new KeywordExtractingEvent(newToursEntity, uuid));
+	}
+
 }

@@ -2,6 +2,7 @@ package kori.tour.tour.domain;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import kori.tour.tour.domain.dto.TourResponse;
@@ -55,6 +56,12 @@ public class Tour {
 
 	private String title;
 
+	@Embedded
+	private Keywords keywords = new Keywords();
+
+	@Transient
+	private boolean keywordSetAlready = false;
+
 	public static Tour createTour(TourResponse tourResponse, Language language) {
 
 		return Tour.builder()
@@ -77,24 +84,18 @@ public class Tour {
 			.build();
 	}
 
-	public void updateTour(TourResponse tourResponse) {
-		roadAddress = tourResponse.roadAddress();
-		basicAddress = tourResponse.basicAddress();
-		areaCode = tourResponse.areaCode();
-		sigunGuCode = tourResponse.sigunGuCode();
+	public Set<String> getAllKeywords(){
+		return this.keywords.getKeywordSet();
+	}
 
-		contentTypeId = TourType.valueOf(tourResponse.contentTypeId());
-
-		eventStartDate = tourResponse.eventStartDate();
-		eventEndDate = tourResponse.eventEndDate();
-		mainImageUrl = tourResponse.mainImageUrl();
-
-		mapX = tourResponse.mapX();
-		mapY = tourResponse.mapY();
-		mLevel = tourResponse.mLevel();
-		modifiedTime = tourResponse.modifiedTime();
-		telephone = tourResponse.telephone();
-		title = tourResponse.title();
+	public void addKeywords(Set<String> keywords) {
+		if (this.keywordSetAlready) {
+			throw new IllegalStateException("키워드는 이미 설정되었습니다.");
+		}
+		for (String keyword : keywords) {
+			this.keywords.addKeyword(keyword);
+		}
+		this.keywordSetAlready = true;
 	}
 
 }

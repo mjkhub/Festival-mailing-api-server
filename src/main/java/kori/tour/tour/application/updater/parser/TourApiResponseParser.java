@@ -81,7 +81,7 @@ public class TourApiResponseParser {
 
 	/**
 	 * Tour - TourDetail은 OneToOne 이지만, 통일성을 위해 List로 작업
-	 * */
+	 */
 	public List<TourDetailResponse> mapToTourDetailCreate(String jsonResponse) {
 		List<TourDetailResponse> tourDetailResponseList = new ArrayList<>();
 		try {

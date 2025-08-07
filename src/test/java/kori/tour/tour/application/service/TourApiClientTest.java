@@ -10,25 +10,23 @@ import org.springframework.http.ResponseEntity;
 
 import kori.tour.tour.application.updater.TourApiClient;
 
-
 @SpringBootTest
 class TourApiClientTest {
 
-    @Autowired
-    TourApiClient tourApiClient;
+	@Autowired
+	TourApiClient tourApiClient;
 
-    @Test
-    @DisplayName("투어 클라이언트 API 요청 실패 경우")
-    void test(){
-        //given
-        String wrongEndpoint = "http://localhost:8081/api/accounts/1";
+	@Test
+	@DisplayName("투어 클라이언트 API 요청 실패 경우")
+	void test() {
+		// given
+		String wrongEndpoint = "http://localhost:8081/api/accounts/1";
 
-        //when
-        ResponseEntity<String> response = tourApiClient.callApi(wrongEndpoint);
+		// when
+		ResponseEntity<String> response = tourApiClient.callApi(wrongEndpoint);
 
-        //then
-        Assertions.assertThat(response.getBody()).isEqualTo(tourApiClient.getEmptyResponse());
-    }
-
+		// then
+		Assertions.assertThat(response.getBody()).isEqualTo(tourApiClient.getEmptyResponse());
+	}
 
 }

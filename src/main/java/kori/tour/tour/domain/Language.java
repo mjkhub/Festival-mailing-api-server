@@ -32,9 +32,9 @@ public enum Language {
 
 	public static Language getLanguageByEgName(String egName) {
 		return Arrays.stream(Language.values())
-				.filter(e->e.getEgName().equals(egName))
-				.findAny()
-				.orElseThrow( ()-> new IllegalArgumentException("Wrong eg Name"));
+			.filter(e -> e.getEgName().equals(egName))
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException("Wrong eg Name"));
 	}
 
 }

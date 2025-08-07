@@ -9,18 +9,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 @Embeddable
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ActivityInfo {
 
-    private LocalDateTime signUpDate;
-    private LocalDate lastSignInDate;
+	private LocalDateTime signUpDate;
 
-    public void updateLastSignInDate(LocalDate localDate){
-        this.lastSignInDate = localDate;
-    }
+	private LocalDate lastSignInDate;
+
+	public void updateLastSignInDate(LocalDate localDate) {
+		this.lastSignInDate = localDate;
+	}
 
 }

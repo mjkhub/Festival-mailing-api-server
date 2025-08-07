@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import kori.tour.keyword.domain.Keyword;
 import kori.tour.tour.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -130,24 +129,6 @@ public class TourJdbcRepository {
 			@Override
 			public int getBatchSize() {
 				return tourImages.size();
-			}
-		});
-	}
-
-	public void saveKeywords(List<Keyword> keywords) {
-		String sql = "INSERT INTO keyword (tour_id, keyword) VALUES (?, ?)";
-
-		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
-			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				Keyword keyword = keywords.get(i);
-				ps.setLong(1, keyword.getTour().getId()); // ManyToOne 관계로 참조된 Tour ID
-				ps.setString(2, keyword.getKeyword());
-			}
-
-			@Override
-			public int getBatchSize() {
-				return keywords.size();
 			}
 		});
 	}

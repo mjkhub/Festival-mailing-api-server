@@ -30,7 +30,8 @@ public class TourUpdateListener {
 
 	private final KeywordExtractingEventPort keywordExtractingEventPort;
 
-	// @Scheduled( cron = "0 0/5 10-18 * * *", zone = "Asia/Seoul" ) // 오전 10시 ~ 오후 6시 매 30분마다 실행
+	// @Scheduled( cron = "0 0/5 10-18 * * *", zone = "Asia/Seoul" ) // 오전 10시 ~ 오후 6시 매
+	// 30분마다 실행
 	// @EventListener(ApplicationReadyEvent.class)
 	public void updateTour() {
 		log.info("######################## 축제 정보 언어별 업데이트 시작 ######################## ");
@@ -60,7 +61,7 @@ public class TourUpdateListener {
 		log.info("멀티스레드 축제 정보 {}개 업데이트 완료 총 소요시간 = {}ms", count, endTime - startTime);
 	}
 
-	public void singleThread() { //로직이 더욱 명시적으로 드러나서 지우지는 않음
+	public void singleThread() { // 로직이 더욱 명시적으로 드러나서 지우지는 않음
 		log.info("싱글스레드 시작");
 		String startDate = getStartDate();
 		for (Language language : Language.values()) {

@@ -54,5 +54,4 @@ class TourRepositoryTest {
 		assertThat(idList.size()).isEqualTo(1);
 	}
 
-
 }

@@ -1,11 +1,10 @@
 package kori.tour.keyword.adapter.out.persistence;
 
+import java.util.HashSet;
 import java.util.List;
 
 import kori.tour.common.annotation.PersistenceAdapter;
 import kori.tour.keyword.application.port.out.KeywordExtractingPort;
-import kori.tour.keyword.domain.Keyword;
-import kori.tour.tour.adapter.out.persistence.TourJdbcRepository;
 import kori.tour.tour.adapter.out.persistence.TourRepository;
 import kori.tour.tour.domain.Tour;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +13,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class KeywordPersistenceAdapter implements KeywordExtractingPort {
 
-    private final TourRepository tourRepository;
-    private final KeywordRepository keywordRepository;
-    private final TourJdbcRepository tourJdbcRepository;
+	private final TourRepository tourRepository;
 
-    @Override
-    public void saveKeyword(Tour tour, List<Keyword> keywordsOfTour) {
-        tourRepository.save(tour);
-        keywordRepository.saveAll(keywordsOfTour);
-    }
+	@Override
+	public void saveKeyword(Tour tour, List<String> keywordsOfTour) {
+		Tour savedTour = tourRepository.save(tour);
+		savedTour.addKeywords(new HashSet<>(keywordsOfTour));
+	}
+
 }
