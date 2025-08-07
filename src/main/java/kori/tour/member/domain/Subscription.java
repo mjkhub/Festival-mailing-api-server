@@ -18,6 +18,8 @@ public class Subscription {
 
 	private String sigunGuName;
 
+	//Todo maybe need all-Args-Constructor
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;

@@ -59,6 +59,9 @@ public class Tour {
 	@Embedded
 	private Keywords keywords = new Keywords();
 
+	@Transient
+	private boolean keywordSetAlready = false;
+
 	public static Tour createTour(TourResponse tourResponse, Language language) {
 
 		return Tour.builder()
@@ -85,10 +88,14 @@ public class Tour {
 		return this.keywords.getKeywordSet();
 	}
 
-	public void setKeywords(Set<String> keywords) {
+	public void addKeywords(Set<String> keywords) {
+		if (this.keywordSetAlready) {
+			throw new IllegalStateException("키워드는 이미 설정되었습니다.");
+		}
 		for (String keyword : keywords) {
 			this.keywords.addKeyword(keyword);
 		}
+		this.keywordSetAlready = true;
 	}
 
 }

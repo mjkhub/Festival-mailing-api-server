@@ -9,7 +9,7 @@ import kori.tour.member.domain.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-	@Query("SELECT m FROM Member m JOIN m.subscriptions s "
+	@Query("SELECT m FROM Member m JOIN m.subscriptions.subscriptions s "
 			+ "WHERE s.areaCode = :areaCode AND s.sigunGuCode = :sigunGuCode")
 	List<Member> findBySubscriptionArea(String areaCode, String sigunGuCode);
 

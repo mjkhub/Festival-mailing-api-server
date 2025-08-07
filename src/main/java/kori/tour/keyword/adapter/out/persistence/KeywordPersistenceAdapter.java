@@ -17,8 +17,8 @@ public class KeywordPersistenceAdapter implements KeywordExtractingPort {
 
 	@Override
 	public void saveKeyword(Tour tour, List<String> keywordsOfTour) {
-		tourRepository.save(tour);
-		tour.setKeywords(new HashSet<>(keywordsOfTour));
+		Tour savedTour = tourRepository.save(tour);
+		savedTour.addKeywords(new HashSet<>(keywordsOfTour));
 	}
 
 }
