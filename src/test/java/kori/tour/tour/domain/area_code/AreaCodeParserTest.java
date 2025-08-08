@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import kori.tour.common.area_code.Area;
-import kori.tour.common.area_code.AreaCodeParser;
+import kori.tour.tour.adapter.out.persistence.area_code.Area;
+import kori.tour.tour.adapter.out.persistence.area_code.AreaCodeParser;
 
 class AreaCodeParserTest {
 

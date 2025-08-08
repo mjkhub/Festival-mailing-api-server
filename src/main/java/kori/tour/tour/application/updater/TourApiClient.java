@@ -1,6 +1,6 @@
 package kori.tour.tour.application.updater;
 
-import static kori.tour.common.utils.CollectionUtils.mapList;
+import static kori.tour.global.utils.CollectionUtils.mapList;
 
 import java.util.ArrayList;
 import java.util.List;

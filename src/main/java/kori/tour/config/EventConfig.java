@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import kori.tour.common.events.Events;
+import kori.tour.global.events.Events;
 
 @Configuration
 public class EventConfig {
