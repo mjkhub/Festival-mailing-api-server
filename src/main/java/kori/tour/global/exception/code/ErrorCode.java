@@ -12,7 +12,7 @@ public enum ErrorCode {
 	 */
 
 	AREA_CODE_FILE(HttpStatus.BAD_REQUEST, "지역 코드 파일을 읽는 데 실패했습니다"),
-	AREA_NOT_FOUND(HttpStatus.BAD_REQUEST, "지역 코드 혹은 시군구 코드를 찾을 수 없습니다"),
+	AREA_NOT_FOUND(HttpStatus.NOT_FOUND, "지역 코드 혹은 시군구 코드를 찾을 수 없습니다"),
 
 
 	HTTP_BAD_REQUEST(HttpStatus.BAD_REQUEST, "Bad Request"), HTTP_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "Unauthorized"),
