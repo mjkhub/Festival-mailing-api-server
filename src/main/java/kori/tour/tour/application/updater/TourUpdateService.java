@@ -23,8 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 class TourUpdateService {
 
-// DB를 포함한 로직 및 저장 담당
-
 	private final TourCrudPort tourCrudPort;
 
 	public TourFilterResponse separateUpdateTourNewTour(List<Tour> tours, Language language) {

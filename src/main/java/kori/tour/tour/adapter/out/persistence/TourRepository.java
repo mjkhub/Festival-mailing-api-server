@@ -13,12 +13,12 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 
 	boolean existsByContentId(String contentId);
 
+	@Query("select t.id from Tour t where t.contentId in :contentIdList")
+	List<Long> findIdListByContentIdList(List<String> contentIdList);
+
 	@Modifying
 	@Query("delete from Tour t where t.id =:id")
 	void deleteById(Long id);
-
-	@Query("select t.id from Tour t where t.contentId in :contentIdList")
-	List<Long> findIdListByContentIdList(List<String> contentIdList);
 
 	@Query("select case when count(t) > 0 then true else false end from Tour t "
 			+ "where t.contentId = :contentId and t.modifiedTime < :modifiedTime")

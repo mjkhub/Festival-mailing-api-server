@@ -24,11 +24,11 @@ public class TourUpdateListener {
 
 	private final TourApiClient tourApiClient;
 
-	private final ThreadPoolTaskExecutor tourUpdaterThreadTaskExecutor;
-
 	private final TourUpdateService tourUpdateService;
 
 	private final KeywordExtractingEventPort keywordExtractingEventPort;
+
+	private final ThreadPoolTaskExecutor tourUpdaterThreadTaskExecutor;
 
 	// @Scheduled( cron = "0 0/5 10-18 * * *", zone = "Asia/Seoul" ) // 오전 10시 ~ 오후 6시 매 30분마다 실행
 	public void updateTour() {
