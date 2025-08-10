@@ -43,6 +43,8 @@ class TourPersistenceAdapter implements TourCrudPort {
 
 	/**
 	 * 정보가 업데이트 되어서 기존의 데이터를 삭제하는 경우는 잘 없어서 그냥 간단하게 구현
+	 * delete 메소드에 @Modifying 어노테이션만 있는데, 이는 영속성 컨텍스트와 별개로
+	 * DB에 직접적으로 flush 하는 상황임을 명시하기 위함이다.
 	 */
 	@Override
 	public void deleteToursAndRelatedEntities(List<Long> tourIdList) {

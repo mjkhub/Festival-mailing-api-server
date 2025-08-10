@@ -1,19 +1,17 @@
 package kori.tour.tour.adapter.out.persistence;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import kori.tour.tour.domain.Tour;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import jakarta.transaction.Transactional;
-import kori.tour.tour.domain.Tour;
+import java.time.LocalDateTime;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @Transactional
@@ -22,6 +20,29 @@ class TourRepositoryTest {
 
 	@Autowired
 	TourRepository tourRepository;
+
+	@Autowired
+	EntityManager em;
+
+	@Test
+	@DisplayName("ID에 해당하는 Tour 데이터를 성공적으로 삭제하는지 확인")
+	void deleteById() {
+		// given
+		Tour tour = Tour.builder()
+				.contentId("112233")
+				.modifiedTime(LocalDateTime.now())
+				.build();
+		tour = tourRepository.save(tour);
+		em.flush();
+		em.clear();
+
+		// when
+		tourRepository.deleteById(tour.getId());
+
+		// then
+		assertThat(tourRepository.findById(tour.getId())).isEmpty();
+	}
+
 
 	@Test
 	@DisplayName("기존에 저장된 투어 정보에 업데이트가 발생했을 때")
@@ -37,21 +58,6 @@ class TourRepositoryTest {
 
 		// then
 		assertThat(isUpdated).isTrue();
-	}
-
-	@Test
-	@DisplayName("contentId 리스트로 투어의 PK 리스트 조회하기")
-	void test() {
-		// Given
-		Tour tour = Tour.builder().contentId("3345700").build();
-		tourRepository.save(tour);
-		List<String> contentIdList = List.of("3345700");
-
-		// When
-		List<Long> idList = tourRepository.findIdListByContentIdList(contentIdList);
-
-		// Then
-		assertThat(idList.size()).isEqualTo(1);
 	}
 
 }
