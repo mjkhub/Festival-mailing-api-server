@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class KeywordExtractService {
 
-	private final TourAiModelClient tourAiModelClient;
+	private final TourKeywordAiModelClient tourKeywordAiModelClient;
 
 	private final AiModelResponseParser aiModelResponseParser;
 
@@ -38,7 +38,7 @@ public class KeywordExtractService {
 	public List<String> extractKeywords(FestivalDocument festivalDocument) {
 		String jsonDocument = FestivalDocument.toJson(festivalDocument);
 		Prompt prompt = promptBuilder.buildKeywordPrompt(jsonDocument);
-		String aiResponse = tourAiModelClient.call(prompt);
+		String aiResponse = tourKeywordAiModelClient.call(prompt);
 		return aiModelResponseParser.mapToKeywords(aiResponse);
 	}
 

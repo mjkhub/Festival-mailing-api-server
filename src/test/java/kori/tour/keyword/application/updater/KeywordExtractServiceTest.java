@@ -25,7 +25,7 @@ import kori.tour.keyword.application.updater.parser.FestivalDocument;
 class KeywordExtractServiceTest {
 
 	@MockitoBean
-	TourAiModelClient tourAiModelClient;
+    TourKeywordAiModelClient tourKeywordAiModelClient;
 
 	@MockitoBean
 	KeywordExtractingPort keywordExtractingPort;
@@ -38,7 +38,7 @@ class KeywordExtractServiceTest {
 	void extractKeywords() throws AiApiException {
 		// given
 		FestivalDocument festivalDocument = getFestivalDocument();
-		doReturn(getKeywordResponse()).when(tourAiModelClient).call(any());
+		doReturn(getKeywordResponse()).when(tourKeywordAiModelClient).call(any());
 
 		// when
 		List<String> keywords = keywordExtractService.extractKeywords(festivalDocument);
@@ -55,7 +55,7 @@ class KeywordExtractServiceTest {
 	void extractKeywords_empty() throws AiApiException {
 		// given
 		FestivalDocument festivalDocument = getFestivalDocument();
-		doReturn("{}").when(tourAiModelClient).call(any());
+		doReturn("{}").when(tourKeywordAiModelClient).call(any());
 
 		// when
 		List<String> keywords = keywordExtractService.extractKeywords(festivalDocument);
@@ -69,7 +69,7 @@ class KeywordExtractServiceTest {
 	void extractKeywords_invalidJson_throwsException() {
 		// given
 		FestivalDocument festivalDocument = getFestivalDocument();
-		doReturn("wrong answer").when(tourAiModelClient).call(any());
+		doReturn("wrong answer").when(tourKeywordAiModelClient).call(any());
 
 		// when
 		ThrowableAssert.ThrowingCallable callable = () -> keywordExtractService.extractKeywords(festivalDocument);

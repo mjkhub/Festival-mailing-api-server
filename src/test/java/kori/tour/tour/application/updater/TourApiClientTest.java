@@ -33,7 +33,6 @@ class TourApiClientTest {
     @Autowired
     TourApiClient tourApiClient;
 
-    // TourConfig에 등록한 빈이 주입될 것 같은데 일단 그냥 사용
     @Autowired
     RestTemplate restTemplate;
 
