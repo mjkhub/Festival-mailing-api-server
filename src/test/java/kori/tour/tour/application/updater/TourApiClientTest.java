@@ -64,7 +64,7 @@ class TourApiClientTest {
         // 페이지 1 (numOfRows=50, pageNo=1, eventStartDate=startDate)
         String pageOneResponse = "{ \"response\": { \"body\": { \"items\": " +
                 "{ \"item\": [ { \"contentid\":\"1001\",\"title\":\"축제A\",\"contenttypeid\":\"15\" }, " +
-                "{ \"contentid\":\"1002\",\"title\":\"축제B\",\"contenttypeid\":\"15\" } ] } } }";
+                "{ \"contentid\":\"1002\",\"title\":\"축제B\",\"contenttypeid\":\"15\" } ] } } } }";
 
         server.expect(times(1), requestTo(containsString("/searchFestival1")))
                 .andExpect(method(HttpMethod.GET))
@@ -93,7 +93,6 @@ class TourApiClientTest {
         assertThat(tours).extracting(Tour::getContentId)
                 .containsExactlyInAnyOrder("1001", "1002", "1003");
     }
-
 
     @Test
     @DisplayName("투어 필터 응답(신규/업데이트) -> 관련 엔티티 조회 -> Tour API 응답")
