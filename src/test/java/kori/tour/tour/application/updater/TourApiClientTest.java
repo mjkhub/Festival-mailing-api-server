@@ -1,14 +1,19 @@
 package kori.tour.tour.application.updater;
 
-import kori.tour.tour.application.updater.dto.NewTourDto;
-import kori.tour.tour.application.updater.dto.TourApiResponse;
-import kori.tour.tour.application.updater.dto.TourFilterResponse;
-import kori.tour.tour.domain.Language;
-import kori.tour.tour.domain.Tour;
-import kori.tour.tour.domain.TourType;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.client.ExpectedCount.times;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
@@ -16,15 +21,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.client.ExpectedCount.times;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
+import kori.tour.tour.application.updater.dto.NewTourDto;
+import kori.tour.tour.application.updater.dto.TourApiResponse;
+import kori.tour.tour.application.updater.dto.TourFilterResponse;
+import kori.tour.tour.domain.Language;
+import kori.tour.tour.domain.Tour;
+import kori.tour.tour.domain.TourType;
 
 
 @SpringBootTest
