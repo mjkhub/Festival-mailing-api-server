@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.evaluation.EvaluationRequest;
+import org.springframework.ai.evaluation.EvaluationResponse;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
@@ -32,6 +34,8 @@ public class KeywordExtractService {
 
 	private final KeywordExtractingPort keywordExtractingPort;
 
+	private final KeywordEvaluator keywordEvaluator;
+
 	private static final int RETRY_PERIOD = 1000;
 
 	@Retryable(retryFor = { AiApiException.class }, backoff = @Backoff(delay = RETRY_PERIOD), maxAttempts = 3)
@@ -39,7 +43,10 @@ public class KeywordExtractService {
 		String jsonDocument = FestivalDocument.toJson(festivalDocument);
 		Prompt prompt = promptBuilder.buildKeywordPrompt(jsonDocument);
 		String aiResponse = tourKeywordAiModelClient.call(prompt);
-		return aiModelResponseParser.mapToKeywords(aiResponse);
+		List<String> keywords = aiModelResponseParser.mapToKeywords(aiResponse);
+		EvaluationResponse evaluationResponse = keywordEvaluator.evaluate(new EvaluationRequest(null, null, keywords.toString()));
+		if(!evaluationResponse.isPass()) throw new RuntimeException();
+		return keywords;
 	}
 
 	@Transactional
