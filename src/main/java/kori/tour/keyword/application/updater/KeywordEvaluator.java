@@ -31,6 +31,10 @@ public class KeywordEvaluator implements Evaluator {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * 검증 로직을 적용하려면 어쩔 수 없이 AI 가 생성한 JSON을 먼저 파싱해야하는 상황.
+     * List<String> keywords 를 toString()으로 전달하는게, 그나마 나은 방식이라고 판단했음.
+     */
     @Override
     public EvaluationResponse evaluate(EvaluationRequest evaluationRequest) {
         String responseContent = evaluationRequest.getResponseContent();
