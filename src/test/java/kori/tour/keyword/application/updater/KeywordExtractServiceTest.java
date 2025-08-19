@@ -13,6 +13,7 @@ import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.ai.evaluation.EvaluationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -30,6 +31,9 @@ class KeywordExtractServiceTest {
 	@MockitoBean
 	KeywordExtractingPort keywordExtractingPort;
 
+	@MockitoBean
+	KeywordEvaluator keywordEvaluator;
+
 	@Autowired
 	KeywordExtractService keywordExtractService;
 
@@ -39,6 +43,7 @@ class KeywordExtractServiceTest {
 		// given
 		FestivalDocument festivalDocument = getFestivalDocument();
 		doReturn(getKeywordResponse()).when(tourKeywordAiModelClient).call(any());
+		doReturn(new EvaluationResponse(true,0,null,null)).when(keywordEvaluator).evaluate(any());
 
 		// when
 		List<String> keywords = keywordExtractService.extractKeywords(festivalDocument);
@@ -56,6 +61,7 @@ class KeywordExtractServiceTest {
 		// given
 		FestivalDocument festivalDocument = getFestivalDocument();
 		doReturn("{}").when(tourKeywordAiModelClient).call(any());
+		doReturn(new EvaluationResponse(true,0,null,null)).when(keywordEvaluator).evaluate(any());
 
 		// when
 		List<String> keywords = keywordExtractService.extractKeywords(festivalDocument);
@@ -70,6 +76,7 @@ class KeywordExtractServiceTest {
 		// given
 		FestivalDocument festivalDocument = getFestivalDocument();
 		doReturn("wrong answer").when(tourKeywordAiModelClient).call(any());
+		doReturn(new EvaluationResponse(true,0,null,null)).when(keywordEvaluator).evaluate(any());
 
 		// when
 		ThrowableAssert.ThrowingCallable callable = () -> keywordExtractService.extractKeywords(festivalDocument);
