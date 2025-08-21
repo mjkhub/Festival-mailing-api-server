@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,8 +69,8 @@ public class EmailService {
 		return response.messageId();
 	}
 
-	public List<Member> findMembersBySubscription(String areaCode, String sigunGucCode){
-		return memberRepository.findBySubscriptionArea(areaCode, sigunGucCode, PageRequest.of(10,0)).getContent();
+	public Slice<Member> findMembersBySubscription(String areaCode, String sigunGucCode, Pageable pageRequest){
+		return memberRepository.findBySubscriptionArea(areaCode, sigunGucCode, pageRequest);
 	}
 
 	@Transactional

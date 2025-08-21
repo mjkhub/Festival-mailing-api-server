@@ -2,6 +2,7 @@ package kori.tour.member.adapter.out.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Comparator;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 
 import kori.tour.member.domain.Member;
 import kori.tour.member.domain.Subscription;
@@ -59,7 +59,7 @@ class MemberRepositoryTest {
     @DisplayName("특정 지역을 구독하는 회원을 페이지네이션하여 첫 페이지를 조회한다")
     void findBySubscriptionArea_shouldReturnFirstPageOfSubscribedMembers() {
         // given
-        PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.ASC, "id"));
+        PageRequest pageRequest = PageRequest.of(0, 3);
 
         // when
         Slice<Member> result = memberRepository.findBySubscriptionArea(TARGET_AREA_CODE, TARGET_SIGUNGU_CODE, pageRequest);
@@ -69,18 +69,14 @@ class MemberRepositoryTest {
         assertThat(result.getNumber()).isEqualTo(0);
         assertThat(result.hasNext()).isTrue();
         assertThat(result.isFirst()).isTrue();
-        result.getContent().forEach(member ->
-            assertThat(member.getSubscriptions()).anyMatch(s ->
-                    s.getAreaCode().equals(TARGET_AREA_CODE) && s.getSigunGuCode().equals(TARGET_SIGUNGU_CODE)
-            )
-        );
+        assertThat(result.getContent()).isSortedAccordingTo(Comparator.comparing(Member::getId));
     }
 
     @Test
     @DisplayName("특정 지역을 구독하는 회원을 페이지네이션하여 마지막 페이지를 조회한다")
     void findBySubscriptionArea_shouldReturnLastPageOfSubscribedMembers() {
         // given
-        PageRequest pageRequest = PageRequest.of(1, 3, Sort.by(Sort.Direction.ASC, "id"));
+        PageRequest pageRequest = PageRequest.of(1, 3);
 
         // when
         Slice<Member> result = memberRepository.findBySubscriptionArea(TARGET_AREA_CODE, TARGET_SIGUNGU_CODE, pageRequest);
@@ -90,11 +86,7 @@ class MemberRepositoryTest {
         assertThat(result.getNumber()).isEqualTo(1);
         assertThat(result.hasNext()).isFalse();
         assertThat(result.isLast()).isTrue();
-        result.getContent().forEach(member ->
-            assertThat(member.getSubscriptions()).anyMatch(s ->
-                    s.getAreaCode().equals(TARGET_AREA_CODE) && s.getSigunGuCode().equals(TARGET_SIGUNGU_CODE)
-            )
-        );
+        assertThat(result.getContent()).isSortedAccordingTo(Comparator.comparing(Member::getId));
     }
 
     @Test

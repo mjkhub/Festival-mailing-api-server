@@ -1,8 +1,13 @@
 package kori.tour.email.application.updater;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -37,11 +42,26 @@ public class EmailSendEventListener {
 		String emailTitle = emailContentParser.parseToEmailTitle(emailTitleDto);
 		String emailBody = emailContentParser.parseToEventEmailHtml(emailBodyDto);
 
-		List<Member> members = emailService.findMembersBySubscription(newTourDto.getTour().getAreaCode(), newTourDto.getTour().getSigunGuCode());
-		EmailSendRequestDto requestDto = mapToSendEmailRequestDto(members, emailTitle, emailBody, newTourDto.getTour());
-		String messageId = emailService.sendEmailToMembers(requestDto);
+		Pageable pageable = PageRequest.of(0,500);
+		while (true) {
+			Slice<Member> memberPage = emailService.findMembersBySubscription(newTourDto.getTour().getAreaCode(), newTourDto.getTour().getSigunGuCode(), pageable);
+			for(List<Member> members : partition(memberPage.toList(), 50)){
+				EmailSendRequestDto requestDto = mapToSendEmailRequestDto(members, emailTitle, emailBody, newTourDto.getTour());
+				String messageId = emailService.sendEmailToMembers(requestDto);
+				emailService.saveEmails(members, messageId, newTourDto.getTour(), emailTitle, emailBody);
+			}
+			if (!memberPage.hasNext()) break;
+			pageable = memberPage.nextPageable();
+		}
 
-		emailService.saveEmails(members, messageId, newTourDto.getTour(), emailTitle, emailBody);
+	}
+
+	private static <T> List<List<T>> partition(List<T> list, int size) {
+		List<List<T>> out = new ArrayList<>();
+		for (int i = 0; i < list.size(); i += size) {
+			out.add(list.subList(i, Math.min(i + size, list.size())));
+		}
+		return out;
 	}
 
 	private EmailTitleDto mapToEmailTitleDto(NewTourDto newTourDto, List<String> keywordsOfTour) {
