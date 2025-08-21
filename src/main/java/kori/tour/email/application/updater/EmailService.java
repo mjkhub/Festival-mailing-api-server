@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,7 +68,7 @@ public class EmailService {
 	}
 
 	public List<Member> findMembersBySubscription(String areaCode, String sigunGucCode){
-		return memberRepository.findBySubscriptionArea(areaCode, sigunGucCode);
+		return memberRepository.findBySubscriptionArea(areaCode, sigunGucCode, PageRequest.of(10,0)).getContent();
 	}
 
 	@Transactional

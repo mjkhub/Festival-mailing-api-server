@@ -1,7 +1,7 @@
 package kori.tour.member.adapter.out.persistence;
 
-import java.util.List;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,6 +11,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	@Query("SELECT m FROM Member m JOIN m.subscriptions.subscriptions s "
 			+ "WHERE s.areaCode = :areaCode AND s.sigunGuCode = :sigunGuCode")
-	List<Member> findBySubscriptionArea(String areaCode, String sigunGuCode);
+	Slice<Member> findBySubscriptionArea(String areaCode, String sigunGuCode, PageRequest pageRequest);
 
 }

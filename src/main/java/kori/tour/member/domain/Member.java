@@ -1,8 +1,8 @@
 package kori.tour.member.domain;
+import java.util.Set;
+
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
 
 @Entity
 @Getter
