@@ -7,7 +7,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +44,7 @@ public class EmailSendEventListener {
 		Pageable pageable = PageRequest.of(0,500);
 		while (true) {
 			Slice<Member> memberPage = emailService.findMembersBySubscription(newTourDto.getTour().getAreaCode(), newTourDto.getTour().getSigunGuCode(), pageable);
-			for(List<Member> members : partition(memberPage.toList(), 50)){
+			for(List<Member> members : partition(memberPage.getContent(), 50)){
 				EmailSendRequestDto requestDto = mapToSendEmailRequestDto(members, emailTitle, emailBody, newTourDto.getTour());
 				String messageId = emailService.sendEmailToMembers(requestDto);
 				emailService.saveEmails(members, messageId, newTourDto.getTour(), emailTitle, emailBody);
