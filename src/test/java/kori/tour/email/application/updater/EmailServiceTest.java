@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import kori.tour.email.adapter.out.persistence.EmailRepository;
-import kori.tour.email.application.updater.dto.EmailSendRequestDto;
+import kori.tour.email.application.updater.dto.EmailSendRequest;
 import kori.tour.member.adapter.out.persistence.MemberRepository;
 import kori.tour.member.domain.Member;
 import kori.tour.member.domain.PlatformInfo;
@@ -55,7 +55,7 @@ class EmailServiceTest {
                 .sigunGuCode("10")
                 .build();
 
-        EmailSendRequestDto requestDto = new EmailSendRequestDto(
+        EmailSendRequest requestDto = new EmailSendRequest(
                 List.of(member),
                 "테스트 제목",
                 "테스트 내용",

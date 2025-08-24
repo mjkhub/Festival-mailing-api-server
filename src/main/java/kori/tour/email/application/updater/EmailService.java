@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kori.tour.email.adapter.out.persistence.EmailRepository;
-import kori.tour.email.application.updater.dto.EmailSendRequestDto;
+import kori.tour.email.application.updater.dto.EmailSendRequest;
 import kori.tour.email.domain.Email;
 import kori.tour.member.adapter.out.persistence.MemberRepository;
 import kori.tour.member.domain.Member;
@@ -36,7 +38,7 @@ public class EmailService {
 	@Value("${email.sender}")
 	private String senderEmail;
 
-	public String sendEmailToMembers(EmailSendRequestDto requestDto) {
+	public String sendEmailToMembers(EmailSendRequest requestDto) {
 		List<String> emails = requestDto.members().stream()
 				.map(Member::getPlatformInfo)
 				.map(PlatformInfo::getPlatformEmail)
@@ -55,19 +57,13 @@ public class EmailService {
 
 		SendEmailResponse response = sesClient.sendEmail(request);
 
-		log.info("[EmailSendSuccess] 총 {}명의 회원에게 이메일 발송 완료 | Tour ID: {} | Message ID: {} | 지역 코드: {}-{}",
-				requestDto.members().size(),
-				requestDto.tourId(),
-				response.messageId(),
-				requestDto.areaCode(),
-				requestDto.sigunGuCode()
-		);
+		log.info("Email sent to {} with messageId {}", emails, response.messageId());
 
 		return response.messageId();
 	}
 
-	public List<Member> findMembersBySubscription(String areaCode, String sigunGucCode){
-		return memberRepository.findBySubscriptionArea(areaCode, sigunGucCode);
+	public Slice<Member> findMembersBySubscription(String areaCode, String sigunGucCode, Pageable pageRequest){
+		return memberRepository.findBySubscriptionArea(areaCode, sigunGucCode, pageRequest);
 	}
 
 	@Transactional

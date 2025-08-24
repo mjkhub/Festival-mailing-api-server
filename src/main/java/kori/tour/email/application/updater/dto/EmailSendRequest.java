@@ -4,7 +4,7 @@ import java.util.List;
 
 import kori.tour.member.domain.Member;
 
-public record EmailSendRequestDto(
+public record EmailSendRequest(
         List<Member> members,
         String emailTitle,
         String emailContent,

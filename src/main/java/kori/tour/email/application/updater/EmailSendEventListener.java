@@ -1,13 +1,17 @@
 package kori.tour.email.application.updater;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import kori.tour.email.application.updater.dto.EmailBodyDto;
-import kori.tour.email.application.updater.dto.EmailSendRequestDto;
+import kori.tour.email.application.updater.dto.EmailSendRequest;
 import kori.tour.email.application.updater.dto.EmailTitleDto;
 import kori.tour.member.domain.Member;
 import kori.tour.tour.application.updater.dto.NewTourDto;
@@ -15,7 +19,9 @@ import kori.tour.tour.domain.Tour;
 import kori.tour.tour.domain.TourDetail;
 import kori.tour.tour.domain.TourRepeat;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class EmailSendEventListener {
@@ -23,6 +29,10 @@ public class EmailSendEventListener {
 	private final EmailContentParser emailContentParser;
 
 	private final EmailService emailService;
+
+	private final int DB_PAGE_SIZE = 500;
+
+	private final int SES_PAGE_SIZE = 50;
 
 	@Async
 	@EventListener
@@ -37,11 +47,36 @@ public class EmailSendEventListener {
 		String emailTitle = emailContentParser.parseToEmailTitle(emailTitleDto);
 		String emailBody = emailContentParser.parseToEventEmailHtml(emailBodyDto);
 
-		List<Member> members = emailService.findMembersBySubscription(newTourDto.getTour().getAreaCode(), newTourDto.getTour().getSigunGuCode());
-		EmailSendRequestDto requestDto = mapToSendEmailRequestDto(members, emailTitle, emailBody, newTourDto.getTour());
-		String messageId = emailService.sendEmailToMembers(requestDto);
+		Pageable pageable = PageRequest.of(0,DB_PAGE_SIZE);
+		List<String> emailSendMessageIdList = new ArrayList<>();
+		int totalMemberCount = 0;
+		while (true) {
+			Slice<Member> memberPage = emailService.findMembersBySubscription(newTourDto.getTour().getAreaCode(), newTourDto.getTour().getSigunGuCode(), pageable);
+			for(List<Member> members : partition(memberPage.getContent(), SES_PAGE_SIZE)){
+				EmailSendRequest emailSendRequest = mapToSendEmailRequestDto(members, emailTitle, emailBody, newTourDto.getTour());
+				String messageId = emailService.sendEmailToMembers(emailSendRequest);
+				emailService.saveEmails(members, messageId, newTourDto.getTour(), emailTitle, emailBody);
+				emailSendMessageIdList.add(messageId);
+				totalMemberCount +=members.size();
+			}
+			if (!memberPage.hasNext()) break;
+			pageable = memberPage.nextPageable();
+		}
 
-		emailService.saveEmails(members, messageId, newTourDto.getTour(), emailTitle, emailBody);
+		log.info("[EmailSendSuccess] 총 {}명의 회원에게 이메일 발송 완료 | Tour ID: {} | Message ID: {} | 지역 코드: {}-{}",
+				totalMemberCount,
+				newTourDto.getTour().getId(),
+				emailSendMessageIdList,
+				newTourDto.getTour().getAreaCode(),
+				newTourDto.getTour().getSigunGuCode());
+	}
+
+	private static <T> List<List<T>> partition(List<T> list, int size) {
+		List<List<T>> out = new ArrayList<>();
+		for (int i = 0; i < list.size(); i += size) {
+			out.add(list.subList(i, Math.min(i + size, list.size())));
+		}
+		return out;
 	}
 
 	private EmailTitleDto mapToEmailTitleDto(NewTourDto newTourDto, List<String> keywordsOfTour) {
@@ -65,8 +100,8 @@ public class EmailSendEventListener {
 				tour.getTelephone());
 	}
 
-	private EmailSendRequestDto mapToSendEmailRequestDto(List<Member> members, String emailTitle, String emailContent, Tour tour) {
-		return new EmailSendRequestDto(
+	private EmailSendRequest mapToSendEmailRequestDto(List<Member> members, String emailTitle, String emailContent, Tour tour) {
+		return new EmailSendRequest(
 				members,
 				emailTitle,
 				emailContent,

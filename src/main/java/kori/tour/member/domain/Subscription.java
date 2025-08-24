@@ -3,12 +3,12 @@ package kori.tour.member.domain;
 import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Embeddable
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Subscription {
 
@@ -17,8 +17,6 @@ public class Subscription {
 	private String sigunGuCode;
 
 	private String sigunGuName;
-
-	//Todo maybe need all-Args-Constructor
 
 	@Override
 	public boolean equals(Object o) {
