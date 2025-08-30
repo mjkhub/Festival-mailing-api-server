@@ -2,8 +2,10 @@ package kori.tour.member.adapter.in;
 
 import kori.tour.global.data.area_code.Area;
 import kori.tour.member.adapter.in.api.out.AreaDto;
+import kori.tour.member.adapter.in.api.out.MyPage;
 import kori.tour.member.adapter.in.api.out.SubAreaDto;
 import kori.tour.member.adapter.in.api.out.SubscriptionsResponse;
+import kori.tour.member.domain.Member;
 import kori.tour.member.domain.Subscription;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,10 @@ import java.util.stream.Collectors;
 
 @Component
 class MemberApiParser {
+
+    public MyPage mapToMyPageResponse(Member member) {
+        return new MyPage(member.getPlatformInfo().getPlatformEmail(), member.getEmailSubscribe());
+    }
 
     public SubscriptionsResponse mapToSubscriptionResponse(List<Area> areaCodeList, Set<Subscription> subscriptions) {
 

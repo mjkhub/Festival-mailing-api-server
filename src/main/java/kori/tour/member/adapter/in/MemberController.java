@@ -10,8 +10,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import kori.tour.global.data.area_code.Area;
 import kori.tour.global.data.area_code.AreaCodeRegistry;
 import kori.tour.member.adapter.in.api.in.SubscriptionUpdate;
+import kori.tour.member.adapter.in.api.out.MyPage;
 import kori.tour.member.adapter.in.api.out.SubscriptionsResponse;
 import kori.tour.member.application.port.MemberUseCase;
+import kori.tour.member.domain.Member;
 import kori.tour.member.domain.Subscription;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +33,17 @@ public class MemberController {
     private final MemberUseCase memberUseCase;
     private final AreaCodeRegistry areaCodeRegistry;
     private final MemberApiParser memberApiParser;
-//    @GetMapping("/")
-//    public ResponseEntity<MemberLoginHome> memberLoginHome(HttpServletRequest servletRequest){
-//
-//    }
+
+    @Operation(summary = "마이페이지 조회", description = "마이페이지에서 회원 정보를 조회합니다 ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "조회 성공",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = MyPage.class))),
+    })
+    @GetMapping("/")
+    public ResponseEntity<MyPage> memberLoginHome(){
+        Member member = memberUseCase.getMemberWithSubscriptions(1L);
+        return ResponseEntity.ok().body(memberApiParser.mapToMyPageResponse(member));
+    }
 
     @Operation(summary = "전체 지역 목록 조회", description = "회원이 구독하는 지역을 표시하여 전체 지역 목록을 반환합니다")
     @ApiResponses(value = {
@@ -59,8 +68,6 @@ public class MemberController {
         memberUseCase.updateSubscription(1L, subscriptionUpdate);
         return ResponseEntity.noContent().build();
     }
-
-
 
 //    @DeleteMapping("/")
 //    public ResponseEntity<Void> memberSubscriptions(HttpServletRequest servletRequest){
