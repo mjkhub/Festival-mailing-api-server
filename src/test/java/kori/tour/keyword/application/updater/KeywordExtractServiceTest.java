@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.ai.evaluation.EvaluationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import kori.tour.keyword.application.port.out.KeywordExtractingPort;
 import kori.tour.keyword.application.updater.parser.AiApiException;
@@ -25,13 +25,13 @@ import kori.tour.keyword.application.updater.parser.FestivalDocument;
 @SpringBootTest
 class KeywordExtractServiceTest {
 
-	@MockitoBean
+	@MockBean
     TourKeywordAiModelClient tourKeywordAiModelClient;
 
-	@MockitoBean
+	@MockBean
 	KeywordExtractingPort keywordExtractingPort;
 
-	@MockitoBean
+	@MockBean
 	KeywordEvaluator keywordEvaluator;
 
 	@Autowired

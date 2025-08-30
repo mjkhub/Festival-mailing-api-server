@@ -1,5 +1,9 @@
 package kori.tour.member.application.service;
 
+import java.time.LocalDateTime;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import kori.tour.global.annotation.UseCase;
 import kori.tour.global.exception.NotFoundException;
 import kori.tour.global.exception.code.ErrorCode;
@@ -9,9 +13,6 @@ import kori.tour.member.application.port.MemberUseCase;
 import kori.tour.member.domain.Member;
 import kori.tour.member.domain.Subscription;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 
 @UseCase

@@ -1,24 +1,26 @@
 package kori.tour.member.adapter.out.persistence;
 
-import kori.tour.member.domain.Member;
-import kori.tour.member.domain.Subscription;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.stream.IntStream;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import kori.tour.member.domain.Member;
+import kori.tour.member.domain.Subscription;
 
 @DataJpaTest
-class MemberRepositoryTest {
+class ryTest {
 
     @Autowired
     private MemberRepository memberRepository;
@@ -34,13 +36,11 @@ class MemberRepositoryTest {
         Subscription targetSubscription = Subscription.builder()
                 .areaCode(TARGET_AREA_CODE)
                 .sigunGuCode(TARGET_SIGUNGU_CODE)
-                .sigunGuName("테스트시군구")
                 .build();
 
         Subscription otherSubscription = Subscription.builder()
                 .areaCode("2")
                 .sigunGuCode("20")
-                .sigunGuName("다른시군구")
                 .build();
         // 5명의 회원을 생성하여 지역을 두개씩 구독
         IntStream.range(0, 5).forEach(i -> {
@@ -62,7 +62,6 @@ class MemberRepositoryTest {
         Subscription subscription = Subscription.builder()
                 .areaCode(TARGET_AREA_CODE)
                 .sigunGuCode(TARGET_SIGUNGU_CODE)
-                .sigunGuName("테스트시군구")
                 .build();
         newMember.addSubscription(subscription);
         Member persistedMember = memberRepository.save(newMember);
