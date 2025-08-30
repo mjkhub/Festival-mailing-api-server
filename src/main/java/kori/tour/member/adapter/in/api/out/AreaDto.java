@@ -1,4 +1,4 @@
-package kori.tour.member.adapter.in.api;
+package kori.tour.member.adapter.in.api.out;
 
 import java.util.List;
 

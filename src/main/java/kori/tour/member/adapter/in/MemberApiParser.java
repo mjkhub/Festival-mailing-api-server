@@ -1,9 +1,9 @@
 package kori.tour.member.adapter.in;
 
 import kori.tour.global.data.area_code.Area;
-import kori.tour.member.adapter.in.api.AreaDto;
-import kori.tour.member.adapter.in.api.SubAreaDto;
-import kori.tour.member.adapter.in.api.SubscriptionsResponse;
+import kori.tour.member.adapter.in.api.out.AreaDto;
+import kori.tour.member.adapter.in.api.out.SubAreaDto;
+import kori.tour.member.adapter.in.api.out.SubscriptionsResponse;
 import kori.tour.member.domain.Subscription;
 import org.springframework.stereotype.Component;
 

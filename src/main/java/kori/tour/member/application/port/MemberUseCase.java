@@ -1,11 +1,12 @@
 package kori.tour.member.application.port;
 
-import kori.tour.member.domain.Subscription;
-
-import java.util.Set;
+import kori.tour.member.adapter.in.api.in.SubscriptionUpdate;
+import kori.tour.member.domain.Member;
 
 public interface MemberUseCase {
 
-    Set<Subscription> getSubscriptions(Long memberId);
+    Member getMemberWithSubscriptions(Long memberId);
+
+    void updateSubscription(Long memberId, SubscriptionUpdate subscriptionUpdate);
 
 }

@@ -9,16 +9,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import kori.tour.global.data.area_code.Area;
 import kori.tour.global.data.area_code.AreaCodeRegistry;
-import kori.tour.member.adapter.in.api.SubscriptionsResponse;
+import kori.tour.member.adapter.in.api.in.SubscriptionUpdate;
+import kori.tour.member.adapter.in.api.out.SubscriptionsResponse;
 import kori.tour.member.application.port.MemberUseCase;
 import kori.tour.member.domain.Subscription;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
@@ -44,11 +43,21 @@ public class MemberController {
                             schema = @Schema(implementation = SubscriptionsResponse.class))),
     })
     @GetMapping("/subscriptions")
-    public ResponseEntity<SubscriptionsResponse> memberSubscriptions(HttpServletRequest servletRequest){
+    public ResponseEntity<SubscriptionsResponse> getSubscriptions(HttpServletRequest servletRequest){
         List<Area> areaCodeList = areaCodeRegistry.getAreaCodeList();
-        Set<Subscription> subscriptions = memberUseCase.getSubscriptions(1L);
+        Set<Subscription> subscriptions = memberUseCase.getMemberWithSubscriptions(1L).getSubscriptions();
         SubscriptionsResponse subscriptionsResponse = memberApiParser.mapToSubscriptionResponse(areaCodeList, subscriptions);
         return ResponseEntity.ok().body(subscriptionsResponse);
+    }
+
+    @Operation(summary = "지역 구독 상태 변경", description = "특정 지역에 대한 구독 상태를 변경합니다. `subscribe`가 `true`이면 구독하고, `false`이면 구독을 취소합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "구독 상태 변경 성공")
+    })
+    @PutMapping("/subscriptions")
+    public ResponseEntity<Void> updateSubscription(@RequestBody SubscriptionUpdate subscriptionUpdate){
+        memberUseCase.updateSubscription(1L, subscriptionUpdate);
+        return ResponseEntity.noContent().build();
     }
 
 
