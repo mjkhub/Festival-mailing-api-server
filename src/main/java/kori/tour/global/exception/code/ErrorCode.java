@@ -17,7 +17,10 @@ public enum ErrorCode {
 
 	HTTP_BAD_REQUEST(HttpStatus.BAD_REQUEST, "Bad Request"), HTTP_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "Unauthorized"),
 	HTTP_FORBIDDEN(HttpStatus.FORBIDDEN, "Forbidden"), HTTP_NOT_FOUND(HttpStatus.NOT_FOUND, "Not Found"),
-	HTTP_INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
+	HTTP_INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),
+
+
+	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다.");
 
 	private final HttpStatus httpStatus;
 
