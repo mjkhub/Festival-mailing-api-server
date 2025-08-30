@@ -31,7 +31,7 @@ public class TourConfig {
 
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient);
 		factory.setConnectTimeout(10_000);
-		factory.setReadTimeout(10_000);
+//		factory.setReadTimeout(10_000);
 
 		RestTemplate restTemplate = new RestTemplate(factory);
 		DefaultUriBuilderFactory d = (DefaultUriBuilderFactory) restTemplate.getUriTemplateHandler();

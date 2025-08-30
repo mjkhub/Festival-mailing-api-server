@@ -1,4 +1,4 @@
-package kori.tour.tour.adapter.out.persistence.area_code;
+package kori.tour.global.data.area_code;
 
 import java.util.List;
 

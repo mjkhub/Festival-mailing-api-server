@@ -1,5 +1,6 @@
 package kori.tour.member.domain;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
@@ -16,7 +17,7 @@ public class Subscription {
 
 	private String sigunGuCode;
 
-	private String sigunGuName;
+	private LocalDateTime subscribeDate;
 
 	@Override
 	public boolean equals(Object o) {

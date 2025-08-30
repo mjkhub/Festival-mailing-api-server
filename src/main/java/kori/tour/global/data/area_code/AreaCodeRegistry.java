@@ -1,29 +1,26 @@
-package kori.tour.tour.adapter.out.persistence;
+package kori.tour.global.data.area_code;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
 import kori.tour.global.exception.AsyncProcessingException;
 import kori.tour.global.exception.NotFoundException;
 import kori.tour.global.exception.code.ErrorCode;
-import kori.tour.tour.adapter.out.persistence.area_code.Area;
-import kori.tour.tour.adapter.out.persistence.area_code.AreaCodeParser;
-import kori.tour.tour.adapter.out.persistence.area_code.SubArea;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AreaCodeMemoryRepository {
+public class AreaCodeRegistry {
 
 	@Value("classpath:/files/area/area-code.json")
 	private Resource areaCodeResource;
@@ -32,7 +29,7 @@ public class AreaCodeMemoryRepository {
 
 	private final AreaCodeParser areaCodeParser;
 
-	@EventListener(ApplicationReadyEvent.class)
+	@PostConstruct
 	public void init() {
 		try (InputStream is = areaCodeResource.getInputStream()) {
 			String json = new String(is.readAllBytes(), StandardCharsets.UTF_8);
@@ -42,6 +39,10 @@ public class AreaCodeMemoryRepository {
 		catch (IOException e) {
 			throw new AsyncProcessingException(ErrorCode.AREA_CODE_FILE);
 		}
+	}
+
+	public List<Area> getAreaCodeList() {
+		return Collections.unmodifiableList(areaCodeList);
 	}
 
 	public String getAreaName(String areaCode) {

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import kori.tour.email.adapter.out.persistence.EmailRepository;
 import kori.tour.email.application.updater.dto.EmailSendRequest;
@@ -26,16 +26,16 @@ import software.amazon.awssdk.services.sesv2.model.*;
 @SpringBootTest
 class EmailServiceTest {
 
-    @MockitoBean
+    @MockBean
     private SesV2Client sesClient;
 
-    @MockitoBean
+    @MockBean
     private EmailRepository emailRepository;
 
-    @MockitoBean
+    @MockBean
     private TourRepository tourRepository;
 
-    @MockitoBean
+    @MockBean
     private MemberRepository memberRepository;
 
     @Autowired

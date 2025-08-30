@@ -3,6 +3,7 @@ package kori.tour.member.adapter.out.persistence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,7 @@ import kori.tour.member.domain.Member;
 import kori.tour.member.domain.Subscription;
 
 @DataJpaTest
-class MemberRepositoryTest {
+class ryTest {
 
     @Autowired
     private MemberRepository memberRepository;
@@ -35,13 +36,11 @@ class MemberRepositoryTest {
         Subscription targetSubscription = Subscription.builder()
                 .areaCode(TARGET_AREA_CODE)
                 .sigunGuCode(TARGET_SIGUNGU_CODE)
-                .sigunGuName("테스트시군구")
                 .build();
 
         Subscription otherSubscription = Subscription.builder()
                 .areaCode("2")
                 .sigunGuCode("20")
-                .sigunGuName("다른시군구")
                 .build();
         // 5명의 회원을 생성하여 지역을 두개씩 구독
         IntStream.range(0, 5).forEach(i -> {
@@ -53,6 +52,30 @@ class MemberRepositoryTest {
 
         em.flush();
         em.clear();
+    }
+
+    @Test
+    @DisplayName("특정 ID로 회원과 구독 정보를 조회하면 해당 회원과 구독 정보를 반환한다")
+    void findByIdWithSubscriptions_shouldReturnMemberWithSubscriptions() {
+        // given
+        Member newMember = Member.builder().build();
+        Subscription subscription = Subscription.builder()
+                .areaCode(TARGET_AREA_CODE)
+                .sigunGuCode(TARGET_SIGUNGU_CODE)
+                .build();
+        newMember.addSubscription(subscription);
+        Member persistedMember = memberRepository.save(newMember);
+        em.flush();
+        em.clear();
+
+        // when
+        Optional<Member> result = memberRepository.findByIdWithSubscriptions(persistedMember.getId());
+
+        // then
+        assertThat(result).isPresent();
+        assertThat(result.get().getSubscriptions()).hasSize(1);
+        assertThat(result.get().getSubscriptions())
+                .anyMatch(s -> s.getAreaCode().equals(TARGET_AREA_CODE) && s.getSigunGuCode().equals(TARGET_SIGUNGU_CODE));
     }
 
     @Test
