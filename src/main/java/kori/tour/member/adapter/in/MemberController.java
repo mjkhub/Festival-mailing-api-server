@@ -4,6 +4,9 @@ package kori.tour.member.adapter.in;
 import java.util.List;
 import java.util.Set;
 
+import kori.tour.member.adapter.in.api.out.SubscribingRegionTours;
+import kori.tour.tour.domain.Tour;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,7 @@ import kori.tour.member.domain.Member;
 import kori.tour.member.domain.Subscription;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import io.swagger.v3.oas.annotations.Parameter;
 
 @Slf4j
 @RestController
@@ -77,6 +81,19 @@ public class MemberController {
 //
 //        return null;
 //    }
+
+    @Operation(summary = "구독 지역 축제/행사 조회", description = "회원이 구독하는 지역의 축제/행사 정보를 페이지별로 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "조회 성공",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = SubscribingRegionTours.class)))
+    })
+    @GetMapping("/subscriptions/tours")
+    public ResponseEntity<SubscribingRegionTours> getSubscribingTours(@Parameter(description = "페이지 번호 (0부터 시작)", required = true, example = "0") @RequestParam int page){
+        Slice<Tour> subscribingRegionTours = memberUseCase.getSubscribingRegionTours(1L, page);
+        SubscribingRegionTours response = memberApiParser.mapToSubscribingRegionTours(subscribingRegionTours);
+        return ResponseEntity.ok().body(response);
+    }
 
 
 }

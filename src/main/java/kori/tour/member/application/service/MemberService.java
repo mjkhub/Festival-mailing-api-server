@@ -1,7 +1,15 @@
 package kori.tour.member.application.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import kori.tour.tour.adapter.out.persistence.TourRepository;
+import kori.tour.tour.domain.RegionCode;
+import kori.tour.tour.domain.Tour;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
 
 import kori.tour.global.annotation.UseCase;
@@ -21,6 +29,10 @@ class MemberService implements MemberUseCase {
 
     private final MemberRepository memberRepository;
 
+    private final TourRepository tourRepository;
+
+    private final int PAGE_SIZE = 15;
+
     @Override
     public Member getMemberWithSubscriptions(Long memberId) {
         return memberRepository.findByIdWithSubscriptions(memberId)
@@ -38,5 +50,15 @@ class MemberService implements MemberUseCase {
                 .build();
         if(subscriptionUpdate.subscribe()) member.addSubscription(subscription);
         else member.removeSubscription(subscription);
+    }
+
+    @Override
+    public Slice<Tour> getSubscribingRegionTours(Long memberId, int page) {
+        Member member = getMemberWithSubscriptions(memberId);
+        List<RegionCode> subscriptions = member.getSubscriptions().stream()
+                .map(Subscription::mapToRegionCode)
+                .toList();
+        Pageable pageRequest = PageRequest.of(page, PAGE_SIZE);
+        return tourRepository.findByMemberSubscriptions(subscriptions, LocalDate.now(), pageRequest);
     }
 }

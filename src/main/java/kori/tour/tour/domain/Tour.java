@@ -42,8 +42,10 @@ public class Tour {
 
 	private String mainImageUrl;
 
+	@Column(name="map_x")
 	private String mapX; // 좌표와 관련된 필드는 분리하고 싶지만, API를 제공하는 측에서 같이 주니까 -> 같은 테이블에
 
+	@Column(name="map_y")
 	private String mapY;
 
 	private String mLevel;
