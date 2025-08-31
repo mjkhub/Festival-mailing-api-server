@@ -64,24 +64,30 @@ public class Tour {
 
 	public static Tour createTour(TourResponse tourResponse, Language language) {
 
+		return Tour.internalBuilder()
+				.language(language)
+				.roadAddress(tourResponse.roadAddress())
+				.basicAddress(tourResponse.basicAddress())
+				.areaCode(tourResponse.areaCode())
+				.sigunGuCode(tourResponse.sigunGuCode())
+				.contentId(tourResponse.contentId())
+				.contentTypeId(TourType.getTourType(tourResponse.contentTypeId()))
+				.eventStartDate(tourResponse.eventStartDate())
+				.eventEndDate(tourResponse.eventEndDate())
+				.mainImageUrl(tourResponse.mainImageUrl())
+				.mapX(tourResponse.mapX())
+				.mapY(tourResponse.mapY())
+				.mLevel(tourResponse.mLevel())
+				.modifiedTime(tourResponse.modifiedTime())
+				.telephone(tourResponse.telephone())
+				.title(tourResponse.title())
+				.build();
+	}
+
+	private static TourBuilder internalBuilder() {
 		return Tour.builder()
-			.language(language)
-			.roadAddress(tourResponse.roadAddress())
-			.basicAddress(tourResponse.basicAddress())
-			.areaCode(tourResponse.areaCode())
-			.sigunGuCode(tourResponse.sigunGuCode())
-			.contentId(tourResponse.contentId())
-			.contentTypeId(TourType.getTourType(tourResponse.contentTypeId()))
-			.eventStartDate(tourResponse.eventStartDate())
-			.eventEndDate(tourResponse.eventEndDate())
-			.mainImageUrl(tourResponse.mainImageUrl())
-			.mapX(tourResponse.mapX())
-			.mapY(tourResponse.mapY())
-			.mLevel(tourResponse.mLevel())
-			.modifiedTime(tourResponse.modifiedTime())
-			.telephone(tourResponse.telephone())
-			.title(tourResponse.title())
-			.build();
+				.keywords(new Keywords())
+				.keywordSetAlready(false);
 	}
 
 	public Set<String> getAllKeywords(){
