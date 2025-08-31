@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 
 import kori.tour.email.application.updater.dto.EmailBodyDto;
 import kori.tour.email.application.updater.dto.EmailTitleDto;
-import kori.tour.tour.adapter.out.persistence.AreaCodeMemoryRepository;
+import kori.tour.global.data.area_code.AreaCodeRegistry;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
 public class EmailContentParser {
 
-	private final AreaCodeMemoryRepository areaCodeMemoryRepository;
+	private final AreaCodeRegistry areaCodeRegistry;
 
 	private final TemplateEngine templateEngine;
 
@@ -23,8 +23,8 @@ public class EmailContentParser {
 		String sigunGuCode = emailTitleDto.sigunGuCode();
 		String title = emailTitleDto.title();
 
-		String areaName = areaCodeMemoryRepository.getAreaName(areaCode);
-		String sigunGuName = areaCodeMemoryRepository.getSigunGuName(areaCode, sigunGuCode);
+		String areaName = areaCodeRegistry.getAreaName(areaCode);
+		String sigunGuName = areaCodeRegistry.getSigunGuName(areaCode, sigunGuCode);
 
 		String keywords = String.join(", ", emailTitleDto.keywordsOfTour());
 		return String.format("[%s-%s]: %s - %s", areaName, sigunGuName, title, keywords);

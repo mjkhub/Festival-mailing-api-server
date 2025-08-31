@@ -4,7 +4,7 @@ spring:
   jpa:
     generate-ddl: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         jdbc:
@@ -18,12 +18,12 @@ spring:
       connectionTimeout: '30000'
       maximum-pool-size: '8'
       max-lifetime: '1800000'
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: ${DB_DRIVER}
+#    url: ${DB_URL}
+#    username: ${DB_USERNAME}
+#    password: ${DB_PASSWORD}
+#    driver-class-name: ${DB_DRIVER}
   flyway:
-    enabled: true
+    enabled: false
     baseline-on-migrate: true
     url: ${DB_URL}
     user: ${DB_USERNAME}
@@ -33,10 +33,10 @@ spring:
       FAIL_ON_EMPTY_BEANS: false
   ai:
     openai:
-      api-key: ${OPEN_AI_KEY}
-      options:
-        model: gpt-3.5-turbo
-
+      api-key: test
+      chat:
+        options:
+          model: test
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -55,8 +55,11 @@ management:
         enabled: true
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: test
   expiration-time: 3600000
 
 tour:
-  api-key: ${TOUR_API_KEY}
+  api-key: test
+
+email:
+  sender: test

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import kori.tour.tour.application.port.out.TourCrudPort;
 import kori.tour.tour.application.updater.dto.NewTourDto;
@@ -27,7 +27,7 @@ class TourUpdateServiceTest {
     @Autowired
     TourUpdateService tourUpdateService;
 
-    @MockitoBean
+    @MockBean
     TourCrudPort tourCrudPort;
 
     @Test

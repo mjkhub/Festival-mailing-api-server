@@ -24,7 +24,7 @@ public class Email {
 	private Member member;
 
 	@JoinColumn(name = "tour_id", unique = false)
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Tour tour;
 
 	private LocalDateTime sendTime;

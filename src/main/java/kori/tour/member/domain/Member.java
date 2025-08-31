@@ -25,6 +25,8 @@ public class Member {
 	@Embedded
 	private Subscriptions subscriptions = new Subscriptions();
 
+	private Boolean emailSubscribe;
+
 	public static MemberBuilder builder() {
 		return internalBuilder().subscriptions(new Subscriptions());
 	}
