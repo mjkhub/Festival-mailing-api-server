@@ -55,7 +55,7 @@ management:
         enabled: true
 
 jwt:
-  secret: test
+  secret: uM6yYxZV0v7zFJr2i+9OQGx7P4L5nT2c8XxVtq5zqHs=
   expiration-time: 3600000
 
 tour:
