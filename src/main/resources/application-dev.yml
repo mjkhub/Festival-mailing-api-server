@@ -23,7 +23,7 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: ${DB_DRIVER}
   flyway:
-    enabled: true
+    enabled: false
     baseline-on-migrate: true
     url: ${DB_URL}
     user: ${DB_USERNAME}
