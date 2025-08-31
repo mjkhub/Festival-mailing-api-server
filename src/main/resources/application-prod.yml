@@ -34,9 +34,9 @@ spring:
   ai:
     openai:
       api-key: ${OPEN_AI_KEY}
-      options:
-        model: gpt-3.5-turbo
-
+      chat:
+        options:
+          model: ${AI_MODEL}
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -60,3 +60,6 @@ jwt:
 
 tour:
   api-key: ${TOUR_API_KEY}
+
+email:
+  sender: test

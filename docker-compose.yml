@@ -5,7 +5,7 @@ services:
     container_name: backend
     build:
       context: ./
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
     environment:
       - ACTIVE_PROFILE=${ACTIVE_PROFILE:-dev}
     expose:
@@ -30,21 +30,6 @@ services:
       - "3000:3000"
     volumes:
       - grafana-storage:/var/lib/grafana
-
-  redis:
-    image: redis:latest
-    container_name: redis
-    restart: always
-    expose:
-      - "6379"
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./data:/data
-    deploy:
-      resources:
-        limits:
-          memory: 80M
 
 volumes:
   grafana-storage:

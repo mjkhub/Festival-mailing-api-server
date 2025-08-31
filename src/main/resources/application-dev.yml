@@ -34,8 +34,9 @@ spring:
   ai:
     openai:
       api-key: ${OPEN_AI_KEY}
-      options:
-        model: ${AI_MODEL}
+      chat:
+        options:
+          model: ${AI_MODEL}
 
   thymeleaf:
     prefix: classpath:/templates/
