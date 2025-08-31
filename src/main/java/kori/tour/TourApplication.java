@@ -130,7 +130,7 @@ public class TourApplication {
 		member.addSubscription(Subscription.builder()
 				.areaCode(AREA_CODE_SEOUL)
 				.sigunGuCode(SIGUNGU_CODE_GANGNAM)
-				.subscribeDate(LocalDateTime.now())
+//				.subscribeDate(LocalDateTime.now())
 				.build());
 	}
 

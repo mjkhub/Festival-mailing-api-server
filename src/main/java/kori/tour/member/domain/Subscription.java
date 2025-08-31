@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
+import kori.tour.tour.domain.RegionCode;
 import lombok.*;
 
 @Embeddable
@@ -30,4 +31,9 @@ public class Subscription {
 	public int hashCode() {
 		return Objects.hash(areaCode, sigunGuCode);
 	}
+
+	public RegionCode mapToRegionCode(){
+		return new RegionCode(areaCode, sigunGuCode);
+	}
+
 }

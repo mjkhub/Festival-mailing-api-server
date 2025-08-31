@@ -1,8 +1,14 @@
 package kori.tour.tour.adapter.out.persistence;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import kori.tour.member.domain.Subscription;
+import kori.tour.tour.domain.RegionCode;
+import org.springframework.cglib.core.Local;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +29,9 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 	@Query("select case when count(t) > 0 then true else false end from Tour t "
 			+ "where t.contentId = :contentId and t.modifiedTime < :modifiedTime")
 	boolean isUpdated(String contentId, LocalDateTime modifiedTime);
+
+	@Query("select t from Tour t where t.regionCode in :subs and t.eventEndDate >= :now order by t.eventStartDate asc")
+	Slice<Tour> findByMemberSubscriptions(List<RegionCode> subs, LocalDate now, Pageable pageable);
+
 
 }

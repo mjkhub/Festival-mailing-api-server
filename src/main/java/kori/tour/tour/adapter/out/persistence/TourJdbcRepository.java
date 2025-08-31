@@ -32,8 +32,8 @@ public class TourJdbcRepository {
 				ps.setString(1, tour.getLanguage().name());
 				ps.setString(2, tour.getRoadAddress());
 				ps.setString(3, tour.getBasicAddress());
-				ps.setString(4, tour.getAreaCode());
-				ps.setString(5, tour.getSigunGuCode());
+				ps.setString(4, tour.getRegionCode().getAreaCode());
+				ps.setString(5, tour.getRegionCode().getSigunGuCode());
 				ps.setString(6, tour.getContentId());
 				ps.setString(7, tour.getContentTypeId().name());
 				ps.setObject(8, tour.getEventStartDate());

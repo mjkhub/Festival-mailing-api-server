@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.List;
 
+import kori.tour.tour.domain.RegionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -51,8 +52,7 @@ class EmailServiceTest {
 
         Tour tour = Tour.builder()
                 .id(1L)
-                .areaCode("01")
-                .sigunGuCode("10")
+                .regionCode(new RegionCode("01","10"))
                 .build();
 
         EmailSendRequest requestDto = new EmailSendRequest(
@@ -60,8 +60,8 @@ class EmailServiceTest {
                 "테스트 제목",
                 "테스트 내용",
                 String.valueOf(tour.getId()),
-                tour.getAreaCode(),
-                tour.getSigunGuCode()
+                tour.getRegionCode().getAreaCode(),
+                tour.getRegionCode().getSigunGuCode()
         );
 
         SendEmailResponse mockResponse = SendEmailResponse.builder()

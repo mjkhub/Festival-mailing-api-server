@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import kori.tour.tour.domain.RegionCode;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,8 +58,7 @@ class TourJdbcRepositoryTest {
 			.language(Language.KOREAN)
 			.roadAddress("123 Road St.")
 			.basicAddress("456 Basic Ave.")
-			.areaCode("01")
-			.sigunGuCode("001")
+			.regionCode(new RegionCode("01","001"))
 			.contentId(contentId)
 			.contentTypeId(TourType.FESTIVAL)
 			.eventStartDate(LocalDate.of(2024, 1, 1))
