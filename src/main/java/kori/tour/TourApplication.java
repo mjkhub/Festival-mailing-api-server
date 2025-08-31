@@ -5,22 +5,20 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TimeZone;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
-import kori.tour.email.domain.Email;
 import kori.tour.member.domain.*;
 import kori.tour.tour.domain.*;
 import kori.tour.tour.domain.dto.TourResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.EnableScheduling;
-
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @EnableScheduling
