@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 
 import java.util.List;
 
-import kori.tour.tour.domain.RegionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +19,7 @@ import kori.tour.member.domain.Member;
 import kori.tour.member.domain.PlatformInfo;
 import kori.tour.member.domain.PlatformType;
 import kori.tour.tour.adapter.out.persistence.TourRepository;
+import kori.tour.tour.domain.RegionCode;
 import kori.tour.tour.domain.Tour;
 import software.amazon.awssdk.services.sesv2.SesV2Client;
 import software.amazon.awssdk.services.sesv2.model.*;

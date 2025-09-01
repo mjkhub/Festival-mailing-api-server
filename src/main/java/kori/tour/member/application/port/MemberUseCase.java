@@ -1,9 +1,10 @@
 package kori.tour.member.application.port;
 
+import org.springframework.data.domain.Slice;
+
 import kori.tour.member.adapter.in.api.in.SubscriptionUpdate;
 import kori.tour.member.domain.Member;
 import kori.tour.tour.domain.Tour;
-import org.springframework.data.domain.Slice;
 
 public interface MemberUseCase {
 

@@ -1,12 +1,14 @@
 package kori.tour.tour.adapter.out.persistence;
 
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
-import kori.tour.member.domain.Subscription;
-import kori.tour.tour.domain.RegionCode;
-import kori.tour.tour.domain.Tour;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,11 +16,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import kori.tour.member.domain.Subscription;
+import kori.tour.tour.domain.RegionCode;
+import kori.tour.tour.domain.Tour;
 
 @DataJpaTest
 @Transactional

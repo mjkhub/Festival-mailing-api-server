@@ -1,12 +1,12 @@
 package kori.tour.tour.adapter.out.persistence;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import kori.tour.tour.domain.TourRepeat;
-
-import java.util.List;
 
 public interface TourRepeatRepository extends JpaRepository<TourRepeat, Long> {
 

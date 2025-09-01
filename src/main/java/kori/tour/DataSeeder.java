@@ -1,19 +1,20 @@
 package kori.tour;
 
-import jakarta.persistence.EntityManager;
-import kori.tour.member.domain.*;
-import kori.tour.tour.domain.*;
-import kori.tour.tour.domain.dto.TourResponse;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
+
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
+import jakarta.persistence.EntityManager;
+import kori.tour.member.domain.*;
+import kori.tour.tour.domain.*;
+import kori.tour.tour.domain.dto.TourResponse;
+import lombok.RequiredArgsConstructor;
 
 @Profile("prod")
 @Component

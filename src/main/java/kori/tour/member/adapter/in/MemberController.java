@@ -4,14 +4,13 @@ package kori.tour.member.adapter.in;
 import java.util.List;
 import java.util.Set;
 
-import kori.tour.member.adapter.in.api.out.SubscribingRegionTours;
-import kori.tour.tour.domain.Tour;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,13 +21,14 @@ import kori.tour.global.data.area_code.Area;
 import kori.tour.global.data.area_code.AreaCodeRegistry;
 import kori.tour.member.adapter.in.api.in.SubscriptionUpdate;
 import kori.tour.member.adapter.in.api.out.MyPage;
+import kori.tour.member.adapter.in.api.out.SubscribingRegionTours;
 import kori.tour.member.adapter.in.api.out.SubscriptionsResponse;
 import kori.tour.member.application.port.MemberUseCase;
 import kori.tour.member.domain.Member;
 import kori.tour.member.domain.Subscription;
+import kori.tour.tour.domain.Tour;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import io.swagger.v3.oas.annotations.Parameter;
 
 @Slf4j
 @RestController

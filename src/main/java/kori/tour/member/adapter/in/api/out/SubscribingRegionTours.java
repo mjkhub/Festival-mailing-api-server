@@ -1,9 +1,9 @@
 package kori.tour.member.adapter.in.api.out;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.List;
 
 
 @Getter

@@ -21,7 +21,7 @@ public enum ErrorCode {
 
 
 	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다."),
-	TOUR_NOT_FOUND(HttpStatus.NOT_FOUND, "투어을 찾을 수 없습니다.");
+	TOUR_NOT_FOUND(HttpStatus.NOT_FOUND, "투어를 찾을 수 없습니다.");
 
 
 	private final HttpStatus httpStatus;

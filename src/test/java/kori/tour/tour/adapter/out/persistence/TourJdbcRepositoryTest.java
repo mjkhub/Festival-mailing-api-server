@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import kori.tour.tour.domain.RegionCode;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import kori.tour.tour.domain.Language;
+import kori.tour.tour.domain.RegionCode;
 import kori.tour.tour.domain.Tour;
 import kori.tour.tour.domain.TourType;
 
