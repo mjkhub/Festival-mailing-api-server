@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import kori.tour.tour.domain.Language;
+import kori.tour.tour.domain.RegionCode;
 import kori.tour.tour.domain.Tour;
 import kori.tour.tour.domain.TourType;
 
@@ -57,8 +58,7 @@ class TourJdbcRepositoryTest {
 			.language(Language.KOREAN)
 			.roadAddress("123 Road St.")
 			.basicAddress("456 Basic Ave.")
-			.areaCode("01")
-			.sigunGuCode("001")
+			.regionCode(new RegionCode("01","001"))
 			.contentId(contentId)
 			.contentTypeId(TourType.FESTIVAL)
 			.eventStartDate(LocalDate.of(2024, 1, 1))

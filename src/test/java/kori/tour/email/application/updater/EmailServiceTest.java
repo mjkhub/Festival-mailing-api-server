@@ -19,6 +19,7 @@ import kori.tour.member.domain.Member;
 import kori.tour.member.domain.PlatformInfo;
 import kori.tour.member.domain.PlatformType;
 import kori.tour.tour.adapter.out.persistence.TourRepository;
+import kori.tour.tour.domain.RegionCode;
 import kori.tour.tour.domain.Tour;
 import software.amazon.awssdk.services.sesv2.SesV2Client;
 import software.amazon.awssdk.services.sesv2.model.*;
@@ -51,8 +52,7 @@ class EmailServiceTest {
 
         Tour tour = Tour.builder()
                 .id(1L)
-                .areaCode("01")
-                .sigunGuCode("10")
+                .regionCode(new RegionCode("01","10"))
                 .build();
 
         EmailSendRequest requestDto = new EmailSendRequest(
@@ -60,8 +60,8 @@ class EmailServiceTest {
                 "테스트 제목",
                 "테스트 내용",
                 String.valueOf(tour.getId()),
-                tour.getAreaCode(),
-                tour.getSigunGuCode()
+                tour.getRegionCode().getAreaCode(),
+                tour.getRegionCode().getSigunGuCode()
         );
 
         SendEmailResponse mockResponse = SendEmailResponse.builder()

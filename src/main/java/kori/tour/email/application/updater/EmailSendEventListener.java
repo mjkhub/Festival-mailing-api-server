@@ -51,7 +51,7 @@ public class EmailSendEventListener {
 		List<String> emailSendMessageIdList = new ArrayList<>();
 		int totalMemberCount = 0;
 		while (true) {
-			Slice<Member> memberPage = emailService.findMembersBySubscription(newTourDto.getTour().getAreaCode(), newTourDto.getTour().getSigunGuCode(), pageable);
+			Slice<Member> memberPage = emailService.findMembersBySubscription(newTourDto.getTour().getRegionCode().getAreaCode(), newTourDto.getTour().getRegionCode().getSigunGuCode(), pageable);
 			for(List<Member> members : partition(memberPage.getContent(), SES_PAGE_SIZE)){
 				EmailSendRequest emailSendRequest = mapToSendEmailRequestDto(members, emailTitle, emailBody, newTourDto.getTour());
 				String messageId = emailService.sendEmailToMembers(emailSendRequest);
@@ -67,8 +67,8 @@ public class EmailSendEventListener {
 				totalMemberCount,
 				newTourDto.getTour().getId(),
 				emailSendMessageIdList,
-				newTourDto.getTour().getAreaCode(),
-				newTourDto.getTour().getSigunGuCode());
+				newTourDto.getTour().getRegionCode().getAreaCode(),
+				newTourDto.getTour().getRegionCode().getSigunGuCode());
 	}
 
 	private static <T> List<List<T>> partition(List<T> list, int size) {
@@ -81,7 +81,7 @@ public class EmailSendEventListener {
 
 	private EmailTitleDto mapToEmailTitleDto(NewTourDto newTourDto, List<String> keywordsOfTour) {
 		Tour tour = newTourDto.getTour();
-		return new EmailTitleDto(tour.getAreaCode(), tour.getSigunGuCode(), tour.getTitle(), keywordsOfTour);
+		return new EmailTitleDto(tour.getRegionCode().getAreaCode(), tour.getRegionCode().getSigunGuCode(), tour.getTitle(), keywordsOfTour);
 	}
 
 	private EmailBodyDto mapToEmailBodyDto(NewTourDto newTourDto, List<String> keywordsOfTour) {
@@ -106,8 +106,8 @@ public class EmailSendEventListener {
 				emailTitle,
 				emailContent,
 				String.valueOf(tour.getId()),
-				tour.getAreaCode(),
-				tour.getSigunGuCode()
+				tour.getRegionCode().getAreaCode(),
+				tour.getRegionCode().getSigunGuCode()
 		);
 	}
 
