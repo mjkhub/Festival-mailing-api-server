@@ -104,6 +104,23 @@ public class DataSeeder {
                 .serialNumber("IMG-001")
                 .build());
 
+        em.persist(TourImage.builder()
+                .tour(tour)
+                .originImageUrl("https://example.com/images/gangnam-2.jpg")
+                .smallImageUrl("https://example.com/images/gangnam-2_small.jpg")
+                .imageName("gangnam-2")
+                .serialNumber("IMG-002")
+                .build());
+
+        em.persist(TourImage.builder()
+                .tour(tour)
+                .originImageUrl("https://example.com/images/gangnam-3.jpg")
+                .smallImageUrl("https://example.com/images/gangnam-3_small.jpg")
+                .imageName("gangnam-3")
+                .serialNumber("IMG-003")
+                .build());
+
+
         // 5) TourRepeat
         em.persist(TourRepeat.builder()
                 .tour(tour)
@@ -112,11 +129,18 @@ public class DataSeeder {
                 .infoText("대중교통 이용 권장, 우천 시 일부 프로그램 취소 가능")
                 .build());
 
+        em.persist(TourRepeat.builder()
+                .tour(tour)
+                .serialNumber("REP-002")
+                .infoName("세부 사항")
+                .infoText("조은핑 화이팅,, ")
+                .build());
+
         // 6) Member 구독
         member.addSubscription(Subscription.builder()
                 .areaCode(AREA_CODE_SEOUL)
                 .sigunGuCode(SIGUNGU_CODE_GANGNAM)
-//				.subscribeDate(LocalDateTime.now())
+				.subscribeDate(LocalDateTime.now())
                 .build());
     }
 }

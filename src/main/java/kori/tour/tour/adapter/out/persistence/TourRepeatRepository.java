@@ -6,10 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 
 import kori.tour.tour.domain.TourRepeat;
 
-interface TourRepeatRepository extends JpaRepository<TourRepeat, Long> {
+import java.util.List;
+
+public interface TourRepeatRepository extends JpaRepository<TourRepeat, Long> {
 
 	@Modifying
 	@Query("delete from TourRepeat tr where tr.tour.id =:tourId")
 	void deleteAllByTourId(Long tourId);
+
+	List<TourRepeat> findByTourId(Long tourId);
 
 }

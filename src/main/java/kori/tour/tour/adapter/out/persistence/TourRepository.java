@@ -3,6 +3,7 @@ package kori.tour.tour.adapter.out.persistence;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import kori.tour.member.domain.Subscription;
 import kori.tour.tour.domain.RegionCode;
@@ -32,5 +33,9 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 
 	@Query("select t from Tour t where t.regionCode in :subs and t.eventEndDate >= :now order by t.eventStartDate asc")
 	Slice<Tour> findByMemberSubscriptions(List<RegionCode> subs, LocalDate now, Pageable pageable);
+
+	@Query("select t from Tour t join fetch t.keywords where t.id =:id ")
+	Optional<Tour> findWithKeywordsById(Long id);
+
 
 }
