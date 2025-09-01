@@ -77,9 +77,9 @@ public class TourController {
         TourAllDto.Overview overview = new TourAllDto.Overview(
                 tour.getEventStartDate().toString(),
                 tour.getEventEndDate().toString(),
-                tourDetail.getPlayTime(),
-                tourDetail.getSpendTimeFestival(),
-                tourDetail.getUseTimeFestival());
+                tourDetail.getPlayTime(), //운영시간
+                tourDetail.getSpendTimeFestival(), // 예상 소요시간
+                tourDetail.getUseTimeFestival()); // 비용
 
         // 상세
         List<TourAllDto.Info> infoList = new ArrayList<>();

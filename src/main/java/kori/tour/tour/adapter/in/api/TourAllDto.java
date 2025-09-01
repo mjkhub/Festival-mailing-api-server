@@ -16,9 +16,9 @@ public record TourAllDto(
     public record Overview(
             String eventStartDate,
             String eventEndDate,
-            String playTime,
-            String spendTimeFestival,
-            String useTimeFestival
+            String businessHours,
+            String expectedDuration,
+            String cost
     ) {}
 
     public record Detail(
