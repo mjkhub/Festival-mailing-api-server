@@ -32,7 +32,7 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 	@Query("select t.id from Tour t where t.regionCode in :subs and t.eventEndDate >= :now order by t.eventStartDate asc, t.id asc")
 	Slice<Long> findTourIdListByMemberSubscriptions(List<RegionCode> subs, LocalDate now, Pageable pageable);
 
-	@Query("select t from Tour t left join fetch t.keywords.keywordSet kw where t.id in :ids order by t.eventStartDate asc, t.id asc")
+	@Query("select distinct t from Tour t left join fetch t.keywords.keywordSet kw where t.id in :ids")
 	List<Tour> findWithKeywordsByIds(List<Long> ids);
 
 	@Query("select t from Tour t left join fetch  t.keywords.keywordSet kw  where t.id =:id ")
