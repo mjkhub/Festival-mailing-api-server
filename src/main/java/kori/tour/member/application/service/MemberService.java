@@ -62,6 +62,12 @@ class MemberService implements MemberUseCase {
         Pageable pageRequest = PageRequest.of(Math.max(0,page), PAGE_SIZE);
         if (subscriptions.isEmpty())
             return new SliceImpl<>(List.of(), pageRequest, false);
-        return tourRepository.findByMemberSubscriptions(subscriptions, LocalDate.now(), pageRequest);
+        // 1) ID Slice 조회
+        Slice<Long> idSlice = tourRepository.findTourIdListByMemberSubscriptions(subscriptions, LocalDate.now(), pageRequest);
+        if (idSlice.isEmpty()) return new SliceImpl<>(List.of(), pageRequest, false);
+
+        // 2) fetch join 으로 Tour 조회 (동일 정렬 그대로)
+        List<Tour> tours = tourRepository.findWithKeywordsByIds(idSlice.getContent());
+        return new SliceImpl<>(tours, pageRequest, idSlice.hasNext());
     }
 }

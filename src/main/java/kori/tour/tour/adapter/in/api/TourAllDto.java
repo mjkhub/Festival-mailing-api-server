@@ -9,7 +9,7 @@ public record TourAllDto(
         List<String> keywords,
         List<String> images,
         Overview overview,
-        Detail detail,
+        List<Info> detailInfo,
         Directions directions) {
 
 
@@ -19,10 +19,6 @@ public record TourAllDto(
             String businessHours,
             String expectedDuration,
             String cost
-    ) {}
-
-    public record Detail(
-            List<Info> infoList
     ) {}
 
     public record Info(String infoName, String infoText) {}

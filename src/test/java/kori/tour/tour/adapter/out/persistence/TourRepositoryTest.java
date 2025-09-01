@@ -70,41 +70,36 @@ class TourRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("구독 지역(areaCode,sigunGuCode)에 해당하고 아직 종료되지 않은 Tour만 시작일 오름차순으로 Slice 페이징 조회")
-	void findByMemberSubscriptions_filtersAndSortsAndPaginates() {
+	@DisplayName("구독 지역에 해당하고 아직 종료되지 않은 Tour만 시작일 오름차순으로 Slice 페이징(ID→fetch join)")
+	void findByMemberSubscriptions_filtersSortsPaginates_withTwoStepFetch() {
 		// given
 		String subArea = "11";
 		String subSigungu = "110";
-		List<RegionCode> subscriptions = List.of(
-				Subscription.builder()
-						.areaCode(subArea)
-						.sigunGuCode(subSigungu)
-						.build()).stream()
-				.map(Subscription::mapToRegionCode)
-				.toList();
+
+		List<RegionCode> subs = List.of(new RegionCode(subArea, subSigungu));
 
 		LocalDate now = LocalDate.now();
 
-		// 구독 지역 + 진행/예정 (포함되어야 함)
+		// 구독 지역 + 진행/예정 (포함)
 		Tour t1 = Tour.builder()
 				.contentId("A-keep-1")
-				.regionCode(new RegionCode(subArea,subSigungu))
+				.regionCode(new RegionCode(subArea, subSigungu))
 				.eventStartDate(now.plusDays(1))   // 더 이른 시작
 				.eventEndDate(now.plusDays(10))    // 아직 안 끝남
 				.build();
 
-		// 구독 지역 + 진행/예정 (포함되어야 함)
+		// 구독 지역 + 진행/예정 (포함)
 		Tour t2 = Tour.builder()
 				.contentId("B-keep-2")
-				.regionCode(new RegionCode(subArea,subSigungu))
+				.regionCode(new RegionCode(subArea, subSigungu))
 				.eventStartDate(now.plusDays(3))   // 더 늦은 시작
 				.eventEndDate(now.plusDays(7))     // 아직 안 끝남
 				.build();
 
-		// 구독 지역이지만 이미 종료됨 (제외)
+		// 구독 지역이나 이미 종료 (제외)
 		Tour t3 = Tour.builder()
 				.contentId("C-exclude-ended")
-				.regionCode(new RegionCode(subArea,subSigungu))
+				.regionCode(new RegionCode(subArea, subSigungu))
 				.eventStartDate(now.minusDays(10))
 				.eventEndDate(now.minusDays(1))    // 끝남
 				.build();
@@ -112,7 +107,7 @@ class TourRepositoryTest {
 		// 다른 지역 (제외)
 		Tour t4 = Tour.builder()
 				.contentId("D-exclude-other-region")
-				.regionCode(new RegionCode("99","990"))
+				.regionCode(new RegionCode("99", "990"))
 				.eventStartDate(now.plusDays(2))
 				.eventEndDate(now.plusDays(9))
 				.build();
@@ -121,25 +116,41 @@ class TourRepositoryTest {
 		em.flush();
 		em.clear();
 
-		// when: 페이지 크기 1로 잘리는지, 정렬이 시작일 asc로 되는지 확인
+		// when: 1차 쿼리 — ID Slice (정렬: eventStartDate asc, id asc)
 		Pageable firstPage = PageRequest.of(0, 1);
-		Slice<Tour> slice1 = tourRepository.findByMemberSubscriptions(subscriptions, now, firstPage);
+		Slice<Long> idSlice1 = tourRepository.findTourIdListByMemberSubscriptions(subs, now, firstPage);
 
-		// then: 필터링 결과 2건(t1,t2) 중 시작일 빠른 t1이 먼저, hasNext=true
-		assertThat(slice1.getContent())
+		// then: 필터링 결과 2건(t1,t2) 중 시작일 빠른 t1의 ID가 먼저, hasNext=true
+		assertThat(idSlice1.getContent()).hasSize(1);
+		Long firstId = idSlice1.getContent().get(0);
+
+		// 2차 쿼리 — ID로 fetch join + 동일 정렬
+		List<Tour> page1Tours = idSlice1.isEmpty()
+				? List.of()
+				: tourRepository.findWithKeywordsByIds(idSlice1.getContent());
+
+		assertThat(page1Tours)
 				.extracting(Tour::getContentId)
 				.containsExactly("A-keep-1");
-		assertThat(slice1.hasNext()).isTrue();
+		assertThat(idSlice1.hasNext()).isTrue();
 
-		// when: 다음 페이지
+		// when: 다음 페이지 — ID Slice
 		Pageable secondPage = PageRequest.of(1, 1);
-		Slice<Tour> slice2 = tourRepository.findByMemberSubscriptions(subscriptions, now, secondPage);
+		Slice<Long> idSlice2 = tourRepository.findTourIdListByMemberSubscriptions(subs, now, secondPage);
 
 		// then: 두 번째는 t2, hasNext=false
-		assertThat(slice2.getContent())
+		assertThat(idSlice2.getContent()).hasSize(1);
+		Long secondId = idSlice2.getContent().get(0);
+		assertThat(secondId).isNotEqualTo(firstId);
+
+		List<Tour> page2Tours = idSlice2.isEmpty()
+				? List.of()
+				: tourRepository.findWithKeywordsByIds(idSlice2.getContent());
+
+		assertThat(page2Tours)
 				.extracting(Tour::getContentId)
 				.containsExactly("B-keep-2");
-		assertThat(slice2.hasNext()).isFalse();
+		assertThat(idSlice2.hasNext()).isFalse();
 	}
 
 }

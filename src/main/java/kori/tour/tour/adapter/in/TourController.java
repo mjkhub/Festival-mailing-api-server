@@ -86,8 +86,6 @@ public class TourController {
         for (TourRepeat r : tourRepeats)
             infoList.add(new TourAllDto.Info(r.getInfoName(), r.getInfoText()));
 
-        TourAllDto.Detail detail = new TourAllDto.Detail(infoList);
-
         // 오시는 길
         TourAllDto.Directions directions = new TourAllDto.Directions(
                 tour.getRoadAddress(),
@@ -101,7 +99,7 @@ public class TourController {
                 keywords,
                 images,
                 overview,
-                detail,
+                infoList,
                 directions);
     }
 

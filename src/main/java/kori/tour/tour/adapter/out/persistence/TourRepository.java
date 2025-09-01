@@ -29,10 +29,13 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 			+ "where t.contentId = :contentId and t.modifiedTime < :modifiedTime")
 	boolean isUpdated(String contentId, LocalDateTime modifiedTime);
 
-	@Query("select t from Tour t where t.regionCode in :subs and t.eventEndDate >= :now order by t.eventStartDate asc")
-	Slice<Tour> findByMemberSubscriptions(List<RegionCode> subs, LocalDate now, Pageable pageable);
+	@Query("select t.id from Tour t where t.regionCode in :subs and t.eventEndDate >= :now order by t.eventStartDate asc, t.id asc")
+	Slice<Long> findTourIdListByMemberSubscriptions(List<RegionCode> subs, LocalDate now, Pageable pageable);
 
-	@Query("select t from Tour t left join fetch t.keywords where t.id =:id ")
+	@Query("select t from Tour t left join fetch t.keywords.keywordSet kw where t.id in :ids order by t.eventStartDate asc, t.id asc")
+	List<Tour> findWithKeywordsByIds(List<Long> ids);
+
+	@Query("select t from Tour t left join fetch  t.keywords.keywordSet kw  where t.id =:id ")
 	Optional<Tour> findWithKeywordsById(Long id);
 
 
