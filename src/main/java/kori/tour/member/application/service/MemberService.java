@@ -3,6 +3,10 @@ package kori.tour.member.application.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -62,6 +66,21 @@ class MemberService implements MemberUseCase {
         Pageable pageRequest = PageRequest.of(Math.max(0,page), PAGE_SIZE);
         if (subscriptions.isEmpty())
             return new SliceImpl<>(List.of(), pageRequest, false);
-        return tourRepository.findByMemberSubscriptions(subscriptions, LocalDate.now(), pageRequest);
+        // 1) ID Slice 조회
+        Slice<Long> idSlice = tourRepository.findTourIdListByMemberSubscriptions(subscriptions, LocalDate.now(), pageRequest);
+        if (idSlice.isEmpty()) return new SliceImpl<>(List.of(), pageRequest, false);
+
+        // 2) fetch join 으로 Tour 조회
+        List<Tour> tours = tourRepository.findWithKeywordsByIds(idSlice.getContent());
+
+        // 3) Id 순서대로 Tour 정렬하기
+        List<Long> idOrder = idSlice.getContent();
+        Map<Long, Tour> TourById = tours.stream()
+                .collect(Collectors.toMap(Tour::getId, Function.identity(), (a, b) -> a));
+
+        List<Tour> orderedTours = idOrder.stream()
+                .map(TourById::get)
+                .toList();
+        return new SliceImpl<>(orderedTours, pageRequest, idSlice.hasNext());
     }
 }
