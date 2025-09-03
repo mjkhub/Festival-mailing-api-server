@@ -17,6 +17,6 @@ public class RegionCode {
     @Column(name = "area_code")
     private String areaCode;
 
-    @Column(name = "sigungu_code")
+    @Column(name = "sigun_gu_code")
     private String sigunGuCode;
 }
