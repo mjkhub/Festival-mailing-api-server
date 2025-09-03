@@ -37,5 +37,8 @@ jobs:
             docker pull $IMAGE_NAME
             docker stop myapp || true
             docker rm myapp || true
-            docker run -d --name myapp -p 8080:8080 $IMAGE_NAME \
-               -e SPRING_PROFILES_ACTIVE=prod
+            
+            docker run -d --name myapp \
+              -p 8080:8080 \
+              -e SPRING_PROFILES_ACTIVE=prod
+              $IMAGE_NAME
