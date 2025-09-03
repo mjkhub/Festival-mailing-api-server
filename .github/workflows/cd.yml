@@ -32,6 +32,15 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            DB_URL="${{secrets.DB_URL}}" 
+            DB_USERNAME="${{secrets.DB_USERNAME}}" 
+            DB_PASSWORD="${{secrets.DB_PASSWORD}}" 
+            DB_DRIVER="${{secrets.DB_DRIVER}}" 
+            OPEN_AI_KEY="${{secrets.OPEN_AI_KEY}}" 
+            AI_MODEL="${{secrets.AI_MODEL}}" 
+            JWT_SECRET="${{secrets.JWT_SECRET}}" 
+            TOUR_API_KEY="${{secrets.TOUR_API_KEY}}" 
+            
             IMAGE_NAME=ghcr.io/${{ secrets.GHCR_USERNAME }}/myapp
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
             docker pull $IMAGE_NAME
@@ -41,4 +50,12 @@ jobs:
             docker run -d --name myapp \
               -p 8080:8080 \
               -e SPRING_PROFILES_ACTIVE=prod \
+              -e DB_URL="${DB_URL}" \
+              -e DB_USERNAME="${DB_USERNAME}" \
+              -e DB_PASSWORD="${DB_PASSWORD}" \
+              -e DB_DRIVER="${DB_DRIVER}" \
+              -e OPEN_AI_KEY="${OPEN_AI_KEY}" \
+              -e AI_MODEL="${AI_MODEL}" \
+              -e JWT_SECRET="${JWT_SECRET}" \
+              -e TOUR_API_KEY="${TOUR_API_KEY}" \
               $IMAGE_NAME
