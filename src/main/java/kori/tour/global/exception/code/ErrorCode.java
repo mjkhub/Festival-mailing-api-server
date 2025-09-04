@@ -11,6 +11,11 @@ public enum ErrorCode {
 	 * API 예외에 사용할 에러코드 정의
 	 */
 
+	API_MISSING_PARAM(HttpStatus.BAD_REQUEST, "필수 파라미터가 없습니다."),
+	API_INVALID_PARAM(HttpStatus.BAD_REQUEST, "파라미터 값 중 잘못된 값이 있습니다."),
+	API_NOT_ACCEPTABLE(HttpStatus.NOT_ACCEPTABLE, "요청한 미디어 타입으로 응답할 수 없습니다."),
+
+
 	AREA_CODE_FILE(HttpStatus.BAD_REQUEST, "지역 코드 파일을 읽는 데 실패했습니다"),
 	AREA_NOT_FOUND(HttpStatus.NOT_FOUND, "지역 코드 혹은 시군구 코드를 찾을 수 없습니다"),
 

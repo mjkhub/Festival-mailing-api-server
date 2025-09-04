@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-import jakarta.servlet.http.HttpServletRequest;
 import kori.tour.global.data.area_code.Area;
 import kori.tour.global.data.area_code.AreaCodeRegistry;
 import kori.tour.member.adapter.in.api.in.SubscriptionUpdate;
@@ -45,7 +44,7 @@ public class MemberController {
             @ApiResponse(responseCode = "200", description = "조회 성공",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MyPage.class))),
     })
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<MyPage> memberLoginHome(){
         Member member = memberUseCase.getMemberWithSubscriptions(1L);
         return ResponseEntity.ok().body(memberApiParser.mapToMyPageResponse(member));
@@ -58,7 +57,7 @@ public class MemberController {
                             schema = @Schema(implementation = SubscriptionsResponse.class))),
     })
     @GetMapping("/subscriptions")
-    public ResponseEntity<SubscriptionsResponse> getSubscriptions(HttpServletRequest servletRequest){
+    public ResponseEntity<SubscriptionsResponse> getSubscriptions(){
         List<Area> areaCodeList = areaCodeRegistry.getAreaCodeList();
         Set<Subscription> subscriptions = memberUseCase.getMemberWithSubscriptions(1L).getSubscriptions();
         SubscriptionsResponse subscriptionsResponse = memberApiParser.mapToSubscriptionResponse(areaCodeList, subscriptions);
@@ -71,6 +70,7 @@ public class MemberController {
     })
     @PutMapping("/subscriptions")
     public ResponseEntity<Void> updateSubscription(@RequestBody SubscriptionUpdate subscriptionUpdate){
+        areaCodeRegistry.validateAreaAndSigunGuCode(subscriptionUpdate.areaCode(), subscriptionUpdate.sigunGuCode());
         memberUseCase.updateSubscription(1L, subscriptionUpdate);
         return ResponseEntity.noContent().build();
     }

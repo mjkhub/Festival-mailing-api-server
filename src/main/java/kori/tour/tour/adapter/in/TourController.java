@@ -36,6 +36,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(value= "/api/tours", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TourController {
 
+    //Todo 컨트롤러에서 레포지토리를 직접 호출하는게 아니라 서비스 로직을 호출하도록 개선해야함
+
     private final TourRepository tourRepository;
     private final TourDetailRepository tourDetailRepository;
     private final TourRepeatRepository tourRepeatRepository;
@@ -52,7 +54,7 @@ public class TourController {
     @GetMapping("/{tourId}")
     public ResponseEntity<TourAllDto> getAllTourInfo(@PathVariable Long tourId){
         Tour tour = tourRepository.findWithKeywordsById(tourId).orElseThrow(() -> new NotFoundException(ErrorCode.TOUR_NOT_FOUND));
-        TourDetail tourDetail = tourDetailRepository.findByTourId(tourId).orElseThrow(() -> new NotFoundException(ErrorCode.TOUR_NOT_FOUND));
+        TourDetail tourDetail = tourDetailRepository.findByTourId(tourId).orElseGet( ()-> null);
         List<TourRepeat> tourRepeats = tourRepeatRepository.findByTourId(tourId);
         List<TourImage> tourImages = tourImageRepository.findByTourId(tourId);
         return ResponseEntity.ok().body(mapToTourAllDto(tour, tourDetail, tourRepeats, tourImages));
@@ -75,11 +77,11 @@ public class TourController {
 
         // 개요
         TourAllDto.Overview overview = new TourAllDto.Overview(
-                tour.getEventStartDate().toString(),
-                tour.getEventEndDate().toString(),
-                tourDetail.getPlayTime(), //운영시간
-                tourDetail.getSpendTimeFestival(), // 예상 소요시간
-                tourDetail.getUseTimeFestival()); // 비용
+                String.valueOf(tour.getEventStartDate()),
+                String.valueOf(tour.getEventEndDate()),
+                tourDetail != null ? tourDetail.getPlayTime() : null,
+                tourDetail != null ? tourDetail.getSpendTimeFestival() : null,
+                tourDetail != null ? tourDetail.getUseTimeFestival() : null);
 
         // 상세
         List<TourAllDto.Info> infoList = new ArrayList<>();
@@ -89,8 +91,9 @@ public class TourController {
         // 오시는 길
         TourAllDto.Directions directions = new TourAllDto.Directions(
                 tour.getRoadAddress(),
-                tourDetail.getEventPlace(),
-                tour.getTelephone());
+                tourDetail != null ? tourDetail.getEventPlace() : null,
+                tour.getTelephone()
+        );
 
         // 레코드 한 번에 생성
         return new TourAllDto(

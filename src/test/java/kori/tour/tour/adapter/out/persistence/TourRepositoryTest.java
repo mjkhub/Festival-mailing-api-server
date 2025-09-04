@@ -18,7 +18,6 @@ import org.springframework.data.domain.Slice;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import kori.tour.member.domain.Subscription;
 import kori.tour.tour.domain.RegionCode;
 import kori.tour.tour.domain.Tour;
 

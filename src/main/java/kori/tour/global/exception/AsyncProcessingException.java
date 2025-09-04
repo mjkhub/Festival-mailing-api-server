@@ -4,7 +4,7 @@ package kori.tour.global.exception;
 import kori.tour.global.exception.code.ErrorCode;
 
 
-// Todo Spring AOP 를 활용해서 예외를 공통처리
+// Todo Spring AOP 를 활용해서 비동기 작업중에서 발생하는 예외를 공통처리
 public class AsyncProcessingException extends BusinessException {
     public AsyncProcessingException(ErrorCode errorCode) {
         super(errorCode);

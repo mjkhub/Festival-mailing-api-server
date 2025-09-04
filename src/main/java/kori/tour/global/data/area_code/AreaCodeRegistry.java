@@ -67,4 +67,18 @@ public class AreaCodeRegistry {
 				.orElseThrow(() -> new NotFoundException(ErrorCode.AREA_NOT_FOUND));
 	}
 
+	public void validateAreaAndSigunGuCode(String areaCode, String sigunGuCode) {
+		// areaCode 존재 여부 확인
+		Area area = areaCodeList.stream()
+				.filter(ac -> ac.areaCode().equals(areaCode))
+				.findAny()
+				.orElseThrow(() -> new NotFoundException(ErrorCode.AREA_NOT_FOUND));
+
+		// sigunGuCode 존재 여부 확인
+		area.subRegions().stream()
+				.filter(sr -> sr.sigunGuCode().equals(sigunGuCode))
+				.findAny()
+				.orElseThrow(() -> new NotFoundException(ErrorCode.AREA_NOT_FOUND));
+	}
+
 }

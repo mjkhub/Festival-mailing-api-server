@@ -71,6 +71,10 @@ public class TourDetail {
 			.build();
 	}
 
+	/**
+	 * 투어를 갱신해야할 때, 관련 엔티티를 모두 삭제하는 Hard delete 방식을 채택하면서
+	 * 사용하지 않게 된 메소드 2025.09.04
+	 * */
 	public void updateTourDetail(TourDetailResponse tourDetailResponse) {
 		ageLimit = tourDetailResponse.ageLimit();
 		bookingPlace = tourDetailResponse.bookingPlace();
