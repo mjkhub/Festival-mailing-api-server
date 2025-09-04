@@ -48,3 +48,13 @@ tour:
 
 email:
   sender: test
+
+service-url: test
+
+oauth2:
+  google:
+    client-id: test
+    client-secret: test
+    redirect-uri: test
+    access-token-uri: test
+    profile-uri: test

@@ -41,6 +41,13 @@ jobs:
             JWT_SECRET="${{secrets.JWT_SECRET}}" 
             TOUR_API_KEY="${{secrets.TOUR_API_KEY}}" 
             
+            SERVICE_URL="${{secrets.SERVICE_URL}}" 
+            GOOGLE_CLIENT_ID="${{secrets.GOOGLE_CLIENT_ID}}" 
+            GOOGLE_CLIENT_SECRET="${{secrets.GOOGLE_CLIENT_SECRET}}" 
+            GOOGLE_REDIRECT_URI="${{secrets.GOOGLE_REDIRECT_URI}}" 
+            GOOGLE_ACCESS_TOKEN_URI="${{secrets.GOOGLE_ACCESS_TOKEN_URI}}" 
+            GOOGLE_PROFILE_URI="${{secrets.GOOGLE_PROFILE_URI}}" 
+            
             IMAGE_NAME=ghcr.io/${{ secrets.GHCR_USERNAME }}/myapp
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
             docker pull $IMAGE_NAME
@@ -58,4 +65,10 @@ jobs:
               -e AI_MODEL="${AI_MODEL}" \
               -e JWT_SECRET="${JWT_SECRET}" \
               -e TOUR_API_KEY="${TOUR_API_KEY}" \
+              -e SERVICE_URL="${SERVICE_URL}" \
+              -e GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID}" \
+              -e GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET}" \
+              -e GOOGLE_REDIRECT_URI="${GOOGLE_REDIRECT_URI}" \
+              -e GOOGLE_ACCESS_TOKEN_URI="${GOOGLE_ACCESS_TOKEN_URI}" \
+              -e GOOGLE_PROFILE_URI="${GOOGLE_PROFILE_URI}" \
               $IMAGE_NAME

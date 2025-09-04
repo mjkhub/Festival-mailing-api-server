@@ -64,3 +64,13 @@ tour:
 
 email:
   sender: test
+
+service-url: ${SERVICE_URL}
+
+oauth2:
+  google:
+    client-id: ${GOOGLE_CLIENT_ID}
+    client-secret: ${GOOGLE_CLIENT_SECRET}
+    redirect-uri: ${GOOGLE_REDIRECT_URI}
+    access-token-uri: ${GOOGLE_ACCESS_TOKEN_URI}
+    profile-uri: ${GOOGLE_PROFILE_URI}

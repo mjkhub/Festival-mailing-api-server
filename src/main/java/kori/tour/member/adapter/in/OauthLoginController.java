@@ -1,0 +1,54 @@
+package kori.tour.member.adapter.in;
+
+
+import jakarta.servlet.http.HttpServletRequest;
+import kori.tour.member.adapter.in.oauth_key.ApiKeyDto;
+import kori.tour.member.adapter.out.persistence.MemberRepository;
+import kori.tour.member.application.service.PlatformClient;
+import kori.tour.member.domain.ActivityInfo;
+import kori.tour.member.domain.Member;
+import kori.tour.member.domain.PlatformInfo;
+import kori.tour.member.domain.PlatformProfile;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+@Slf4j
+@Controller
+@RequiredArgsConstructor
+class OauthLoginController {
+
+    private final ApiKeyResolver apiKeyResolver;
+    private final PlatformClient platformClient;
+    private final MemberRepository memberRepository;
+
+    @Value("${service-url}")
+    private String serviceURL;
+
+    @GetMapping("/api/login/oauth/{platformName}") // 플랫폼으로부터 요청을 받는 부분 -> 이건 내가 설정
+    public String listenRedirectRequestFromPlatform(@RequestParam("code") String authorizationCode, @PathVariable String platformName, HttpServletRequest servletRequest) {
+        ApiKeyDto apiKeyDto = apiKeyResolver.resolveApiKey(platformName);
+        String accessToken = platformClient.getAccessToken(authorizationCode, apiKeyDto);
+        PlatformProfile platformProfile = platformClient.getPlatformProfileFromPlatform(accessToken, apiKeyDto, platformName);
+        Optional<Member> m = memberRepository.findByPlatformProfile(platformProfile.getPlatformType(), platformProfile.getPlatformPk(), platformProfile.getPlatformEmail());
+        Member member = m.orElseGet(() -> null);
+
+        if (member == null) {
+            Member savedMember = memberRepository.save(Member.builder()
+                    .emailSubscribe(true)
+                    .activityInfo(new ActivityInfo(LocalDateTime.now(), LocalDate.now()))
+                    .platformInfo(new PlatformInfo(platformProfile.getPlatformType(), platformProfile.getPlatformPk(), platformProfile.getPlatformEmail()))
+                    .build());
+        }
+        // jwt 부여
+        return "redirect:"+ serviceURL + "/auth/callback/sign-up?code="; // Todo 임시 코드와 JWT 를 교환하는 API 구현 ?
+    }
+
+}
+
