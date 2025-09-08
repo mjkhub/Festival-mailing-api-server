@@ -15,7 +15,7 @@ public class CorsConfig {  // 스프링 시큐리티로 처리할지는 조금 �
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("localhost:3000")
+                        .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH", "HEAD")
                         .allowCredentials(true)
                         .allowedHeaders("*");
