@@ -1,6 +1,14 @@
 package kori.tour.member.adapter.in;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
 import jakarta.servlet.http.HttpServletRequest;
 import kori.tour.member.adapter.in.oauth_key.ApiKeyDto;
 import kori.tour.member.adapter.out.persistence.MemberRepository;
@@ -11,13 +19,6 @@ import kori.tour.member.domain.PlatformInfo;
 import kori.tour.member.domain.PlatformProfile;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -51,4 +52,3 @@ class OauthLoginController {
     }
 
 }
-

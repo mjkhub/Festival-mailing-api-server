@@ -2,14 +2,13 @@ package kori.tour.member.adapter.out.persistence;
 
 import java.util.Optional;
 
-import kori.tour.member.domain.PlatformProfile;
-import kori.tour.member.domain.PlatformType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import kori.tour.member.domain.Member;
+import kori.tour.member.domain.PlatformType;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 

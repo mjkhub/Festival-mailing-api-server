@@ -1,9 +1,10 @@
 package kori.tour.member.adapter.in;
 
+import org.springframework.stereotype.Component;
+
 import kori.tour.member.adapter.in.oauth_key.ApiKeyDto;
 import kori.tour.member.adapter.in.oauth_key.GoogleApiKey;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
