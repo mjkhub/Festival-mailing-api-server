@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import kori.tour.auth.token.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +29,13 @@ class OauthLoginController {
     private final ApiKeyResolver apiKeyResolver;
     private final PlatformClient platformClient;
     private final MemberRepository memberRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Value("${service-url}")
     private String serviceURL;
 
     @GetMapping("/api/login/oauth/{platformName}") // 플랫폼으로부터 요청을 받는 부분 -> 이건 내가 설정
-    public String listenRedirectRequestFromPlatform(@RequestParam("code") String authorizationCode, @PathVariable String platformName, HttpServletRequest servletRequest) {
+    public String listenRedirectRequestFromPlatform(@RequestParam("code") String authorizationCode, @PathVariable String platformName) {
         ApiKeyDto apiKeyDto = apiKeyResolver.resolveApiKey(platformName);
         String accessToken = platformClient.getAccessToken(authorizationCode, apiKeyDto);
         PlatformProfile platformProfile = platformClient.getPlatformProfileFromPlatform(accessToken, apiKeyDto, platformName);
@@ -41,14 +43,14 @@ class OauthLoginController {
         Member member = m.orElseGet(() -> null);
 
         if (member == null) {
-            Member savedMember = memberRepository.save(Member.builder()
+            member = memberRepository.save(Member.builder()
                     .emailSubscribe(true)
                     .activityInfo(new ActivityInfo(LocalDateTime.now(), LocalDate.now()))
                     .platformInfo(new PlatformInfo(platformProfile.getPlatformType(), platformProfile.getPlatformPk(), platformProfile.getPlatformEmail()))
                     .build());
         }
-        // jwt 부여
-        return "redirect:"+ serviceURL + "/auth/callback/sign-up?code="; // Todo 임시 코드와 JWT 를 교환하는 API 구현 ?
+        String jwtToken = jwtTokenProvider.createAccessToken(member.getId().toString());
+        return "redirect:"+ serviceURL + "/auth/callback/sign-in?token=" + jwtToken;
     }
 
 }
