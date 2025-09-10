@@ -14,4 +14,8 @@ public interface MemberUseCase {
 
     Slice<Tour> getSubscribingRegionTours(Long memberId, int page);
 
+    boolean updateEmailSubscribe(Long memberId, boolean subscribe);
+
+    void deleteMember(Long memberId);
+
 }

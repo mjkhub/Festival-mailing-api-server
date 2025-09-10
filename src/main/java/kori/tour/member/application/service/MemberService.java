@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import kori.tour.email.adapter.out.persistence.EmailRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -32,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 class MemberService implements MemberUseCase {
 
     private final MemberRepository memberRepository;
+    private final EmailRepository emailRepository;
 
     private final TourRepository tourRepository;
 
@@ -81,5 +83,21 @@ class MemberService implements MemberUseCase {
                 .map(TourById::get)
                 .toList();
         return new SliceImpl<>(orderedTours, pageRequest, idSlice.hasNext());
+    }
+
+    @Transactional
+    @Override
+    public boolean updateEmailSubscribe(Long memberId, boolean subscribe) {
+        Member member= getMemberWithSubscriptions(memberId);
+        member.updateEmailSubscribe(subscribe);
+        return member.getEmailSubscribe();
+    }
+
+    @Transactional
+    @Override
+    public void deleteMember(Long memberId){
+        Member member = getMemberWithSubscriptions(memberId); // check 404
+        memberRepository.deleteById(memberId);
+        emailRepository.deleteByMember_Id(memberId);
     }
 }
