@@ -20,7 +20,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private static final String NO_CHECK_URL = "/api/login/oauth";
     private static final String BEARER = "Bearer ";
 
     @Override
@@ -31,8 +30,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .map(h -> h.substring(BEARER.length()))
                 .orElseGet(()->"");
 
-        // AnonymousAuthenticationFilter 가 실행 -> .anyRequest().authenticated())과 만나 403이 반환
-        if (request.getRequestURI().startsWith(NO_CHECK_URL) || accessToken.isEmpty()) { //
+        // AnonymousAuthenticationFilter -> SecurityContext에 아무것도 없음 -> anyRequest().authenticated() 으로 403
+        if (accessToken.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -46,6 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 java.util.Collections.emptyList() // 권한 없음
         );
 
+        //스레드 로컬에 저장된다
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);

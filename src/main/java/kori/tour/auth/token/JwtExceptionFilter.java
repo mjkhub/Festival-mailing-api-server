@@ -19,7 +19,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
         try{
             filterChain.doFilter(request, response);
-        }catch (UnauthorizedException e) {
+        }catch (UnauthorizedException e) { // 토큰을 추출하는 과정에서 발생하는 예외 처리 : extractPrincipal
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             response.setContentType("application/json");

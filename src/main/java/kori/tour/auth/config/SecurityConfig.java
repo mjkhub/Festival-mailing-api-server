@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .sessionManagement(c ->
                         c.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 x
 
-                // request 인증, 인가 설정
+                // JWT 검증을 하지 않을 URI 설정 & 이외의 URI 는 모두 JWT 인증 필요
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(
                                         "/error", "/favicon.ico",
@@ -59,7 +59,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 );
 
-        httpSecurity  // UsernamePasswordAuthenticationFilter 는 사용하지 않지만 위치를 지정하기 위해서 등록
+        httpSecurity  // UsernamePasswordAuthenticationFilter 는 사용하지 않지만 필터 위치를 지정하기 위해서 등록
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class);
 

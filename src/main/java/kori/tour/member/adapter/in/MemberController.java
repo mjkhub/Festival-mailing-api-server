@@ -61,6 +61,7 @@ public class MemberController {
     @GetMapping("/subscriptions")
     public ResponseEntity<SubscriptionsResponse> getSubscriptions(){
         List<Area> areaCodeList = areaCodeRegistry.getAreaCodeList();
+        System.out.println(SecurityUtils.getCurrentMemberId());
         Set<Subscription> subscriptions = memberUseCase.getMemberWithSubscriptions(SecurityUtils.getCurrentMemberId()).getSubscriptions();
         SubscriptionsResponse subscriptionsResponse = memberApiParser.mapToSubscriptionResponse(areaCodeList, subscriptions);
         return ResponseEntity.ok().body(subscriptionsResponse);
