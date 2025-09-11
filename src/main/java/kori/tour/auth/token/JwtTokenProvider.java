@@ -39,7 +39,12 @@ public class JwtTokenProvider {
 
 	public String extractPrincipal(String token) {
 		try {
-			return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+			String principal = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+			if(principal == null){
+				log.warn("ValidationKey was good But no subject in token. {}",token);
+				throw new UnauthorizedException(new MalformedJwtException("Malformed JWT token: "+token));
+			}
+			return principal;
 		}
 		catch (ExpiredJwtException e) {
 			log.warn("JWT token expired: {}", e.getMessage());

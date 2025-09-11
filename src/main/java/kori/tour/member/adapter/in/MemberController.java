@@ -4,6 +4,10 @@ package kori.tour.member.adapter.in;
 import java.util.List;
 import java.util.Set;
 
+import kori.tour.email.adapter.out.persistence.EmailRepository;
+import kori.tour.member.adapter.in.api.in.EmailSubscribeUpdateRequest;
+import kori.tour.member.adapter.in.api.out.EmailSubscribeUpdateResponse;
+import kori.tour.member.adapter.out.persistence.MemberRepository;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +19,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import kori.tour.global.data.area_code.Area;
 import kori.tour.global.data.area_code.AreaCodeRegistry;
+import kori.tour.global.utils.SecurityUtils;
 import kori.tour.member.adapter.in.api.in.SubscriptionUpdate;
 import kori.tour.member.adapter.in.api.out.MyPage;
 import kori.tour.member.adapter.in.api.out.SubscribingRegionTours;
@@ -38,19 +44,23 @@ public class MemberController {
     private final MemberUseCase memberUseCase;
     private final AreaCodeRegistry areaCodeRegistry;
     private final MemberApiParser memberApiParser;
+    private final MemberRepository memberRepository;
+    private final EmailRepository emailRepository;
 
-    @Operation(summary = "마이페이지 조회", description = "마이페이지에서 회원 정보를 조회합니다 ")
+    @Operation(summary = "마이페이지 조회", description = "마이페이지에서 회원 정보를 조회합니다 ",
+            security = { @SecurityRequirement(name = "bearerAuth") })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "조회 성공",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MyPage.class))),
     })
     @GetMapping("")
     public ResponseEntity<MyPage> memberLoginHome(){
-        Member member = memberUseCase.getMemberWithSubscriptions(1L);
+        Member member = memberUseCase.getMemberWithSubscriptions(SecurityUtils.getCurrentMemberId());
         return ResponseEntity.ok().body(memberApiParser.mapToMyPageResponse(member));
     }
 
-    @Operation(summary = "전체 지역 목록 조회", description = "회원이 구독하는 지역을 표시하여 전체 지역 목록을 반환합니다")
+    @Operation(summary = "전체 지역 목록 조회", description = "회원이 구독하는 지역을 표시하여 전체 지역 목록을 반환합니다",
+            security = { @SecurityRequirement(name = "bearerAuth") })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "조회 성공",
                     content = @Content(mediaType = "application/json",
@@ -59,30 +69,25 @@ public class MemberController {
     @GetMapping("/subscriptions")
     public ResponseEntity<SubscriptionsResponse> getSubscriptions(){
         List<Area> areaCodeList = areaCodeRegistry.getAreaCodeList();
-        Set<Subscription> subscriptions = memberUseCase.getMemberWithSubscriptions(1L).getSubscriptions();
+        Set<Subscription> subscriptions = memberUseCase.getMemberWithSubscriptions(SecurityUtils.getCurrentMemberId()).getSubscriptions();
         SubscriptionsResponse subscriptionsResponse = memberApiParser.mapToSubscriptionResponse(areaCodeList, subscriptions);
         return ResponseEntity.ok().body(subscriptionsResponse);
     }
 
-    @Operation(summary = "지역 구독 상태 변경", description = "특정 지역에 대한 구독 상태를 변경합니다. `subscribe`가 `true`이면 구독하고, `false`이면 구독을 취소합니다.")
+    @Operation(summary = "지역 구독 상태 변경", description = "특정 지역에 대한 구독 상태를 변경합니다. `subscribe`가 `true`이면 구독하고, `false`이면 구독을 취소합니다.",
+            security = { @SecurityRequirement(name = "bearerAuth") })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "구독 상태 변경 성공")
     })
     @PutMapping("/subscriptions")
     public ResponseEntity<Void> updateSubscription(@RequestBody SubscriptionUpdate subscriptionUpdate){
         areaCodeRegistry.validateAreaAndSigunGuCode(subscriptionUpdate.areaCode(), subscriptionUpdate.sigunGuCode());
-        memberUseCase.updateSubscription(1L, subscriptionUpdate);
+        memberUseCase.updateSubscription(SecurityUtils.getCurrentMemberId(), subscriptionUpdate);
         return ResponseEntity.noContent().build();
     }
 
-//    @DeleteMapping("/")
-//    public ResponseEntity<Void> memberSubscriptions(HttpServletRequest servletRequest){
-//
-//
-//        return null;
-//    }
-
-    @Operation(summary = "구독 지역 축제/행사 조회", description = "회원이 구독하는 지역의 축제/행사 정보를 페이지별로 조회합니다.")
+    @Operation(summary = "구독 지역 축제/행사 조회", description = "회원이 구독하는 지역의 축제/행사 정보를 페이지별로 조회합니다.",
+            security = { @SecurityRequirement(name = "bearerAuth") })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "조회 성공",
                     content = @Content(mediaType = "application/json",
@@ -90,9 +95,36 @@ public class MemberController {
     })
     @GetMapping("/subscriptions/tours")
     public ResponseEntity<SubscribingRegionTours> getSubscribingTours(@Parameter(description = "페이지 번호 (0부터 시작)", required = true, example = "0") @RequestParam int page){
-        Slice<Tour> subscribingRegionTours = memberUseCase.getSubscribingRegionTours(1L, page);
+        Slice<Tour> subscribingRegionTours = memberUseCase.getSubscribingRegionTours(SecurityUtils.getCurrentMemberId(), page);
         SubscribingRegionTours response = memberApiParser.mapToSubscribingRegionTours(subscribingRegionTours);
         return ResponseEntity.ok().body(response);
+    }
+
+    @Operation(summary = "이메일 알림 구독 설정 변경", description = "회원이 이메일로 축제 소식을 받을지 여부를 변경합니다. `emailSubscribe`가 `true`면 구독, `false`면 해제합니다.",
+            security = { @SecurityRequirement(name = "bearerAuth")}
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "설정 변경 성공",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = EmailSubscribeUpdateResponse.class)))
+    })
+    @PatchMapping("/email-subscribe")
+    public ResponseEntity<EmailSubscribeUpdateResponse> updateEmailSubscribe(@RequestBody EmailSubscribeUpdateRequest emailSubscribeUpdateRequest){
+        boolean emailSubscribe = memberUseCase.updateEmailSubscribe(SecurityUtils.getCurrentMemberId(), emailSubscribeUpdateRequest.emailSubscribe());
+        return ResponseEntity.ok().body(new EmailSubscribeUpdateResponse(emailSubscribe));
+    }
+
+    @Operation(summary = "회원 탈퇴", description = "현재 로그인한 회원 계정을 영구 삭제합니다. -> 메인페이지로 리다이렉션",
+            security = { @SecurityRequirement(name = "bearerAuth")}
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "삭제 완료")
+    })
+    @DeleteMapping("/")
+    public ResponseEntity<Void> deleteMember(){
+        Long memberId = SecurityUtils.getCurrentMemberId();
+        memberUseCase.deleteMember(memberId);
+        return ResponseEntity.noContent().build();
     }
 
 

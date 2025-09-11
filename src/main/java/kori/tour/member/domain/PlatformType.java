@@ -13,7 +13,7 @@ public enum PlatformType {
 		String platformPk = emailAddress.get("metadata").get("source").get("id").asText();
 		String platformEmail = emailAddress.get("value").asText();
 		return new PlatformProfile(platformPk, platformEmail);
-	}), KAKAO("kakao", null);
+	}), KAKAO("kakao", null); // Todo 카카오 소셜 로그인은 나중에
 
 	@Getter
 	private String platformName;

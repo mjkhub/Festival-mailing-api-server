@@ -48,4 +48,8 @@ public class Member {
 		this.subscriptions.remove(subscription);
 	}
 
+	public void updateEmailSubscribe(Boolean emailSubscribe) {
+		this.emailSubscribe = emailSubscribe;
+	}
+
 }
