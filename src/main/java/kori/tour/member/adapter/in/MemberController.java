@@ -120,7 +120,7 @@ public class MemberController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "삭제 완료")
     })
-    @DeleteMapping("/")
+    @DeleteMapping("")
     public ResponseEntity<Void> deleteMember(){
         Long memberId = SecurityUtils.getCurrentMemberId();
         memberUseCase.deleteMember(memberId);
