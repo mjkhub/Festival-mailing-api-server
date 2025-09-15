@@ -41,7 +41,7 @@ CREATE TABLE tour_detail (
                              age_limit VARCHAR(255),
                              booking_place VARCHAR(255),
                              discount_info_festival VARCHAR(255),
-                             event_homepage VARCHAR(255),
+                             event_homepage VARCHAR(1500),
                              event_place VARCHAR(255),
 
                              place_info VARCHAR(1000),

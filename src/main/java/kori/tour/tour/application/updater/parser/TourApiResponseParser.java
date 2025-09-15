@@ -39,7 +39,7 @@ public class TourApiResponseParser {
 
 		}
 		catch (JsonProcessingException e) { // xml response
-			log.warn("/searchFestival1 언어={} 응답 Metadata 파싱중 에러 발생 response = {}", language.getKrName(), jsonResponse,
+			log.warn("/searchFestival 언어={} 응답 Metadata 파싱중 에러 발생 response = {}", language.getKrName(), jsonResponse,
 					e);
 			return new TourMetaData(0, 0, 0);
 		}
@@ -74,7 +74,7 @@ public class TourApiResponseParser {
 
 		}
 		catch (JsonProcessingException e) { // xml response
-			log.warn("/searchFestival1 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
+			log.warn("/searchFestival 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
 		}
 		return tourResponseList;
 	}
@@ -102,7 +102,7 @@ public class TourApiResponseParser {
 			return tourDetailResponseList; // 항상 1개이긴 하지만, 코드 규칙을 위해서 이렇게 작성
 		}
 		catch (JsonProcessingException e) { // xml response
-			log.warn("/detailIntro1 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
+			log.warn("/detailIntro 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
 			return new ArrayList<>();
 		}
 	}
@@ -122,7 +122,7 @@ public class TourApiResponseParser {
 			}
 		}
 		catch (JsonProcessingException e) { // xml response
-			log.warn("/detailInfo1 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
+			log.warn("/detailInfo 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
 		}
 
 		return tourRepeatList;
@@ -144,7 +144,7 @@ public class TourApiResponseParser {
 			}
 		}
 		catch (JsonProcessingException e) { // xml response
-			log.warn("/detailImage1 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
+			log.warn("/detailImage 응답 파싱중 에러 발생 response = {}", jsonResponse, e);
 		}
 
 		return tourImageList;

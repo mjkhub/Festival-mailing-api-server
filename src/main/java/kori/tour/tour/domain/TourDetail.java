@@ -26,6 +26,7 @@ public class TourDetail {
 
 	private String discountInfoFestival;
 
+	@Column(length = 1500)
 	private String eventHomepage;
 
 	private String eventPlace; // 세부 장소
