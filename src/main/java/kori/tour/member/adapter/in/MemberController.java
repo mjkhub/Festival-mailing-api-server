@@ -44,8 +44,6 @@ public class MemberController {
     private final MemberUseCase memberUseCase;
     private final AreaCodeRegistry areaCodeRegistry;
     private final MemberApiParser memberApiParser;
-    private final MemberRepository memberRepository;
-    private final EmailRepository emailRepository;
 
     @Operation(summary = "마이페이지 조회", description = "마이페이지에서 회원 정보를 조회합니다 ",
             security = { @SecurityRequirement(name = "bearerAuth") })
