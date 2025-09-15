@@ -35,7 +35,7 @@ public class EmailSendEventListener {
 	private final int SES_PAGE_SIZE = 50;
 
 	@Async
-	@EventListener
+//	@EventListener
 	public void listenEmailSendEvent(EmailSendEvent emailSendEvent) {
 		// ToDo: Async 스레드 풀 커스터마이징
 		NewTourDto newTourDto = emailSendEvent.entry().getKey();
