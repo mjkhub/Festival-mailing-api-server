@@ -12,12 +12,12 @@ import lombok.*;
 public class TourDetail {
 
 	@Id
-	@Column(name = "tour_id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "tour_detail_id")
 	private Long id;
 
-	@MapsId
+	@JoinColumn(name = "tour_id", nullable = false)
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tour_id")
 	private Tour tour;
 
 	private String ageLimit;

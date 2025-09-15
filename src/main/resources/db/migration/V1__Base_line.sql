@@ -32,27 +32,34 @@ CREATE INDEX idx_tour_modified_time ON tour (modified_time);
 CREATE INDEX idx_tour_event_range ON tour (event_start_date, event_end_date);
 
 -- =========================================================
--- TOUR DETAIL (1:1, 공유 PK = FK)
+-- TOUR DETAIL (1:1, PK != FK)
 -- =========================================================
 CREATE TABLE tour_detail (
-                             tour_id                 BIGINT      NOT NULL,
-                             age_limit               VARCHAR(255),
-                             booking_place           VARCHAR(255),
-                             discount_info_festival  VARCHAR(1000),
-                             event_homepage          VARCHAR(512),
-                             event_place             VARCHAR(255),
-                             place_info              VARCHAR(1000),
-                             play_time               VARCHAR(500),
-                             program                 VARCHAR(1000),
-                             spend_time_festival     VARCHAR(255),
-                             sponsor                 VARCHAR(255),
-                             sponsor_telephone       VARCHAR(1000),
-                             sub_event               VARCHAR(255),
-                             use_time_festival       VARCHAR(500),
-                             CONSTRAINT pk_tour_detail PRIMARY KEY (tour_id),
-                             CONSTRAINT fk_tour_detail_tour
-                                 FOREIGN KEY (tour_id) REFERENCES tour(tour_id)
-                                     ON UPDATE CASCADE ON DELETE CASCADE
+                             tour_detail_id BIGINT NOT NULL AUTO_INCREMENT,
+                             tour_id BIGINT NOT NULL,
+
+                             age_limit VARCHAR(255),
+                             booking_place VARCHAR(255),
+                             discount_info_festival VARCHAR(255),
+                             event_homepage VARCHAR(255),
+                             event_place VARCHAR(255),
+
+                             place_info VARCHAR(1000),
+                             play_time VARCHAR(500),
+                             program VARCHAR(1000),
+
+                             spend_time_festival VARCHAR(255),
+                             sponsor VARCHAR(255),
+                             sponsor_telephone VARCHAR(1000),
+                             sub_event VARCHAR(255),
+                             use_time_festival VARCHAR(500),
+
+                             PRIMARY KEY (tour_detail_id),
+                             UNIQUE KEY uk_tour_detail_tour_id (tour_id),
+                             CONSTRAINT fk_tour_detail_tour FOREIGN KEY (tour_id)
+                                 REFERENCES tour (tour_id)
+                                 ON UPDATE CASCADE
+                                 ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =========================================================
