@@ -10,22 +10,22 @@ import lombok.Getter;
 public enum ApiType {
 
 	// 서비스 api path job Path
-	SEARCH("searchFestival1", (params, eventStartDate) -> { // String 을 하나 정도 더 받을 수 있다.
+	SEARCH("searchFestival2", (params, eventStartDate) -> { // String 을 하나 정도 더 받을 수 있다.
 															// eventEndDate
 		Map<String, String> queryParams = params.mapToParamMap();
 		queryParams.put("eventStartDate", eventStartDate);
 		return queryParams; // 이게 요구 사항이 완벽 하게 나온게 아니라
-	}), DETAIL("detailIntro1", (params, contentId) -> {
+	}), DETAIL("detailIntro2", (params, contentId) -> {
 		Map<String, String> queryParams = params.mapToParamMap();
 		queryParams.put("contentId", contentId);
 		queryParams.put("contentTypeId", "15");
 		return queryParams;
-	}), REPEAT("detailInfo1", (params, contentId) -> {
+	}), REPEAT("detailInfo2", (params, contentId) -> {
 		Map<String, String> queryParams = params.mapToParamMap();
 		queryParams.put("contentId", contentId);
 		queryParams.put("contentTypeId", "15");
 		return queryParams;
-	}), IMAGE("detailImage1", (params, contentId) -> {
+	}), IMAGE("detailImage2", (params, contentId) -> {
 		Map<String, String> queryParams = params.mapToParamMap();
 		queryParams.put("contentId", contentId);
 		return queryParams;

@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public enum Language {
 
-	KOREAN("국문", "Korean", "KorService1");
+	KOREAN("국문", "Korean", "KorService2");
 
 	// ENGLISH("영문", "English", "EngService1"), SIMPLIFIED_CHINESE("중문 간체", "Simplified
 	// Chinese",
