@@ -57,7 +57,7 @@ public class TourApiClient {
 			pageNo += 1;
 		}
 
-		log.info("/searchFestival1 언어={} 총 응답 데이터={}개 ", language.getKrName(), totalCount);
+		log.info("/searchFestival2 언어={} 총 응답 데이터={}개 ", language.getKrName(), totalCount);
 		return mapList(allTourResponse, dto -> Tour.createTour(dto, language));
 	}
 

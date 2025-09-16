@@ -74,7 +74,7 @@ public class TourUpdateListener {
 	}
 
 	private String getStartDate() {
-		return LocalDate.now(ZoneId.of("Asia/Seoul")).minusMonths(3).toString();
+		return LocalDate.now(ZoneId.of("Asia/Seoul")).minusMonths(1).toString();
 	}
 
 }
