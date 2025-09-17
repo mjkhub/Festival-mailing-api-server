@@ -55,7 +55,8 @@ CREATE TABLE tour_detail (
                              use_time_festival VARCHAR(500),
 
                              PRIMARY KEY (tour_detail_id),
-                             UNIQUE KEY uk_tour_detail_tour_id (tour_id),
+--                              Tour - Tour Detail은 1:1이긴한데, 관광공사에서 가끔 아니게 넣어줄 때도 있어서..
+--                              UNIQUE KEY uk_tour_detail_tour_id (tour_id),
                              CONSTRAINT fk_tour_detail_tour FOREIGN KEY (tour_id)
                                  REFERENCES tour (tour_id)
                                  ON UPDATE CASCADE
