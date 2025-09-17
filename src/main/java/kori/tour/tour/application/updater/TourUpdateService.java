@@ -50,7 +50,7 @@ class TourUpdateService {
 	@Transactional
 	public TourApiResponse saveNewTours(TourApiResponse tourApiResponse, Language language) {
 		tourCrudPort.saveTourListBulk(tourApiResponse.newToursEntity());
-		tourCrudPort.saveTourListBulk(tourApiResponse.newToursEntity());
+		tourCrudPort.saveTourListBulk(tourApiResponse.updatedToursEntity());
 		log.info("언어={} 응답 결과: 새로운 투어={} 업데이트된 투어={} 저장 완료", language.getKrName(),
 				tourApiResponse.newToursEntity().size(), tourApiResponse.updatedToursEntity().size());
 		return tourApiResponse;
