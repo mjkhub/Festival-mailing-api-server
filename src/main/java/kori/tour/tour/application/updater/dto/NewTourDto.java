@@ -15,7 +15,7 @@ public class NewTourDto {
 
 	private Tour tour;
 
-	private List<TourDetail> detailInfo;
+	private TourDetail detailInfo;
 
 	private List<TourRepeat> tourRepeatList;
 

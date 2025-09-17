@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import kori.tour.email.adapter.out.persistence.EmailRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.transaction.annotation.Transactional;
 
+import kori.tour.email.adapter.out.persistence.EmailRepository;
 import kori.tour.global.annotation.UseCase;
 import kori.tour.global.exception.NotFoundException;
 import kori.tour.global.exception.code.ErrorCode;

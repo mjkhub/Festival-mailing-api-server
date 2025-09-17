@@ -22,7 +22,7 @@ public enum TourType {
 		return Arrays.stream(TourType.values())
 			.filter(tourType -> tourType.contentTypeIdList.contains(contentTypeId))
 			.findFirst()
-			.orElseThrow(() -> new RuntimeException(" 잘못된 contentTypeId 입력" + contentTypeId));
+			.orElseGet(()->FESTIVAL);
 	}
 
 }

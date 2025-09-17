@@ -3,7 +3,6 @@ package kori.tour.email.application.updater;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -86,7 +85,7 @@ public class EmailSendEventListener {
 
 	private EmailBodyDto mapToEmailBodyDto(NewTourDto newTourDto, List<String> keywordsOfTour) {
 		Tour tour = newTourDto.getTour();
-		TourDetail detail = newTourDto.getDetailInfo().get(0); // 단일 가정
+		TourDetail detail = newTourDto.getDetailInfo();
 		List<TourRepeat> repeats = newTourDto.getTourRepeatList();
 
 		List<EmailBodyDto.InfoItem> infoList = repeats.stream()

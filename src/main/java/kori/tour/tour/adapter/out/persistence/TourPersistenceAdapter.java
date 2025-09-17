@@ -64,7 +64,8 @@ class TourPersistenceAdapter implements TourCrudPort {
 
 		for (NewTourDto newTourDto : newTourDtoList) {
 			tourRepository.save(newTourDto.getTour());
-			tourDetailList.addAll(newTourDto.getDetailInfo());
+			if (newTourDto.getDetailInfo() != null) // 생성 단계에서 넘어온 null을 제거
+				tourDetailList.add(newTourDto.getDetailInfo());
 			tourRepeatList.addAll(newTourDto.getTourRepeatList());
 			tourImageList.addAll(newTourDto.getTourImageList());
 		}

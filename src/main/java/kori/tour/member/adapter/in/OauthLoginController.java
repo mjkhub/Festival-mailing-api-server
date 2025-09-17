@@ -5,12 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import kori.tour.auth.token.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
+import kori.tour.auth.token.JwtTokenProvider;
 import kori.tour.member.adapter.in.oauth_key.ApiKeyDto;
 import kori.tour.member.adapter.out.persistence.MemberRepository;
 import kori.tour.member.application.service.PlatformClient;

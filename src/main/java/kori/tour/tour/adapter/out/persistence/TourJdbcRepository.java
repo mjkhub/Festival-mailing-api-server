@@ -64,7 +64,6 @@ public class TourJdbcRepository {
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
 				TourDetail detailInfo = tourDetailInfos.get(i);
-
 				ps.setLong(1, detailInfo.getTour().getId());
 				ps.setString(2, detailInfo.getAgeLimit());
 				ps.setString(3, detailInfo.getBookingPlace());

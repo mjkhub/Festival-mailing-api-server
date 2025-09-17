@@ -81,7 +81,11 @@ public class TourApiClient {
 			List<TourDetailResponse> tourDetailResponses = fetchApiData(ApiType.DETAIL, apiParam,
 					TourDetailResponse.class);
 			List<TourDetail> tourDetails = mapList(tourDetailResponses, dto -> TourDetail.createTourDetail(dto, tour));
-			detailCount += tourDetails.size();
+			TourDetail tourDetail = null;
+			if(!tourDetails.isEmpty()){ // one to one mapping
+				tourDetail = tourDetails.get(0);
+				detailCount += 1;
+			}
 
 			List<TourRepeatResponse> tourRepeatResponses = fetchApiData(ApiType.REPEAT, apiParam,
 					TourRepeatResponse.class);
@@ -93,7 +97,7 @@ public class TourApiClient {
 			List<TourImage> tourImages = mapList(tourImageResponses, dto -> TourImage.createTourImage(dto, tour));
 			imageCount += tourImages.size();
 
-			newTourDtoList.add(new NewTourDto(tour, tourDetails, tourRepeatList, tourImages));
+			newTourDtoList.add(new NewTourDto(tour, tourDetail, tourRepeatList, tourImages));
 		}
 		log.info("언어={} {} Tour={} Detail={} Repeat={} Image={} 조회 완료", language.getKrName(), actionType, tours.size(),
 				detailCount, repeatCount, imageCount);

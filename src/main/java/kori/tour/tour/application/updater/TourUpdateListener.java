@@ -31,7 +31,7 @@ public class TourUpdateListener {
 
 	private final ThreadPoolTaskExecutor tourUpdaterThreadTaskExecutor;
 
-	@Scheduled( cron = "0 0/5 10-18 * * *", zone = "Asia/Seoul" ) // 오전 10시 ~ 오후 6시 매 30분마다 실행
+	@Scheduled(cron = "0 0 9-18 * * *", zone = "Asia/Seoul")
 	public void updateTour() {
 		log.info("######################## 축제 정보 언어별 업데이트 시작 ######################## ");
 		long startTime = System.currentTimeMillis();
@@ -74,7 +74,7 @@ public class TourUpdateListener {
 	}
 
 	private String getStartDate() {
-		return LocalDate.now(ZoneId.of("Asia/Seoul")).minusMonths(1).toString();
+		return LocalDate.now(ZoneId.of("Asia/Seoul")).minusMonths(6).toString();
 	}
 
 }
