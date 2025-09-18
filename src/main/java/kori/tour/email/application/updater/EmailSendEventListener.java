@@ -3,6 +3,7 @@ package kori.tour.email.application.updater;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -34,7 +35,7 @@ public class EmailSendEventListener {
 	private final int SES_PAGE_SIZE = 50;
 
 	@Async
-//	@EventListener
+	@EventListener
 	public void listenEmailSendEvent(EmailSendEvent emailSendEvent) {
 		// ToDo: Async 스레드 풀 커스터마이징
 		NewTourDto newTourDto = emailSendEvent.entry().getKey();

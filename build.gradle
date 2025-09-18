@@ -79,8 +79,8 @@ dependencies {
     implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.1'
 
     //ses
-    implementation(platform("software.amazon.awssdk:bom:2.25.39"))
-    implementation("software.amazon.awssdk:sesv2")
+    implementation 'javax.mail:javax.mail-api:1.6.2'
+    implementation 'com.sun.mail:javax.mail:1.6.2'
 
     //thymeleaf
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")

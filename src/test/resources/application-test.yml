@@ -47,7 +47,9 @@ tour:
   api-key: test
 
 email:
+  host: test
   sender: test
+  password: test
 
 service-url: test
 

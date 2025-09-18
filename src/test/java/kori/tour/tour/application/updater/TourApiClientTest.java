@@ -145,7 +145,7 @@ class TourApiClientTest {
         assertThat(response.newToursEntity()).hasSize(1);
         NewTourDto newTourDto = response.newToursEntity().get(0);
         assertThat(newTourDto.getTour().getContentId()).isEqualTo("3001");
-        assertThat(newTourDto.getDetailInfo().get(0).getEventHomepage()).isEqualTo("<p>홈페이지1</p>");
+        assertThat(newTourDto.getDetailInfo().getEventHomepage()).isEqualTo("<p>홈페이지1</p>");
         assertThat(newTourDto.getTourRepeatList().get(0).getInfoName()).isEqualTo("주최");
         assertThat(newTourDto.getTourImageList().get(0).getOriginImageUrl()).isEqualTo("http://image.com/new.jpg");
 
@@ -153,7 +153,7 @@ class TourApiClientTest {
         assertThat(response.updatedToursEntity()).hasSize(1);
         NewTourDto updatedTourDto = response.updatedToursEntity().get(0);
         assertThat(updatedTourDto.getTour().getContentId()).isEqualTo("3002");
-        assertThat(updatedTourDto.getDetailInfo().get(0).getEventHomepage()).isEqualTo("<p>홈페이지2</p>");
+        assertThat(updatedTourDto.getDetailInfo().getEventHomepage()).isEqualTo("<p>홈페이지2</p>");
         assertThat(updatedTourDto.getTourRepeatList().get(0).getInfoName()).isEqualTo("주관");
         assertThat(updatedTourDto.getTourImageList().get(0).getOriginImageUrl()).isEqualTo("http://image.com/updated.jpg");
 

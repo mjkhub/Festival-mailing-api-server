@@ -3,7 +3,6 @@ package kori.tour.email.application.updater;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -19,24 +18,21 @@ import kori.tour.tour.adapter.out.persistence.TourRepository;
 import kori.tour.tour.domain.Tour;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import software.amazon.awssdk.services.sesv2.SesV2Client;
-import software.amazon.awssdk.services.sesv2.model.*;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 
-	private final SesV2Client sesClient;
-
+	private final EmailSendUseCase emailSendUseCase;
 	private final EmailRepository emailRepository;
-
 	private final TourRepository tourRepository;
-
 	private final MemberRepository memberRepository;
 
-	@Value("${email.sender}")
-	private String senderEmail;
+
+	public Slice<Member> findMembersBySubscription(String areaCode, String sigunGucCode, Pageable pageRequest){
+		return memberRepository.findBySubscriptionArea(areaCode, sigunGucCode, pageRequest);
+	}
 
 	public String sendEmailToMembers(EmailSendRequest requestDto) {
 		List<String> emails = requestDto.members().stream()
@@ -44,26 +40,10 @@ public class EmailService {
 				.map(PlatformInfo::getPlatformEmail)
 				.toList();
 
-		SendEmailRequest request = SendEmailRequest.builder()
-				.fromEmailAddress(senderEmail)
-				.destination(Destination.builder().toAddresses(emails).build())
-				.content(EmailContent.builder()
-						.simple(Message.builder()
-								.subject(Content.builder().data(requestDto.emailTitle()).charset("UTF-8").build())
-								.body(Body.builder().html(Content.builder().data(requestDto.emailContent()).charset("UTF-8").build()).build())
-								.build())
-						.build())
-				.build();
+		String messageId = emailSendUseCase.sendEmail(emails, requestDto.emailTitle(), requestDto.emailContent());
+		log.info("Email sent to {} with messageId {}", emails, messageId);
 
-		SendEmailResponse response = sesClient.sendEmail(request);
-
-		log.info("Email sent to {} with messageId {}", emails, response.messageId());
-
-		return response.messageId();
-	}
-
-	public Slice<Member> findMembersBySubscription(String areaCode, String sigunGucCode, Pageable pageRequest){
-		return memberRepository.findBySubscriptionArea(areaCode, sigunGucCode, pageRequest);
+		return messageId;
 	}
 
 	@Transactional

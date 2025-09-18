@@ -63,7 +63,9 @@ tour:
   api-key: ${TOUR_API_KEY}
 
 email:
+  host: ${EMAIL_HOST}
   sender: ${EMAIL_SENDER}
+  password: ${EMAIL_PASSWORD}
 
 service-url: ${SERVICE_URL}
 

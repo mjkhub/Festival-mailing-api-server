@@ -65,8 +65,8 @@ class TourUpdateServiceTest {
         Tour updatedTour1 = Tour.builder().id(1L).contentId("101").build();
         Tour updatedTour2 = Tour.builder().id(2L).contentId("102").build();
 
-        NewTourDto updatedDto1 = new NewTourDto(updatedTour1, List.of(), List.of(), List.of());
-        NewTourDto updatedDto2 = new NewTourDto(updatedTour2, List.of(), List.of(), List.of());
+        NewTourDto updatedDto1 = new NewTourDto(updatedTour1, null, List.of(), List.of());
+        NewTourDto updatedDto2 = new NewTourDto(updatedTour2, null, List.of(), List.of());
 
         List<NewTourDto> updatedDtos = List.of(updatedDto1, updatedDto2);
         TourApiResponse tourApiResponse = new TourApiResponse(List.of(), updatedDtos);
@@ -92,8 +92,8 @@ class TourUpdateServiceTest {
         // given
         Language language = Language.KOREAN;
 
-        NewTourDto newTourDto1 = new NewTourDto(Tour.builder().contentId("789").build(), List.of(), List.of(), List.of());
-        NewTourDto newTourDto2 = new NewTourDto(Tour.builder().contentId("101").build(), List.of(), List.of(), List.of());
+        NewTourDto newTourDto1 = new NewTourDto(Tour.builder().contentId("789").build(), null, List.of(), List.of());
+        NewTourDto newTourDto2 = new NewTourDto(Tour.builder().contentId("101").build(), null, List.of(), List.of());
         List<NewTourDto> newTours = List.of(newTourDto1, newTourDto2);
 
         TourApiResponse tourApiResponse = new TourApiResponse(newTours, List.of());
@@ -110,8 +110,8 @@ class TourUpdateServiceTest {
     @DisplayName("TourApiResponse의 투어 개수를 AtomicInteger에 더한다")
     void givenTourApiResponse_whenSumTourEntity_thenAccumulatesCorrectly() {
         // given
-        NewTourDto newTourDto = new NewTourDto(Tour.builder().build(), List.of(), List.of(), List.of());
-        NewTourDto updatedTourDto = new NewTourDto(Tour.builder().build(), List.of(), List.of(), List.of());
+        NewTourDto newTourDto = new NewTourDto(Tour.builder().build(),null, List.of(), List.of());
+        NewTourDto updatedTourDto = new NewTourDto(Tour.builder().build(), null, List.of(), List.of());
 
         // 새로운 투어 3개, 업데이트된 투어 2개
         TourApiResponse tourApiResponse = new TourApiResponse(

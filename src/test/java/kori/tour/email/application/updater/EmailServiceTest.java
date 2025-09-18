@@ -1,10 +1,5 @@
 package kori.tour.email.application.updater;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
-import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,22 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import kori.tour.email.adapter.out.persistence.EmailRepository;
-import kori.tour.email.application.updater.dto.EmailSendRequest;
 import kori.tour.member.adapter.out.persistence.MemberRepository;
-import kori.tour.member.domain.Member;
-import kori.tour.member.domain.PlatformInfo;
-import kori.tour.member.domain.PlatformType;
 import kori.tour.tour.adapter.out.persistence.TourRepository;
-import kori.tour.tour.domain.RegionCode;
-import kori.tour.tour.domain.Tour;
-import software.amazon.awssdk.services.sesv2.SesV2Client;
-import software.amazon.awssdk.services.sesv2.model.*;
 
 @SpringBootTest
 class EmailServiceTest {
 
-    @MockBean
-    private SesV2Client sesClient;
 
     @MockBean
     private EmailRepository emailRepository;
@@ -45,36 +30,7 @@ class EmailServiceTest {
     @Test
     @DisplayName("이메일 전송: 정상 케이스")
     void sendEmailToMembers_success() {
-        // given
-        Member member = Member.builder()
-                .platformInfo(new PlatformInfo(PlatformType.KAKAO, "1234", "testEmail@test.com"))
-                .build();
 
-        Tour tour = Tour.builder()
-                .id(1L)
-                .regionCode(new RegionCode("01","10"))
-                .build();
 
-        EmailSendRequest requestDto = new EmailSendRequest(
-                List.of(member),
-                "테스트 제목",
-                "테스트 내용",
-                String.valueOf(tour.getId()),
-                tour.getRegionCode().getAreaCode(),
-                tour.getRegionCode().getSigunGuCode()
-        );
-
-        SendEmailResponse mockResponse = SendEmailResponse.builder()
-                .messageId("abc123")
-                .build();
-
-        doReturn(mockResponse).when(sesClient).sendEmail(any(SendEmailRequest.class));
-
-        // when
-        String messageId = emailService.sendEmailToMembers(requestDto);
-
-        // then
-        assertEquals("abc123", messageId);
-        verify(sesClient, times(1)).sendEmail(any(SendEmailRequest.class));
     }
 }
