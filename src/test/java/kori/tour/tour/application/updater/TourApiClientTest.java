@@ -54,7 +54,7 @@ class TourApiClientTest {
         // 메타 데이터 응답 (총 2페이지: ceil(75/50)=2)
         String metaDataResponse = "{\"response\":{\"body\":{\"items\":{},\"numOfRows\":50,\"pageNo\":1,\"totalCount\":75}}}";
 
-        server.expect(times(1), requestTo(containsString("/searchFestival1")))
+        server.expect(times(1), requestTo(containsString("/searchFestival2")))
                 .andExpect(method(HttpMethod.GET))
                 .andExpect(queryParam("pageNo", "1"))
                 .andExpect(queryParam("numOfRows", "1"))
@@ -66,7 +66,7 @@ class TourApiClientTest {
                 "{ \"item\": [ { \"contentid\":\"1001\",\"title\":\"축제A\",\"contenttypeid\":\"15\" }, " +
                 "{ \"contentid\":\"1002\",\"title\":\"축제B\",\"contenttypeid\":\"15\" } ] } } } }";
 
-        server.expect(times(1), requestTo(containsString("/searchFestival1")))
+        server.expect(times(1), requestTo(containsString("/searchFestival2")))
                 .andExpect(method(HttpMethod.GET))
                 .andExpect(queryParam("pageNo", "1"))
                 .andExpect(queryParam("numOfRows", "50"))
@@ -77,7 +77,7 @@ class TourApiClientTest {
         String pageTwoResponse = "{ \"response\": { \"body\": { \"items\": " +
                 "{ \"item\": [ { \"contentid\":\"1003\",\"title\":\"축제C\",\"contenttypeid\":\"15\" } ] } } } }";
 
-        server.expect(times(1), requestTo(containsString("/searchFestival1")))
+        server.expect(times(1), requestTo(containsString("/searchFestival2")))
                 .andExpect(method(HttpMethod.GET))
                 .andExpect(queryParam("pageNo", "2"))
                 .andExpect(queryParam("numOfRows", "50"))
@@ -126,14 +126,14 @@ class TourApiClientTest {
 
 
         // Expect calls for newTour
-        expectApiCallForRelatedEntities("/detailIntro1", "3001", newTourDetailResponse);
-        expectApiCallForRelatedEntities("/detailInfo1", "3001", newTourRepeatResponse);
-        expectApiCallForRelatedEntities("/detailImage1", "3001", newTourImageResponse);
+        expectApiCallForRelatedEntities("/detailIntro2", "3001", newTourDetailResponse);
+        expectApiCallForRelatedEntities("/detailInfo2", "3001", newTourRepeatResponse);
+        expectApiCallForRelatedEntities("/detailImage2", "3001", newTourImageResponse);
 
         // Expect calls for updatedTour
-        expectApiCallForRelatedEntities("/detailIntro1", "3002", updatedTourDetailResponse);
-        expectApiCallForRelatedEntities("/detailInfo1", "3002", updatedTourRepeatResponse);
-        expectApiCallForRelatedEntities("/detailImage1", "3002", updatedTourImageResponse);
+        expectApiCallForRelatedEntities("/detailIntro2", "3002", updatedTourDetailResponse);
+        expectApiCallForRelatedEntities("/detailInfo2", "3002", updatedTourRepeatResponse);
+        expectApiCallForRelatedEntities("/detailImage2", "3002", updatedTourImageResponse);
 
         // when
         TourApiResponse response = tourApiClient.fetchTourRelatedEntities(tourFilterResponse, lang);

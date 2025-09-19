@@ -11,16 +11,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 
+import jakarta.transaction.Transactional;
 import kori.tour.member.domain.Member;
 import kori.tour.member.domain.Subscription;
 
+
 @DataJpaTest
-class ryTest {
+@Transactional
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+class MemberRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;

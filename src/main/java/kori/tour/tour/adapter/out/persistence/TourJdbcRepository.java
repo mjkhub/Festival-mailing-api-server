@@ -20,8 +20,8 @@ public class TourJdbcRepository {
 
 	public void saveTours(List<Tour> tours) { // 테스트가 끝났으면 지우는게 맞는데.. 일단 그냥 두도로 하자 1월 31일
 		String sql = "INSERT INTO tour (language, road_address, basic_address, area_code, sigun_gu_code, "
-				+ "content_id, content_type_id, event_start_date, event_end_date, main_image_url, mapx, "
-				+ "mapy, m_level, modified_time, telephone, title) "
+				+ "content_id, content_type_id, event_start_date, event_end_date, main_image_url, map_x, "
+				+ "map_y, m_level, modified_time, telephone, title) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {

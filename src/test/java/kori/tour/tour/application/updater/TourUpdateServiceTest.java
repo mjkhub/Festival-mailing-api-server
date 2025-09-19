@@ -102,9 +102,33 @@ class TourUpdateServiceTest {
         TourApiResponse response = tourUpdateService.saveNewTours(tourApiResponse, language);
 
         // then
-        verify(tourCrudPort, times(2)).saveTourListBulk(newTours);
+        verify(tourCrudPort, times(1)).saveTourListBulk(newTours);
         assertThat(response).isEqualTo(tourApiResponse);
     }
+
+    @Test
+    @DisplayName("새로운 투어 목록 & 업데이트 투어 목록을 저장하고 응답을 반환한다")
+    void givenNewToursAndUpdatedTours_whenSaveNewTours_thenSavesToursAndReturnsResponse() {
+        // given
+        Language language = Language.KOREAN;
+
+        NewTourDto newTourDto1 = new NewTourDto(Tour.builder().contentId("789").build(), null, List.of(), List.of());
+        NewTourDto newTourDto2 = new NewTourDto(Tour.builder().contentId("101").build(), null, List.of(), List.of());
+        List<NewTourDto> newTours = List.of(newTourDto1, newTourDto2);
+        List<NewTourDto> updatedTours = List.of(new NewTourDto(Tour.builder().build(), null, List.of(), List.of()));
+
+        TourApiResponse tourApiResponse = new TourApiResponse(newTours, updatedTours);
+
+        // when
+        TourApiResponse response = tourUpdateService.saveNewTours(tourApiResponse, language);
+
+        // then
+        verify(tourCrudPort, times(1)).saveTourListBulk(newTours);
+        verify(tourCrudPort, times(1)).saveTourListBulk(updatedTours);
+        assertThat(response).isEqualTo(tourApiResponse);
+    }
+
+
 
     @Test
     @DisplayName("TourApiResponse의 투어 개수를 AtomicInteger에 더한다")
