@@ -55,7 +55,9 @@ jobs:
             GOOGLE_REDIRECT_URI="${{secrets.GOOGLE_REDIRECT_URI}}" 
             GOOGLE_ACCESS_TOKEN_URI="${{secrets.GOOGLE_ACCESS_TOKEN_URI}}" 
             GOOGLE_PROFILE_URI="${{secrets.GOOGLE_PROFILE_URI}}" 
+            EMAIL_HOST="${{secrets.EMAIL_HOST}}" 
             EMAIL_SENDER="${{secrets.EMAIL_SENDER}}" 
+            EMAIL_PASSWORD="${{secrets.EMAIL_PASSWORD}}" 
             
             IMAGE_NAME=ghcr.io/${{ secrets.GHCR_USERNAME }}/myapp
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
@@ -80,5 +82,7 @@ jobs:
               -e GOOGLE_REDIRECT_URI="${GOOGLE_REDIRECT_URI}" \
               -e GOOGLE_ACCESS_TOKEN_URI="${GOOGLE_ACCESS_TOKEN_URI}" \
               -e GOOGLE_PROFILE_URI="${GOOGLE_PROFILE_URI}" \
+              -e EMAIL_HOST="${EMAIL_HOST}" \
               -e EMAIL_SENDER="${EMAIL_SENDER}" \
+              -e EMAIL_PASSWORD="${EMAIL_PASSWORD}" \
               $IMAGE_NAME
