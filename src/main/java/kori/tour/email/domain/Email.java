@@ -33,7 +33,7 @@ public class Email {
 
 	private String body;
 
-	@Column(name = "ses_message_id", unique = true)
+	@Column(name = "ses_message_id", unique = false)
 	private String messageId;
 
 }
