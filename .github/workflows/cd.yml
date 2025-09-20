@@ -68,6 +68,7 @@ jobs:
             docker run -d --name myapp \
               -p 127.0.0.1:8080:8080 \
               -e SPRING_PROFILES_ACTIVE=prod \
+              -e TZ=Asia/Seoul \
               -e DB_URL="${DB_URL}" \
               -e DB_USERNAME="${DB_USERNAME}" \
               -e DB_PASSWORD="${DB_PASSWORD}" \
