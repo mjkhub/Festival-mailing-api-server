@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
     <!-- 공통 로그 패턴 정의 -->
-    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"/>
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss, Asia/Seoul} %-5level [%thread] %logger{36} - %msg%n"/>
 
     <!-- 콘솔 로그 출력 설정 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
