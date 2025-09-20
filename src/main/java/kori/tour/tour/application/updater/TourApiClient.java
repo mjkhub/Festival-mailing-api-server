@@ -2,6 +2,8 @@ package kori.tour.tour.application.updater;
 
 import static kori.tour.global.utils.CollectionUtils.mapList;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,7 @@ public class TourApiClient {
 
 	public List<Tour> fetchTourListSinceStartDate(String startDate, Language language) {
 
+		LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
 		ResponseEntity<String> response = fetchTourMetaData(language, startDate);
 		TourMetaData tourMetaData = tourApiResponseParser.mapToTotalPage(response.getBody(), language);
 		int totalPage = tourMetaData.totalPage();
@@ -52,7 +55,10 @@ public class TourApiClient {
 		int pageNo = 1;
 		while (pageNo <= totalPage) {
 			List<TourResponse> tourResponse = fetchApiData(ApiType.SEARCH,
-					new ApiParam(language, 50, pageNo, startDate), TourResponse.class);
+					new ApiParam(language, 50, pageNo, startDate), TourResponse.class)
+					.stream()
+					.filter( tr-> tr.eventEndDate().isAfter(now) || tr.eventEndDate().isEqual(now))
+					.toList();
 			allTourResponse.addAll(tourResponse);
 			pageNo += 1;
 		}
