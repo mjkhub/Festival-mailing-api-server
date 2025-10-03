@@ -1,5 +1,7 @@
-package kori.tour.email.application.updater;
+package kori.tour.email.application.updater.client;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
@@ -12,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailSendService implements EmailSendUseCase{
+class SmtpEmailClient implements EmailClient {
 
     @Value("${email.host}")
     private String smtpHost;
@@ -25,7 +27,7 @@ public class EmailSendService implements EmailSendUseCase{
 
 
     @Override
-    public String sendEmail(List<String> recipients, String title, String content) {
+    public EmailSendResponse sendEmail(List<String> recipients, String title, String content) {
         Session session = getSessionWithSmtpServer();
 
         for (String recipient :  recipients) {
@@ -43,7 +45,8 @@ public class EmailSendService implements EmailSendUseCase{
                 throw new RuntimeException("Msg error occurred while sending an email ",e);
             }
         }
-        return UUID.randomUUID().toString();
+        // 모든 이메일은 동시에 보내졌다고 가정한다
+        return new EmailSendResponse(UUID.randomUUID().toString(), LocalDateTime.now(ZoneId.of("Asia/Seoul")));
     }
 
     private Session getSessionWithSmtpServer() {
