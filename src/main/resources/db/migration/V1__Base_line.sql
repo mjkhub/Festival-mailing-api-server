@@ -72,10 +72,9 @@ CREATE TABLE tour_image (
                             small_image_url   VARCHAR(512),
                             image_name        VARCHAR(255),
                             serial_number     VARCHAR(100),
-                            CONSTRAINT fk_tour_image_tour FOREIGN KEY (tour_id)
-                                REFERENCES tour(tour_id)
-                                ON UPDATE CASCADE
-                                ON DELETE CASCADE
+                            CONSTRAINT fk_tour_image_tour
+                                FOREIGN KEY (tour_id) REFERENCES tour(tour_id)
+                                    ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE INDEX idx_tour_image_tour ON tour_image (tour_id);
@@ -89,10 +88,9 @@ CREATE TABLE tour_repeat (
                              serial_number     VARCHAR(100),
                              info_name         VARCHAR(255),
                              info_text         TEXT,
-                             CONSTRAINT fk_tour_repeat_tour FOREIGN KEY (tour_id)
-                                 REFERENCES tour(tour_id)
-                                 ON UPDATE CASCADE
-                                 ON DELETE CASCADE
+                             CONSTRAINT fk_tour_repeat_tour
+                                 FOREIGN KEY (tour_id) REFERENCES tour(tour_id)
+                                     ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE INDEX idx_tour_repeat_tour ON tour_repeat (tour_id);
@@ -104,10 +102,9 @@ CREATE TABLE tour_keywords (
                                tour_id   BIGINT        NOT NULL,
                                keyword   VARCHAR(255)  NOT NULL,
                                CONSTRAINT pk_tour_keywords PRIMARY KEY (tour_id, keyword),
-                               CONSTRAINT fk_tour_keywords_tour FOREIGN KEY (tour_id)
-                                   REFERENCES tour(tour_id)
-                                   ON UPDATE CASCADE
-                                   ON DELETE CASCADE
+                               CONSTRAINT fk_tour_keywords_tour
+                                   FOREIGN KEY (tour_id) REFERENCES tour(tour_id)
+                                       ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =========================================================
@@ -142,8 +139,7 @@ CREATE TABLE member_subscription (
                                      CONSTRAINT pk_member_subscription PRIMARY KEY (member_id, area_code, sigun_gu_code),
                                      CONSTRAINT fk_member_subscription_member
                                          FOREIGN KEY (member_id) REFERENCES member(member_id)
-                                             ON UPDATE CASCADE
-                                             ON DELETE CASCADE
+                                             ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE INDEX idx_region ON member_subscription (area_code, sigun_gu_code);
@@ -163,7 +159,6 @@ CREATE TABLE email (
                        CONSTRAINT fk_email_member
                            FOREIGN KEY (member_id) REFERENCES member(member_id)
                                ON UPDATE CASCADE ON DELETE SET NULL,
--- ============================ 이메일이 전송된 후에도 Tour가 업데이트 될 경우 DB 에서 삭제되었다가 추가 되기 때문에 set null로 변경
                        CONSTRAINT fk_email_tour
                            FOREIGN KEY (tour_id) REFERENCES tour(tour_id)
                                ON UPDATE CASCADE ON DELETE SET NULL
