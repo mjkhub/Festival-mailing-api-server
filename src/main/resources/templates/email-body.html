@@ -7,10 +7,10 @@
     <div style="margin-bottom: 20px;">
         <h3 style="color: #444;">행사 개요</h3>
         <ul style="list-style: none; padding: 0; color: #555;">
-            <li><strong>진행 기간:</strong> <span th:text="${eventStartDate} + ' ~ ' + ${eventEndDate}"></span></li>
-            <li><strong>운영 시간:</strong> <span th:text="${playTime}"></span></li>
-            <li><strong>예상 소요시간:</strong> <span th:text="${spendTimeFestival}"></span></li>
-            <li><strong>비용:</strong> <span th:text="${useTimeFestival}"></span></li>
+            <li><strong>진행 기간:</strong> <span th:utext="${eventStartDate} + ' ~ ' + ${eventEndDate}"></span></li>
+            <li><strong>운영 시간:</strong> <span th:utext="${playTime}"></span></li>
+            <li><strong>예상 소요시간:</strong> <span th:utext="${spendTimeFestival}"></span></li>
+            <li><strong>비용:</strong> <span th:utext="${useTimeFestival}"></span></li>
             <li><strong>행사 키워드:</strong>
                 <span th:each="keyword : ${keywords}" th:text="|${keyword}|"></span>
             </li>
@@ -21,8 +21,8 @@
         <h3 style="color: #444;">행사 상세 정보</h3>
         <ul style="list-style: none; padding: 0; color: #555;">
             <li th:each="info : ${infoList}">
-                <strong th:text="${info.infoName}">정보 이름</strong>:
-                <span th:text="${info.infoText}">정보 내용</span>
+                <strong th:utext="${info.infoName}">정보 이름</strong>:
+                <span th:utext="${info.infoText}">정보 내용</span>
             </li>
         </ul>
     </div>
@@ -30,13 +30,13 @@
     <div style="margin-bottom: 20px;">
         <h3 style="color: #444;">오시는 길</h3>
         <ul style="list-style: none; padding: 0; color: #555;">
-            <li><strong>주소:</strong> <span th:text="${roadAddress}"></span></li>
-            <li><strong>세부 장소:</strong> <span th:text="${eventPlace}"></span></li>
-            <li><strong>연락처:</strong> <span th:text="${telephone}"></span></li>
+            <li><strong>주소:</strong> <span th:utext="${roadAddress}"></span></li>
+            <li><strong>세부 장소:</strong> <span th:utext="${eventPlace}"></span></li>
+            <li><strong>연락처:</strong> <span th:utext="${telephone}"></span></li>
         </ul>
     </div>
 
     <hr style="margin: 30px 0;" />
-    <p style="font-size: 0.9em; color: #999;">본 메일은 발신 전용입니다. 문의는 홈페이지를 이용해주세요.</p>
+    <p style="font-size: 0.9em; color: #999;">본 메일은 발신 전용입니다.</p>
 </div>
 </body>
