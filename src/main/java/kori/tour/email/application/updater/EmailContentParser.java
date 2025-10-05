@@ -1,5 +1,8 @@
 package kori.tour.email.application.updater;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -46,6 +49,23 @@ public class EmailContentParser {
 		context.setVariable("telephone", emailBodyDto.getTelephone());
 
 		return templateEngine.process("email-body", context);
+	}
+
+	/**
+	 * 실제 사용자에게 전송되는 이메일과 띄어쓰기 하나 정도 차이가 있음.
+	 * 여기에 시간을 더 쏟는 것 보다 빠르게 치고가는게 더 효율적이라서 일단 이 정도로만~
+	 * minify 전: 약 2100바이트 minify 후: 약 1800바이트 -> 약 300 바이트 감소
+	 * */
+	public String minifyHtml(String html){
+		Document doc = Jsoup.parse(html);
+		doc.outputSettings().prettyPrint(false);
+
+		Element body = doc.body();
+		String innerHtml = body.html();
+
+		innerHtml = innerHtml.replaceAll(">\\s+<", "><").trim();
+
+        return "<body>" + innerHtml + "</body>";
 	}
 
 }

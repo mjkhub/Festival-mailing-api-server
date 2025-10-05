@@ -62,9 +62,7 @@ class TourApiClientTest {
                 .andRespond(withSuccess(metaDataResponse, MediaType.APPLICATION_JSON));
 
         // 페이지 1 (numOfRows=50, pageNo=1, eventStartDate=startDate)
-        String pageOneResponse = "{ \"response\": { \"body\": { \"items\": " +
-                "{ \"item\": [ { \"contentid\":\"1001\",\"title\":\"축제A\",\"contenttypeid\":\"15\" }, " +
-                "{ \"contentid\":\"1002\",\"title\":\"축제B\",\"contenttypeid\":\"15\" } ] } } } }";
+        String pageOneResponse = "{ \"response\": { \"body\": { \"items\": { \"item\": [ { \"contentid\":\"1001\",\"title\":\"축제A\",\"contenttypeid\":\"15\",\"eventenddate\":\"23001031\" }, { \"contentid\":\"1002\",\"title\":\"축제B\",\"contenttypeid\":\"15\",\"eventenddate\":\"23001031\" } ] } } } }";
 
         server.expect(times(1), requestTo(containsString("/searchFestival2")))
                 .andExpect(method(HttpMethod.GET))
@@ -74,8 +72,7 @@ class TourApiClientTest {
                 .andRespond(withSuccess(pageOneResponse, MediaType.APPLICATION_JSON));
 
         // 페이지 2
-        String pageTwoResponse = "{ \"response\": { \"body\": { \"items\": " +
-                "{ \"item\": [ { \"contentid\":\"1003\",\"title\":\"축제C\",\"contenttypeid\":\"15\" } ] } } } }";
+        String pageTwoResponse = "{ \"response\": { \"body\": { \"items\": { \"item\": [ { \"contentid\":\"1003\",\"title\":\"축제C\",\"contenttypeid\":\"15\",\"eventenddate\":\"23001031\" } ] } } } }";
 
         server.expect(times(1), requestTo(containsString("/searchFestival2")))
                 .andExpect(method(HttpMethod.GET))

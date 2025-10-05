@@ -27,13 +27,11 @@ public class Email {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Tour tour;
 
+	// 이메일이 실제로 보내진 시간과 오차가 있을 수 있음
 	private LocalDateTime sendTime;
 
-	private String title;
-
-	private String body;
-
-	@Column(name = "ses_message_id", unique = false)
-	private String messageId;
+	@JoinColumn(name = "email_content_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private EmailContent emailContent;
 
 }
