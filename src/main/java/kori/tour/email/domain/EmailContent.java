@@ -20,7 +20,7 @@ public class EmailContent {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String body;
 
-    @Column(name = "ses_message_id", length = 36)
+    @Column(name = "ses_message_id", length = 36, unique = true)
     private String messageId;
 
 }
