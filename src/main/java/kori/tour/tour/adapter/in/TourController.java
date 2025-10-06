@@ -3,6 +3,7 @@ package kori.tour.tour.adapter.in;
 import java.util.ArrayList;
 import java.util.List;
 
+import kori.tour.tour.application.updater.TourService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,12 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(value= "/api/tours", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TourController {
 
-    //Todo 컨트롤러에서 레포지토리를 직접 호출하는게 아니라 서비스 로직을 호출하도록 개선해야함
-
-    private final TourRepository tourRepository;
-    private final TourDetailRepository tourDetailRepository;
-    private final TourRepeatRepository tourRepeatRepository;
-    private final TourImageRepository tourImageRepository;
+    private final TourService tourService;
 
     @Operation(summary = "축제/행사 상세 정보 조회", description = "특정 축제 또는 행사의 모든 상세 정보를 조회합니다.")
     @ApiResponses(value = {
@@ -53,58 +49,7 @@ public class TourController {
     })
     @GetMapping("/{tourId}")
     public ResponseEntity<TourAllDto> getAllTourInfo(@PathVariable Long tourId){
-        Tour tour = tourRepository.findWithKeywordsById(tourId).orElseThrow(() -> new NotFoundException(ErrorCode.TOUR_NOT_FOUND));
-        TourDetail tourDetail = tourDetailRepository.findByTourId(tourId).orElseGet( ()-> null);
-        List<TourRepeat> tourRepeats = tourRepeatRepository.findByTourId(tourId);
-        List<TourImage> tourImages = tourImageRepository.findByTourId(tourId);
-        return ResponseEntity.ok().body(mapToTourAllDto(tour, tourDetail, tourRepeats, tourImages));
+        return ResponseEntity.ok().body(tourService.getTourAllDto(tourId));
     }
-
-    private TourAllDto mapToTourAllDto(
-            Tour tour,
-            TourDetail tourDetail,
-            List<TourRepeat> tourRepeats,
-            List<TourImage> tourImages
-    ) {
-        // 키워드: Set -> List (그대로)
-        List<String> keywords = new ArrayList<>(tour.getAllKeywords());
-
-        // 이미지: 대표 + 각 이미지의 원본/스몰 모두 추가 (필터링/중복제거/정렬 없음)
-        List<String> images = new ArrayList<>();
-        images.add(tour.getMainImageUrl());
-        for (TourImage img : tourImages) images.add(img.getOriginImageUrl());
-
-
-        // 개요
-        TourAllDto.Overview overview = new TourAllDto.Overview(
-                String.valueOf(tour.getEventStartDate()),
-                String.valueOf(tour.getEventEndDate()),
-                tourDetail != null ? tourDetail.getPlayTime() : null,
-                tourDetail != null ? tourDetail.getSpendTimeFestival() : null,
-                tourDetail != null ? tourDetail.getUseTimeFestival() : null);
-
-        // 상세
-        List<TourAllDto.Info> infoList = new ArrayList<>();
-        for (TourRepeat r : tourRepeats)
-            infoList.add(new TourAllDto.Info(r.getInfoName(), r.getInfoText()));
-
-        // 오시는 길
-        TourAllDto.Directions directions = new TourAllDto.Directions(
-                tour.getRoadAddress(),
-                tourDetail != null ? tourDetail.getEventPlace() : null,
-                tour.getTelephone()
-        );
-
-        // 레코드 한 번에 생성
-        return new TourAllDto(
-                tour.getId(),
-                tour.getTitle(),
-                keywords,
-                images,
-                overview,
-                infoList,
-                directions);
-    }
-
 
 }
