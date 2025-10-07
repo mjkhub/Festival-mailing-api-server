@@ -1,9 +1,6 @@
 package kori.tour.tour.adapter.in;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import kori.tour.tour.application.updater.TourService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,17 +14,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-import kori.tour.global.exception.NotFoundException;
-import kori.tour.global.exception.code.ErrorCode;
 import kori.tour.tour.adapter.in.api.TourAllDto;
-import kori.tour.tour.adapter.out.persistence.TourDetailRepository;
-import kori.tour.tour.adapter.out.persistence.TourImageRepository;
-import kori.tour.tour.adapter.out.persistence.TourRepeatRepository;
-import kori.tour.tour.adapter.out.persistence.TourRepository;
-import kori.tour.tour.domain.Tour;
-import kori.tour.tour.domain.TourDetail;
-import kori.tour.tour.domain.TourImage;
-import kori.tour.tour.domain.TourRepeat;
+import kori.tour.tour.application.updater.TourService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
