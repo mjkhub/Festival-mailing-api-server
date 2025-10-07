@@ -28,8 +28,8 @@ public class CacheConfig {
     @Bean
     public CacheManager cacheManager() {
         Caffeine<Object, Object> spec = Caffeine.newBuilder()
-                .initialCapacity(100)
-                .maximumSize(150)
+                .initialCapacity(300)
+                .maximumSize(500)
                 .expireAfterWrite(Duration.ofMinutes(10))
                 .recordStats();
 
