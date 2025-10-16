@@ -12,7 +12,7 @@
             <li><strong>예상 소요시간:</strong> <span th:utext="${spendTimeFestival}"></span></li>
             <li><strong>비용:</strong> <span th:utext="${useTimeFestival}"></span></li>
             <li><strong>행사 키워드:</strong>
-                <span th:each="keyword : ${keywords}" th:text="|${keyword}|"></span>
+                <span th:each="keyword : ${keywords}" th:text="|${keyword}| "></span>
             </li>
         </ul>
     </div>
