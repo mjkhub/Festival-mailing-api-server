@@ -10,7 +10,7 @@ COPY src ./src
 
 RUN ./gradlew bootJar -x test --no-daemon
 
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-slim
 
 WORKDIR /
 
