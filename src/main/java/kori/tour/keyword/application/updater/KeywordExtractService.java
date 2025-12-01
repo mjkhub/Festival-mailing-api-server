@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import kori.tour.global.exception.code.ErrorCode;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.evaluation.EvaluationRequest;
 import org.springframework.ai.evaluation.EvaluationResponse;
@@ -36,7 +37,7 @@ public class KeywordExtractService {
 
 	private final KeywordEvaluator keywordEvaluator;
 
-	private static final int RETRY_PERIOD = 1000;
+	private static final int RETRY_PERIOD = 60 * 1000; // one minute
 
 	@Retryable(retryFor = { AiApiException.class }, backoff = @Backoff(delay = RETRY_PERIOD), maxAttempts = 3)
 	public List<String> extractKeywords(FestivalDocument festivalDocument) {
@@ -45,7 +46,8 @@ public class KeywordExtractService {
 		String aiResponse = tourKeywordAiModelClient.call(prompt);
 		List<String> keywords = aiModelResponseParser.mapToKeywords(aiResponse);
 		EvaluationResponse evaluationResponse = keywordEvaluator.evaluate(new EvaluationRequest(null, null, keywords.toString()));
-		if(!evaluationResponse.isPass()) throw new RuntimeException();
+		if(!evaluationResponse.isPass())
+			throw new AiApiException(ErrorCode.AI_RESPONSE_RATE_LIMIT);
 		return keywords;
 	}
 

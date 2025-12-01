@@ -26,8 +26,10 @@ public enum ErrorCode {
 
 
 	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다."),
-	TOUR_NOT_FOUND(HttpStatus.NOT_FOUND, "투어를 찾을 수 없습니다.");
+	TOUR_NOT_FOUND(HttpStatus.NOT_FOUND, "투어를 찾을 수 없습니다."),
 
+	AI_RESPONSE_WRONG_FORMAT(null,"프롬프트에 명시한 형식대로 응답이 오지 않았습니다."),
+	AI_RESPONSE_RATE_LIMIT(null,"LLM API의 RATE LIMIT에 도달했습니다.");
 
 	private final HttpStatus httpStatus;
 
