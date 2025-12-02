@@ -13,6 +13,7 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kori.tour.global.exception.code.ErrorCode;
 import kori.tour.keyword.application.port.out.KeywordExtractingPort;
 import kori.tour.keyword.application.updater.parser.AiApiException;
 import kori.tour.keyword.application.updater.parser.AiModelResponseParser;
@@ -36,7 +37,7 @@ public class KeywordExtractService {
 
 	private final KeywordEvaluator keywordEvaluator;
 
-	private static final int RETRY_PERIOD = 1000;
+	private static final int RETRY_PERIOD = 60 * 1000; // one minute
 
 	@Retryable(retryFor = { AiApiException.class }, backoff = @Backoff(delay = RETRY_PERIOD), maxAttempts = 3)
 	public List<String> extractKeywords(FestivalDocument festivalDocument) {
@@ -45,7 +46,8 @@ public class KeywordExtractService {
 		String aiResponse = tourKeywordAiModelClient.call(prompt);
 		List<String> keywords = aiModelResponseParser.mapToKeywords(aiResponse);
 		EvaluationResponse evaluationResponse = keywordEvaluator.evaluate(new EvaluationRequest(null, null, keywords.toString()));
-		if(!evaluationResponse.isPass()) throw new RuntimeException();
+		if(!evaluationResponse.isPass())
+			throw new AiApiException(ErrorCode.AI_RESPONSE_RATE_LIMIT);
 		return keywords;
 	}
 
@@ -57,7 +59,7 @@ public class KeywordExtractService {
 
 	@Recover
 	public List<String> recoverFromAiFailure(AiApiException e, FestivalDocument festivalDocument) {
-		log.error("AI 키워드 추출 실패 - 모든 재시도 시도 후에도 응답 없음. festivalDocument={}, message={}",
+		log.warn("AI 키워드 추출 실패 - 3회 재시도 후에도 적절하게 처리되지 않았음. festivalDocument={}, message={}",
 				FestivalDocument.toJson(festivalDocument), e.getMessage(), e);
 		return new ArrayList<>(); // 일단 정상흐름으로
 	}
