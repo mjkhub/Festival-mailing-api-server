@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.evaluation.EvaluationRequest;
 import org.springframework.ai.evaluation.EvaluationResponse;
@@ -26,11 +27,11 @@ import org.springframework.retry.backoff.Sleeper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import kori.tour.global.exception.code.ErrorCode;
 import kori.tour.keyword.application.port.out.KeywordExtractingPort;
+import kori.tour.keyword.application.updater.parser.AiApiException;
 import kori.tour.keyword.application.updater.parser.AiModelResponseParser;
 import kori.tour.keyword.application.updater.parser.FestivalDocument;
-import kori.tour.keyword.application.updater.parser.AiApiException;
-import kori.tour.global.exception.code.ErrorCode;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = KeywordExtractServiceTest.TestConfig.class)

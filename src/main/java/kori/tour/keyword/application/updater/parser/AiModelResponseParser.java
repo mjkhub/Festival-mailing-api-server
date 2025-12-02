@@ -3,13 +3,13 @@ package kori.tour.keyword.application.updater.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import kori.tour.global.exception.code.ErrorCode;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kori.tour.global.exception.code.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kori.tour.global.exception.code.ErrorCode;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.evaluation.EvaluationRequest;
 import org.springframework.ai.evaluation.EvaluationResponse;
@@ -14,6 +13,7 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kori.tour.global.exception.code.ErrorCode;
 import kori.tour.keyword.application.port.out.KeywordExtractingPort;
 import kori.tour.keyword.application.updater.parser.AiApiException;
 import kori.tour.keyword.application.updater.parser.AiModelResponseParser;

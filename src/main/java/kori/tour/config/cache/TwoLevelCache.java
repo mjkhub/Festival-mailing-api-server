@@ -1,11 +1,12 @@
 package kori.tour.config.cache;
 
-import lombok.RequiredArgsConstructor;
+import java.util.concurrent.Callable;
+
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.lang.Nullable;
 
-import java.util.concurrent.Callable;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class TwoLevelCache implements Cache {
