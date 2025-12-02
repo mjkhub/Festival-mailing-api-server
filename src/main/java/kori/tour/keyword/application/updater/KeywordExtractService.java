@@ -59,7 +59,7 @@ public class KeywordExtractService {
 
 	@Recover
 	public List<String> recoverFromAiFailure(AiApiException e, FestivalDocument festivalDocument) {
-		log.error("AI 키워드 추출 실패 - 모든 재시도 시도 후에도 응답 없음. festivalDocument={}, message={}",
+		log.warn("AI 키워드 추출 실패 - 3회 재시도 후에도 적절하게 처리되지 않았음. festivalDocument={}, message={}",
 				FestivalDocument.toJson(festivalDocument), e.getMessage(), e);
 		return new ArrayList<>(); // 일단 정상흐름으로
 	}
